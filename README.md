@@ -4,6 +4,19 @@ Composable frontend features for modern React & Next.js apps. Add production-rea
 
 ## Quick Start
 
+**Create a new project:**
+```bash
+# Using bun (recommended)
+bun create stackpatch@latest
+
+# Or with project name
+bun create stackpatch@latest my-app
+
+# Using npx
+npx stackpatch create my-app
+```
+
+**Add features to existing project:**
 ```bash
 npx stackpatch add auth-ui
 ```

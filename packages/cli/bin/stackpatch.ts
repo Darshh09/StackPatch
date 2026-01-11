@@ -6,28 +6,36 @@ import inquirer from "inquirer";
 import chalk from "chalk";
 import fse from "fs-extra";
 import { spawnSync } from "child_process";
+import Jimp from "jimp";
 
 // ---------------- CONFIG ----------------
 // Get directory path - Bun supports import.meta.dir
 // @ts-expect-error - Bun-specific API, not in Node types
 const CLI_DIR = import.meta.dir || path.dirname(new URL(import.meta.url).pathname);
-const BOILERPLATE_ROOT = path.resolve(CLI_DIR, "../../boilerplate");
+// Resolve boilerplate path - works for both local dev and published package
+let BOILERPLATE_ROOT = path.resolve(CLI_DIR, "../boilerplate");
+if (!fs.existsSync(BOILERPLATE_ROOT)) {
+  // Fallback to sibling directory (for local development)
+  BOILERPLATE_ROOT = path.resolve(CLI_DIR, "../../boilerplate");
+}
 const PATCHES: Record<
   string,
   { path: string; dependencies: string[] }
 > = {
   auth: {
     path: "auth",
-    dependencies: ["next-auth"],
+    dependencies: ["next-auth", "react-hot-toast"],
   },
   "auth-ui": {
     path: "auth",
-    dependencies: ["next-auth"],
+    dependencies: ["next-auth", "react-hot-toast"],
   },
   // Example for future patches:
   // stripe: { path: "stripe", dependencies: ["stripe"] },
   // redux: { path: "redux", dependencies: ["@reduxjs/toolkit", "react-redux"] },
 };
+
+
 
 // ---------------- Helpers ----------------
 async function copyFiles(src: string, dest: string) {
@@ -99,6 +107,70 @@ function installDependencies(target: string, deps: string[]) {
     console.log(chalk.red("❌ Failed to install dependencies. Please run manually."));
   } else {
     console.log(chalk.green("✅ Dependencies installed!"));
+  }
+}
+
+// Update layout.tsx to include Toaster
+function updateLayoutForToaster(target: string): boolean {
+  const layoutPath = path.join(target, "app", "layout.tsx");
+
+  if (!fs.existsSync(layoutPath)) {
+    return false;
+  }
+
+  try {
+    let layoutContent = fs.readFileSync(layoutPath, "utf-8");
+
+    // Check if already has Toaster
+    if (layoutContent.includes("Toaster")) {
+      console.log(chalk.green("✅ Layout already has Toaster!"));
+      return true;
+    }
+
+    // Add import if not present
+    const hasImport = layoutContent.includes("from \"@/components/toaster\"") ||
+                      layoutContent.includes("from '@/components/toaster'");
+
+    if (!hasImport) {
+      // Find the last import statement
+      const lines = layoutContent.split("\n");
+      let lastImportIndex = -1;
+
+      for (let i = 0; i < lines.length; i++) {
+        const trimmed = lines[i].trim();
+        if (trimmed.startsWith("import ") && trimmed.endsWith(";")) {
+          lastImportIndex = i;
+        } else if (trimmed && !trimmed.startsWith("//") && lastImportIndex >= 0) {
+          break;
+        }
+      }
+
+      if (lastImportIndex >= 0) {
+        lines.splice(lastImportIndex + 1, 0, 'import { Toaster } from "@/components/toaster";');
+        layoutContent = lines.join("\n");
+      }
+    }
+
+    // Add Toaster component before closing AuthSessionProvider
+    if (layoutContent.includes("</AuthSessionProvider>")) {
+      layoutContent = layoutContent.replace(
+        /(<\/AuthSessionProvider>)/,
+        '<Toaster />\n        $1'
+      );
+    } else if (layoutContent.includes("{children}")) {
+      // If AuthSessionProvider wraps children, add Toaster after children
+      layoutContent = layoutContent.replace(
+        /(\{children\})/,
+        '$1\n          <Toaster />'
+      );
+    }
+
+    fs.writeFileSync(layoutPath, layoutContent, "utf-8");
+    console.log(chalk.green("✅ Updated layout.tsx with Toaster!"));
+    return true;
+  } catch (error: any) {
+    console.log(chalk.yellow(`⚠️  Failed to update layout with Toaster: ${error?.message || error}`));
+    return false;
   }
 }
 
@@ -189,13 +261,231 @@ function updateLayoutForAuth(target: string): boolean {
   }
 }
 
+// Generate rainbow gradient color for a character
+function getRainbowColor(char: string, index: number, total: number): string {
+  const colors = [
+    chalk.magentaBright,
+    chalk.redBright,
+    chalk.yellowBright,
+    chalk.greenBright,
+    chalk.cyanBright,
+    chalk.blueBright,
+    chalk.magentaBright,
+  ];
+  const colorIndex = Math.floor((index / total) * colors.length);
+  return colors[colorIndex].bold(char);
+}
+
+// Convert PNG to colored ASCII art
+async function pngToAscii(imagePath: string, width: number = 80): Promise<string[]> {
+  try {
+    const image = await Jimp.read(imagePath);
+
+    // Resize image to fit terminal width
+    const aspectRatio = image.getHeight() / image.getWidth();
+    const height = Math.floor(width * aspectRatio * 0.5); // 0.5 for character aspect ratio
+    image.resize(width, height);
+
+    const asciiLines: string[] = [];
+    const chars = [" ", "░", "▒", "▓", "█"]; // ASCII characters from light to dark
+
+    for (let y = 0; y < image.getHeight(); y++) {
+      let line = "  "; // Add some left padding
+      for (let x = 0; x < image.getWidth(); x++) {
+        const color = Jimp.intToRGBA(image.getPixelColor(x, y));
+        const brightness = (color.r + color.g + color.b) / 3;
+        const charIndex = Math.floor((brightness / 255) * (chars.length - 1));
+        const char = chars[charIndex];
+
+        // Apply color from image
+        const rgb = chalk.rgb(color.r, color.g, color.b);
+        line += rgb(char);
+      }
+      asciiLines.push(line);
+    }
+
+    return asciiLines;
+  } catch (error) {
+    console.error(chalk.red("Error loading PNG image:"), error);
+    return [];
+  }
+}
+
+// Show welcome screen with ASCII art
+async function showWelcome() {
+  console.log("\n");
+
+  // ASCII art for "StackPatch"
+  const asciiArt = [
+    "  _________ __                 __     __________         __         .__     ",
+    " /   _____//  |______    ____ |  | __ \\______   \\_____ _/  |_  ____ |  |__  ",
+    " \\_____  \\\\   __\\__  \\ _/ ___\\|  |/ /  |     ___/\\__  \\\\   __\\/ ___\\|  |  \\ ",
+    " /        \\|  |  / __ \\\\  \\___|    <   |    |     / __ \\|  | \\  \\___|   Y  \\",
+    "/_______  /|__| (____  /\\___  >__|_ \\  |____|    (____  /__|  \\___  >___|  /",
+    "        \\/           \\/     \\/     \\/                 \\/          \\/     \\/ ",
+  ];
+
+  // Print ASCII art with rainbow gradient
+  asciiArt.forEach((line) => {
+    let coloredLine = "";
+    const chars = line.split("");
+    chars.forEach((char, index) => {
+      // Apply rainbow gradient to all visible characters (not just spaces)
+      if (char.trim() !== "") {
+        coloredLine += getRainbowColor(char, index, chars.length);
+      } else {
+        coloredLine += char;
+      }
+    });
+    console.log(coloredLine);
+  });
+
+  console.log("");
+  console.log(chalk.white("  Creating a new StackPatch project"));
+  console.log("");
+}
+
+// Create a new project from template
+async function createProject(projectName: string, showWelcomeScreen: boolean = true, forceOverwrite: boolean = false) {
+  const templatePath = path.join(BOILERPLATE_ROOT, "template");
+  const targetPath = path.resolve(process.cwd(), projectName);
+
+  if (fs.existsSync(targetPath)) {
+    if (!forceOverwrite) {
+      console.log(chalk.yellow(`⚠️  Directory "${projectName}" already exists!`));
+      const { overwrite } = await inquirer.prompt([
+        {
+          type: "confirm",
+          name: "overwrite",
+          message: chalk.white("Do you want to overwrite it? (This will delete existing files)"),
+          default: false,
+        },
+      ]);
+
+      if (!overwrite) {
+        console.log(chalk.gray("Cancelled. Choose a different name."));
+        process.exit(0);
+      }
+    }
+
+    // Remove existing directory if overwriting
+    console.log(chalk.yellow(`Removing existing directory "${projectName}"...`));
+    fs.rmSync(targetPath, { recursive: true, force: true });
+  }
+
+  if (showWelcomeScreen) {
+    await showWelcome();
+  }
+  console.log(chalk.blue.bold(`🚀 Creating new StackPatch project: ${chalk.white(projectName)}\n`));
+
+  // Copy template
+  await fse.copy(templatePath, targetPath);
+
+  // Replace placeholders in files
+  const filesToProcess = [
+    "package.json",
+    "app/layout.tsx",
+    "app/page.tsx",
+    "README.md",
+  ];
+
+  for (const file of filesToProcess) {
+    const filePath = path.join(targetPath, file);
+    if (fs.existsSync(filePath)) {
+      let content = fs.readFileSync(filePath, "utf-8");
+      content = content.replace(/\{\{PROJECT_NAME\}\}/g, projectName);
+      fs.writeFileSync(filePath, content, "utf-8");
+    }
+  }
+
+  // Install dependencies
+  console.log(chalk.blue("📦 Installing dependencies...\n"));
+  const installResult = spawnSync("pnpm", ["install"], {
+    cwd: targetPath,
+    stdio: "inherit",
+  });
+
+  if (installResult.status !== 0) {
+    console.log(chalk.yellow("\n⚠️  Dependency installation had issues. You can run 'pnpm install' manually."));
+  } else {
+    console.log(chalk.green("\n✅ Dependencies installed!"));
+  }
+
+  console.log(chalk.green(`\n✅ Project "${projectName}" created successfully!`));
+  console.log(chalk.blue("\n📦 Next steps:"));
+  console.log(chalk.white(`  ${chalk.cyan("cd")} ${chalk.yellow(projectName)}`));
+  console.log(chalk.white(`  ${chalk.cyan("pnpm")} ${chalk.yellow("dev")}`));
+  console.log(chalk.gray("\n💡 Add features:"));
+  console.log(chalk.white(`  ${chalk.cyan("npx")} ${chalk.yellow("stackpatch")} ${chalk.green("add")} ${chalk.magenta("auth-ui")}\n`));
+}
+
 // ---------------- Main CLI ----------------
 async function main() {
   const args = process.argv.slice(2);
   const command = args[0];
-  const patchName = args[1];
+  const projectName = args[1];
+  const skipPrompts = args.includes("--yes") || args.includes("-y");
+
+  // Handle: bun create stackpatch@latest (no project name)
+  // Show welcome and prompt for project name
+  if (!command || command.startsWith("-")) {
+    await showWelcome();
+    const { name } = await inquirer.prompt([
+      {
+        type: "input",
+        name: "name",
+        message: chalk.white("Enter your project name or path (relative to current directory)"),
+        default: "my-stackpatch-app",
+        validate: (input: string) => {
+          if (!input.trim()) {
+            return "Project name cannot be empty";
+          }
+          return true;
+        },
+      },
+    ]);
+    await createProject(name.trim(), false, skipPrompts); // Don't show welcome again
+    return;
+  }
+
+  // Handle: bun create stackpatch@latest my-app
+  // When bun runs create, it passes project name as first arg (not "create")
+  // Check if first arg looks like a project name (not a known command)
+  if (command && !["add", "create"].includes(command) && !PATCHES[command] && !command.startsWith("-")) {
+    // Likely called as: bun create stackpatch@latest my-app
+    await showWelcome();
+    await createProject(command, false, skipPrompts); // Welcome already shown
+    return;
+  }
+
+  // Handle: npx stackpatch create my-app
+  if (command === "create") {
+    if (!projectName) {
+      showWelcome();
+      const { name } = await inquirer.prompt([
+        {
+          type: "input",
+          name: "name",
+          message: chalk.white("Enter your project name or path (relative to current directory)"),
+          default: "my-stackpatch-app",
+          validate: (input: string) => {
+            if (!input.trim()) {
+              return "Project name cannot be empty";
+            }
+            return true;
+          },
+        },
+      ]);
+      await createProject(name.trim(), false); // Welcome already shown
+      return;
+    }
+    await showWelcome();
+    await createProject(projectName, false, skipPrompts); // Welcome already shown
+    return;
+  }
 
   // Handle: npx stackpatch add auth-ui
+  const patchName = args[1];
   if (command === "add" && patchName) {
     if (!PATCHES[patchName]) {
       console.log(chalk.red(`❌ Unknown patch: ${patchName}`));
@@ -272,9 +562,10 @@ async function main() {
     // Install dependencies (only if missing)
     installDependencies(target, PATCHES[patchName].dependencies);
 
-    // For auth patches, update layout.tsx
+    // For auth patches, update layout.tsx and add Toaster
     if (patchName === "auth" || patchName === "auth-ui") {
       updateLayoutForAuth(target);
+      updateLayoutForToaster(target);
     }
 
     // Final next steps
@@ -282,6 +573,22 @@ async function main() {
     console.log(chalk.green("- Run your Next.js dev server: pnpm dev"));
     console.log(chalk.green("- Start building your features!\n"));
     return;
+  }
+
+  // If no command, show help or interactive mode
+  if (!command) {
+    await showWelcome();
+    console.log(chalk.yellow("Usage:"));
+    console.log(chalk.white("  ") + chalk.cyan("bun create stackpatch@latest") + chalk.gray(" [project-name]"));
+    console.log(chalk.white("  ") + chalk.cyan("npx stackpatch create") + chalk.gray(" [project-name]"));
+    console.log(chalk.white("  ") + chalk.cyan("npx stackpatch add") + chalk.white(" <patch-name>"));
+    console.log(chalk.white("\nExamples:"));
+    console.log(chalk.gray("  bun create stackpatch@latest"));
+    console.log(chalk.gray("  bun create stackpatch@latest my-app"));
+    console.log(chalk.gray("  npx stackpatch create my-app"));
+    console.log(chalk.gray("  npx stackpatch add auth-ui"));
+    console.log(chalk.gray("\n"));
+    process.exit(0);
   }
 
   // Interactive mode (fallback)
@@ -319,9 +626,10 @@ async function main() {
   // 3️⃣ Install dependencies (only if missing)
   installDependencies(dest, PATCHES[patch].dependencies);
 
-  // 4️⃣ For auth patches, update layout.tsx
+  // 4️⃣ For auth patches, update layout.tsx and add Toaster
   if (patch === "auth" || patch === "auth-ui") {
     updateLayoutForAuth(dest);
+    updateLayoutForToaster(dest);
   }
 
   // 5️⃣ Final next steps
