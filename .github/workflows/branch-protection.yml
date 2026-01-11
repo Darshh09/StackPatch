@@ -1,0 +1,32 @@
+name: Branch Protection Check
+
+on:
+  push:
+    branches: [main, master]
+
+jobs:
+  check-direct-commit:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.actor != 'dependabot[bot]'
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check if commit is from PR
+        run: |
+          # Get the commit message
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+
+          # Check if it's a merge commit (from PR)
+          if git log -1 --pretty=%P | grep -q .; then
+            echo "✅ This appears to be a merge commit from a PR"
+            exit 0
+          fi
+
+          # If not a merge and not from dependabot, fail
+          echo "❌ Direct commits to main/master branch are not allowed!"
+          echo "Please create a pull request instead."
+          echo "Commit message: $COMMIT_MSG"
+          exit 1

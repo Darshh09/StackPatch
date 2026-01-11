@@ -1,20 +1,31 @@
 {
   "name": "StackPatch",
   "version": "1.0.0",
-  "description": "",
+  "description": "Composable frontend features for modern React & Next.js apps",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint . --ext .ts,.tsx",
+    "prepare": "husky install",
     "stackpatch": "bun run packages/cli/bin/stackpatch.ts"
   },
-  "keywords": [],
+  "keywords": ["nextjs", "react", "boilerplate", "cli", "frontend"],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.28.0",
   "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@vitest/coverage-v8": "^2.1.0",
     "autoprefixer": "^10.4.23",
+    "eslint": "^9.0.0",
+    "husky": "^9.0.0",
+    "lint-staged": "^15.2.0",
     "postcss": "^8.5.6",
+    "prettier": "^3.2.0",
     "tailwindcss": "^4.1.18",
-    "turbo": "^2.7.3"
+    "turbo": "^2.7.3",
+    "vitest": "^2.1.0"
   }
 }

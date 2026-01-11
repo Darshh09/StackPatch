@@ -135,3 +135,11 @@ storybook-static/
 # Optional: Ignore specific app/node_modules but keep root
 # apps/*/node_modules
 # packages/*/node_modules
+
+# Testing
+coverage/
+.nyc_output/
+*.lcov
+
+# Husky
+.husky/_/
