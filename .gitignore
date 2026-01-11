@@ -1,0 +1,137 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+.pnpm-store/
+
+# Package manager lock files (uncomment if you want to ignore them)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+# bun.lockb
+
+# Build outputs
+dist/
+build/
+out/
+.next/
+.turbo/
+.vercel/
+.output/
+
+# Production
+/build
+/.next/
+/out/
+
+# Testing
+coverage/
+.nyc_output/
+*.lcov
+.jest/
+
+# Environment variables
+.env
+.env*.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.build
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.bun/
+
+# Debug
+.vscode-test/
+.vscode/launch.json
+
+# IDE and editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+.project
+.classpath
+.settings/
+*.iml
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+.tsbuildinfo
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+.parcel-cache/
+.temp/
+tmp/
+temp/
+
+# Misc
+*.pem
+*.key
+*.cert
+*.crt
+.vercel
+.turbo
+
+# Storybook
+storybook-static/
+
+# PWA files
+**/public/sw.js
+**/public/workbox-*.js
+**/public/worker-*.js
+**/public/sw.js.map
+**/public/workbox-*.js.map
+**/public/worker-*.js.map
+
+# Sentry
+.sentryclirc
+
+# Local Netlify folder
+.netlify
+
+# Vercel
+.vercel
+
+# Turborepo
+.turbo
+
+# Optional: Keep lock files but ignore if you prefer
+# Uncomment the following if you want to ignore lock files:
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# Optional: Ignore specific app/node_modules but keep root
+# apps/*/node_modules
+# packages/*/node_modules
