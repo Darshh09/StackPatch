@@ -1,4 +1,9 @@
 #!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
 
+# Add common pnpm locations to PATH
+export PATH="$PATH:/opt/homebrew/bin"
+export PATH="$PATH:$HOME/.local/share/pnpm"
+export PATH="$PATH:/usr/local/bin"
+
+# Run tests
 pnpm test

@@ -37,6 +37,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
+      - name: Check lockfile
+        run: |
+          if pnpm install --frozen-lockfile 2>&1 | grep -q "ERR_PNPM_OUTDATED_LOCKFILE"; then
+            echo "::error::Lockfile is outdated. Run 'pnpm install' locally and commit pnpm-lock.yaml"
+            echo "Missing dependencies detected. Please update the lockfile."
+            exit 1
+          fi
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 

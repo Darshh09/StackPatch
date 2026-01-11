@@ -9,9 +9,17 @@
     "test:coverage": "vitest run --coverage",
     "lint": "eslint . --ext .ts,.tsx",
     "prepare": "husky install",
+    "preinstall": "node -e \"require('fs').chmodSync('scripts/check-lockfile.sh', 0o755)\" || true",
+    "check-lockfile": "bash scripts/check-lockfile.sh",
     "stackpatch": "bun run packages/cli/bin/stackpatch.ts"
   },
-  "keywords": ["nextjs", "react", "boilerplate", "cli", "frontend"],
+  "keywords": [
+    "nextjs",
+    "react",
+    "boilerplate",
+    "cli",
+    "frontend"
+  ],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.28.0",
