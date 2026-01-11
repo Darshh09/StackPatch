@@ -12,7 +12,8 @@ pnpm install
 pnpm prepare
 ```
 
-**Important:** Always commit `pnpm-lock.yaml` after adding new dependencies. CI will fail if the lockfile is outdated.
+**Important:** After adding new dependencies, always run `pnpm install` and commit the updated `pnpm-lock.yaml`. Pre-commit hooks will catch outdated lockfiles.
+
 
 ## Development Workflow
 
@@ -43,6 +44,7 @@ pnpm test:coverage
 ## Pre-commit Hooks
 
 Husky runs automatically on commit:
+
 - Lints your code
 - Runs related tests
 - Formats with Prettier
@@ -59,6 +61,7 @@ If hooks fail, fix the issues and commit again.
 ## Branch Protection
 
 The `main` branch is protected:
+
 - ✅ All changes via PR
 - ✅ Tests must pass
 - ✅ No direct commits (except merges)
