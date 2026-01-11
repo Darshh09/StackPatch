@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
+import toast from "react-hot-toast";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -19,11 +20,13 @@ export default function SignupPage() {
 
     if (password !== confirmPassword) {
       setError("Passwords do not match");
+      toast.error("Passwords do not match");
       return;
     }
 
     if (password.length < 6) {
       setError("Password must be at least 6 characters");
+      toast.error("Password must be at least 6 characters");
       return;
     }
 
@@ -41,8 +44,11 @@ export default function SignupPage() {
       if (!response.ok) {
         const data = await response.json();
         setError(data.error || "Failed to create account");
+        toast.error(data.error || "Failed to create account");
         return;
       }
+
+      toast.success("Account created successfully! Signing you in...");
 
       // Auto sign in after successful signup
       const result = await signIn("credentials", {
@@ -53,12 +59,17 @@ export default function SignupPage() {
 
       if (result?.error) {
         setError("Account created but sign in failed. Please try logging in.");
+        toast.error("Account created but sign in failed. Please try logging in.");
       } else {
-        router.push("/");
-        router.refresh();
+        toast.success("Welcome! Redirecting...");
+        setTimeout(() => {
+          router.push("/");
+          router.refresh();
+        }, 1000);
       }
     } catch (err) {
       setError("Something went wrong. Please try again.");
+      toast.error("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }

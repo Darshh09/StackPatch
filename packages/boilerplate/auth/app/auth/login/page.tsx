@@ -3,6 +3,7 @@
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -25,12 +26,17 @@ export default function LoginPage() {
 
       if (result?.error) {
         setError("Invalid email or password");
+        toast.error("Invalid email or password");
       } else {
-        router.push("/");
-        router.refresh();
+        toast.success("Login successful! Redirecting...");
+        setTimeout(() => {
+          router.push("/");
+          router.refresh();
+        }, 1000);
       }
     } catch (err) {
       setError("Something went wrong. Please try again.");
+      toast.error("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }

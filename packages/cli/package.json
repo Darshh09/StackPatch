@@ -4,20 +4,28 @@
   "description": "Composable frontend features for modern React & Next.js apps",
   "main": "index.js",
   "bin": {
-    "stackpatch": "bin/stackpatch.ts"
+    "stackpatch": "bin/stackpatch.ts",
+    "create-stackpatch": "bin/stackpatch.ts"
   },
+  "files": [
+    "bin",
+    "boilerplate"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "bun run bin/stackpatch.ts"
+    "dev": "bun run bin/stackpatch.ts",
+    "create": "bun run bin/stackpatch.ts",
+    "prepublishOnly": "node scripts/prepare-publish.js"
   },
-  "keywords": [],
+  "keywords": ["nextjs", "react", "boilerplate", "cli", "frontend"],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.28.0",
   "dependencies": {
     "chalk": "^5.6.2",
     "fs-extra": "^11.3.3",
-    "inquirer": "^13.1.0"
+    "inquirer": "^13.1.0",
+    "jimp": "^0.22.10"
   },
   "devDependencies": {
     "@types/node": "^20.0.0"
