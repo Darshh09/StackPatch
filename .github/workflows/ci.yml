@@ -46,7 +46,15 @@ jobs:
           fi
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: |
+          # Check if lockfile is out of date
+          if ! pnpm install --frozen-lockfile 2>&1 | grep -q "ERR_PNPM_OUTDATED_LOCKFILE"; then
+            echo "✅ Lockfile is up to date"
+          else
+            echo "⚠️ Lockfile is outdated. This should be fixed locally."
+            echo "Run: pnpm install"
+            exit 1
+          fi
 
       - name: Run linter
         run: pnpm lint

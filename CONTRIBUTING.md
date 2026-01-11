@@ -5,11 +5,15 @@ Thanks for contributing! This doc covers the basics.
 ## Setup
 
 ```bash
+# Install dependencies (this updates pnpm-lock.yaml)
 pnpm install
-pnpm prepare  # Sets up git hooks
+
+# Set up git hooks
+pnpm prepare
 ```
 
 **Important:** After adding new dependencies, always run `pnpm install` and commit the updated `pnpm-lock.yaml`. Pre-commit hooks will catch outdated lockfiles.
+
 
 ## Development Workflow
 
