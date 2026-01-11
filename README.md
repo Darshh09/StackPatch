@@ -33,6 +33,9 @@ cd StackPatch
 # Install dependencies
 pnpm install
 
+# Set up git hooks (after first install)
+pnpm prepare
+
 # Test the CLI locally
 cd packages/cli
 pnpm dev
