@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "{{PROJECT_NAME}}",
+  title: "My StackPatch App",
   description: "Created with StackPatch",
 };
 
