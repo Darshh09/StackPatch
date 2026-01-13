@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { motion, useInView } from "motion/react";
 import { useRef } from "react";
-import { Scan, CheckCircle2, Folder, FolderOpen, File, Lock } from "lucide-react";
+import { CheckCircle2, Folder, FolderOpen, File, Lock } from "lucide-react";
 
 export function StackPatchFeaturesSection() {
   return (
@@ -250,7 +250,7 @@ function AutoDetectionCard() {
 
               {/* Timeline Items */}
               <div className="space-y-6 mt-15">
-                {detectionItems.map((item, index) => {
+                {detectionItems.map((item) => {
                   const isVisible = visibleItems.includes(item.id);
                   return (
                     <motion.div
@@ -310,7 +310,7 @@ function AutoDetectionCard() {
 
 function CodeInjectionCard() {
   const [visibleLines, setVisibleLines] = useState<number[]>([]);
-  const [isAnimating, setIsAnimating] = useState(false);
+  const [, setIsAnimating] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: false, amount: 0.3 });
   const timersRef = useRef<NodeJS.Timeout[]>([]);
@@ -610,8 +610,8 @@ function FileTreePreviewCard() {
                   const lineHeight = 22;
 
                   // Calculate if this item needs vertical guide lines
-                  const needsVerticalLine = item.indent > 0;
-                  const hasSiblingBelow = index < fileTreeItems.length - 1 &&
+                  const _needsVerticalLine = item.indent > 0;
+                  const _hasSiblingBelow = index < fileTreeItems.length - 1 &&
                     fileTreeItems[index + 1].indent > item.indent;
 
                   return (

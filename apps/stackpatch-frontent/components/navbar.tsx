@@ -10,7 +10,7 @@ interface NavbarProps {
 }
 
 export function Navbar(props: NavbarProps = {}) {
-  const { command = "npx stackpatch add auth", onCopyCommand } = props;
+  const { onCopyCommand } = props;
   const { scrollYProgress } = useScroll();
   const navbarOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0.95]);
 
