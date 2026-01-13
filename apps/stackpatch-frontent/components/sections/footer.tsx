@@ -98,7 +98,7 @@ export function Footer() {
                   href="mailto:your-email@example.com"
                   className="break-all sm:break-normal transition-colors hover:text-primary"
                 >
-                  your-email@example.com
+                  darshitshukla1777@gmail.com
                 </a>
               </div>
               <p className="text-sm leading-relaxed sm:text-base">
