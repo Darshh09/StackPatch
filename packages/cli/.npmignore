@@ -1,0 +1,20 @@
+# Exclude node_modules from boilerplate
+boilerplate/**/node_modules
+boilerplate/**/pnpm-lock.yaml
+boilerplate/**/package-lock.json
+boilerplate/**/yarn.lock
+boilerplate/**/.next
+boilerplate/**/dist
+boilerplate/**/build
+boilerplate/**/.git
+
+# Exclude test files
+__tests__
+*.test.ts
+*.test.tsx
+
+# Exclude development files
+scripts/
+assets/
+PUBLISHING.md
+publish.sh
