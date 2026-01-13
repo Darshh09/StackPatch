@@ -11,7 +11,9 @@
   "dependencies": {
     "next": "^16.1.1",
     "react": "^19.2.3",
-    "react-dom": "^19.2.3"
+    "react-dom": "^19.2.3",
+    "framer-motion": "^11.11.17",
+    "lucide-react": "^0.469.0"
   },
   "devDependencies": {
     "@types/node": "^20",
