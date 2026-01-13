@@ -2,6 +2,7 @@
   "name": "StackPatch",
   "version": "1.0.0",
   "description": "Composable frontend features for modern React & Next.js apps",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "vitest run",
@@ -24,6 +25,7 @@
   "license": "ISC",
   "packageManager": "pnpm@10.28.0",
   "devDependencies": {
+    "@eslint/js": "^9.0.0",
     "@types/node": "^20.0.0",
     "@vitest/coverage-v8": "^2.1.0",
     "autoprefixer": "^10.4.23",
@@ -34,6 +36,7 @@
     "prettier": "^3.2.0",
     "tailwindcss": "^4.1.18",
     "turbo": "^2.7.3",
+    "typescript-eslint": "^8.0.0",
     "vitest": "^2.1.0"
   }
 }

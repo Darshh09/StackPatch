@@ -1,5 +1,10 @@
 // @ts-check
-export default [
+import eslint from "@eslint/js";
+import tseslint from "typescript-eslint";
+
+export default tseslint.config(
+  eslint.configs.recommended,
+  ...tseslint.configs.recommended,
   {
     files: ["**/*.js", "**/*.ts", "**/*.tsx"],
     ignores: [
@@ -14,13 +19,18 @@ export default [
       "**/vitest.config.ts",
     ],
     languageOptions: {
-      ecmaVersion: "latest",
-      sourceType: "module",
+      parserOptions: {
+        ecmaVersion: "latest",
+        sourceType: "module",
+        ecmaFeatures: {
+          jsx: true,
+        },
+      },
     },
     rules: {
       // Add your custom rules here
-      "no-unused-vars": "warn",
+      "@typescript-eslint/no-unused-vars": "warn",
       "no-console": "warn",
     },
-  },
-];
+  }
+);
