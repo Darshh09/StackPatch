@@ -39,21 +39,9 @@ export default function Home() {
 
       <StackPatchFeaturesSection />
 
-      <PatchesSection />
-
-      <DiffPreviewSection />
-
-      <WhyStackPatchSection />
-
-      <ForWhoSection />
-
-      <HowStackPatchWorksSection />
-
-      <FrameworksIntegrationsSection />
-
-
-
       <WorkflowSection />
+
+     {/*  <FrameworksIntegrationsSection /> */}
 
       <AuthPreviewSection />
 
