@@ -36,12 +36,24 @@ bun add -g stackpatch
 ### Create a New Project
 
 ```bash
-# Using npx (recommended)
+# Using npm create (recommended - works with create-stackpatch bin)
+npm create stackpatch@latest my-app
+
+# Using npx (recommended alternative)
+npx create-stackpatch@latest my-app
+# or
 npx stackpatch create my-app
 
-# Using bun
-bun create stackpatch@latest my-app
+# Using bunx (Bun's npx equivalent)
+bunx create-stackpatch@latest my-app
+# or
+bunx stackpatch create my-app
 ```
+
+> **Note:**
+> - `bun create stackpatch@latest` won't work because Bun's `create` command looks for packages named `create-*` in npm. Use `bunx` instead.
+> - `npm create stackpatch` works because it uses the `create-stackpatch` binary from the `stackpatch` package.
+> - All commands will prompt you for a project name if not provided.
 
 ### Add Features to Existing Project
 

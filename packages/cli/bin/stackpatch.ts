@@ -1080,11 +1080,52 @@ async function createProject(projectName: string, showWelcomeScreen: boolean = t
   }
 
   console.log(chalk.green(`\n✅ Project "${projectName}" created successfully!`));
+
+  // Automatically add auth-ui after creating the project
+  console.log(chalk.blue.bold(`\n🔐 Adding authentication to your project...\n`));
+
+  const authSrc = path.join(BOILERPLATE_ROOT, PATCHES["auth-ui"].path);
+  const authCopied = await copyFiles(authSrc, targetPath);
+
+  if (authCopied) {
+    // Install auth dependencies (only if missing)
+    installDependencies(targetPath, PATCHES["auth-ui"].dependencies);
+
+    // Setup authentication with Google and GitHub providers
+    const success = await setupAuth(targetPath, "providers");
+
+    if (success) {
+      await withSpinner("Updating layout with AuthSessionProvider", () => {
+        updateLayoutForAuth(targetPath);
+        return true;
+      });
+
+      await withSpinner("Adding Toaster component", () => {
+        updateLayoutForToaster(targetPath);
+        return true;
+      });
+
+      await withSpinner("Setting up protected routes", () => {
+        copyProtectedRouteFiles(targetPath);
+        return true;
+      });
+
+      // Show OAuth setup instructions
+      await showOAuthSetupInstructions(targetPath);
+
+      console.log(chalk.green("\n✅ Authentication added successfully!"));
+    } else {
+      console.log(chalk.yellow("\n⚠️  Authentication setup had some issues. You can run 'npx stackpatch add auth-ui' manually."));
+    }
+  } else {
+    console.log(chalk.yellow("\n⚠️  Could not add authentication. You can run 'npx stackpatch add auth-ui' manually."));
+  }
+
   console.log(chalk.blue("\n📦 Next steps:"));
   console.log(chalk.white(`  ${chalk.cyan("cd")} ${chalk.yellow(projectName)}`));
   console.log(chalk.white(`  ${chalk.cyan("pnpm")} ${chalk.yellow("dev")}`));
-  console.log(chalk.gray("\n💡 Add features:"));
-  console.log(chalk.white(`  ${chalk.cyan("npx")} ${chalk.yellow("stackpatch")} ${chalk.green("add")} ${chalk.magenta("auth-ui")}\n`));
+  console.log(chalk.white(`  Test authentication at: ${chalk.cyan("http://localhost:3000/auth/login")}`));
+  console.log(chalk.gray("\n📚 See README.md for OAuth setup and protected routes\n"));
 }
 
 // ---------------- Main CLI ----------------
@@ -1121,10 +1162,26 @@ async function main() {
   // Handle: bun create stackpatch@latest my-app
   // When bun runs create, it passes project name as first arg (not "create")
   // Check if first arg looks like a project name (not a known command)
+  // Always ask for project name first, even if provided
   if (command && !["add", "create"].includes(command) && !PATCHES[command] && !command.startsWith("-")) {
     // Likely called as: bun create stackpatch@latest my-app
+    // But we'll ask for project name anyway to be consistent
     await showWelcome();
-    await createProject(command, false, skipPrompts); // Welcome already shown
+    const { name } = await inquirer.prompt([
+      {
+        type: "input",
+        name: "name",
+        message: chalk.white("Enter your project name or path (relative to current directory)"),
+        default: command || "my-stackpatch-app", // Use provided name as default
+        validate: (input: string) => {
+          if (!input.trim()) {
+            return "Project name cannot be empty";
+          }
+          return true;
+        },
+      },
+    ]);
+    await createProject(name.trim(), false, skipPrompts); // Welcome already shown
     return;
   }
 
@@ -1283,12 +1340,15 @@ async function main() {
   if (!command) {
     await showWelcome();
     console.log(chalk.yellow("Usage:"));
-    console.log(chalk.white("  ") + chalk.cyan("bun create stackpatch@latest") + chalk.gray(" [project-name]"));
+    console.log(chalk.white("  ") + chalk.cyan("npm create stackpatch@latest") + chalk.gray(" [project-name]"));
+    console.log(chalk.white("  ") + chalk.cyan("npx create-stackpatch@latest") + chalk.gray(" [project-name]"));
+    console.log(chalk.white("  ") + chalk.cyan("bunx create-stackpatch@latest") + chalk.gray(" [project-name]"));
     console.log(chalk.white("  ") + chalk.cyan("npx stackpatch create") + chalk.gray(" [project-name]"));
     console.log(chalk.white("  ") + chalk.cyan("npx stackpatch add") + chalk.white(" <patch-name>"));
     console.log(chalk.white("\nExamples:"));
-    console.log(chalk.gray("  bun create stackpatch@latest"));
-    console.log(chalk.gray("  bun create stackpatch@latest my-app"));
+    console.log(chalk.gray("  npm create stackpatch@latest my-app"));
+    console.log(chalk.gray("  npx create-stackpatch@latest my-app"));
+    console.log(chalk.gray("  bunx create-stackpatch@latest my-app"));
     console.log(chalk.gray("  npx stackpatch create my-app"));
     console.log(chalk.gray("  npx stackpatch add auth-ui"));
     console.log(chalk.gray("\n"));
@@ -1304,10 +1364,10 @@ async function main() {
   // 1️⃣ Select patch with back option
   do {
     const response = await inquirer.prompt([
-      {
-        type: "list",
-        name: "patch",
-        message: "Which patch do you want to add?",
+    {
+      type: "list",
+      name: "patch",
+      message: "Which patch do you want to add?",
         choices: [
           ...Object.keys(PATCHES)
             .filter(p => p !== "auth-ui") // Don't show duplicate
@@ -1318,8 +1378,8 @@ async function main() {
             value: "back",
           },
         ],
-      },
-    ]);
+    },
+  ]);
 
     if (response.patch === "back") {
       goBack = true;
