@@ -820,7 +820,46 @@ async function copyProtectedRouteFiles(target: string) {
     fs.copyFileSync(middlewareSrc, middlewareDest);
   }
 
-  // Documentation is in README.md, no need to copy separate files
+  // Copy auth navbar component (demo/example - won't overwrite existing navbar)
+  const authNavbarSrc = path.join(BOILERPLATE_ROOT, "auth/components/auth-navbar.tsx");
+  const authNavbarDest = path.join(componentsDir, "auth-navbar.tsx");
+  if (fs.existsSync(authNavbarSrc)) {
+    // Only copy if it doesn't exist (won't overwrite)
+    if (!fs.existsSync(authNavbarDest)) {
+      fs.copyFileSync(authNavbarSrc, authNavbarDest);
+    }
+  }
+
+  // Copy example pages (only if they don't exist)
+  const dashboardPageSrc = path.join(BOILERPLATE_ROOT, "auth/app/dashboard/page.tsx");
+  const landingPageSrc = path.join(BOILERPLATE_ROOT, "auth/app/page.tsx");
+  const dashboardPageDest = path.join(target, "app/dashboard/page.tsx");
+  const landingPageDest = path.join(target, "app/page.tsx");
+
+  // Create dashboard directory if needed
+  const dashboardDir = path.join(target, "app/dashboard");
+  if (!fs.existsSync(dashboardDir)) {
+    fs.mkdirSync(dashboardDir, { recursive: true });
+  }
+
+  // Copy dashboard page (only if it doesn't exist)
+  if (fs.existsSync(dashboardPageSrc) && !fs.existsSync(dashboardPageDest)) {
+    fs.copyFileSync(dashboardPageSrc, dashboardPageDest);
+  }
+
+  // Copy landing page (only if it doesn't exist or is default)
+  if (fs.existsSync(landingPageSrc)) {
+    // Check if current page is just a default Next.js page
+    if (fs.existsSync(landingPageDest)) {
+      const currentContent = fs.readFileSync(landingPageDest, "utf-8");
+      // Only replace if it's the default Next.js page
+      if (currentContent.includes("Get started by editing") || currentContent.length < 500) {
+        fs.copyFileSync(landingPageSrc, landingPageDest);
+      }
+    } else {
+      fs.copyFileSync(landingPageSrc, landingPageDest);
+    }
+  }
 }
 
 // Update auth button with OAuth providers
@@ -1225,9 +1264,10 @@ async function main() {
     console.log(chalk.green("\n📝 Next Steps:"));
     console.log(chalk.white("   1. Configure OAuth providers (see instructions above)"));
     console.log(chalk.white("   2. Set up database for email/password auth (see comments in code)"));
-    console.log(chalk.white("   3. Protect your routes (see README.md)"));
-    console.log(chalk.white("   4. Run your Next.js dev server: ") + chalk.cyan("pnpm dev"));
-    console.log(chalk.white("   5. Test authentication at: ") + chalk.cyan("http://localhost:3000/auth/login\n"));
+    console.log(chalk.white("   3. Check out the auth navbar demo in ") + chalk.cyan("components/auth-navbar.tsx"));
+    console.log(chalk.white("   4. Protect your routes (see README.md)"));
+    console.log(chalk.white("   5. Run your Next.js dev server: ") + chalk.cyan("pnpm dev"));
+    console.log(chalk.white("   6. Test authentication at: ") + chalk.cyan("http://localhost:3000/auth/login\n"));
 
     console.log(chalk.blue.bold("📚 Documentation:"));
     console.log(chalk.white("   - See ") + chalk.cyan("README.md") + chalk.white(" for complete setup guide\n"));

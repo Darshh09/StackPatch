@@ -111,6 +111,32 @@ GITHUB_CLIENT_ID=your_github_client_id
 GITHUB_CLIENT_SECRET=your_github_client_secret
 ```
 
+## 🧭 Auth Navbar (Demo)
+
+An example navbar component (`components/auth-navbar.tsx`) is included that shows:
+- **When logged out**: Sign In button
+- **When logged in**: User name/email, avatar, and Sign Out button
+
+> **Note**: This is a demo component named `auth-navbar.tsx` to avoid conflicts with existing navbars. You can rename it or use it as reference.
+
+### Usage
+
+```tsx
+// app/layout.tsx or any page
+import { AuthNavbar } from "@/components/auth-navbar";
+
+export default function Layout({ children }) {
+  return (
+    <>
+      <AuthNavbar />
+      {children}
+    </>
+  );
+}
+```
+
+The auth navbar is included in example pages (`app/page.tsx` and `app/dashboard/page.tsx`) as a reference.
+
 ## 🛡️ Protecting Routes
 
 ### Method 1: Component-Based (Recommended)
@@ -120,10 +146,12 @@ Wrap any page or component:
 ```tsx
 // app/dashboard/page.tsx
 import { ProtectedRoute } from "@/components/protected-route";
+import { AuthNavbar } from "@/components/auth-navbar";
 
 export default function Dashboard() {
   return (
     <ProtectedRoute>
+      <AuthNavbar />
       <h1>Protected Dashboard</h1>
     </ProtectedRoute>
   );
@@ -169,7 +197,13 @@ After running `npx stackpatch add auth`, you'll find:
 
 - **Auth pages**: `app/auth/login/page.tsx`, `app/auth/signup/page.tsx`
 - **NextAuth config**: `app/api/auth/[...nextauth]/route.ts`
-- **Protected route**: `components/protected-route.tsx`
+- **Components**:
+  - `components/auth-navbar.tsx` - Example navbar with session and sign out (demo)
+  - `components/protected-route.tsx` - Route protection component
+  - `components/auth-button.tsx` - Auth button component
+- **Example pages**:
+  - `app/page.tsx` - Landing page with navbar
+  - `app/dashboard/page.tsx` - Protected dashboard example
 - **Middleware**: `middleware.ts` (root)
 - **Environment**: `.env.example`, `.env.local`
 
