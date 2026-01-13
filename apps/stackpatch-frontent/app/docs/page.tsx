@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { TextAlignStart } from "lucide-react";
+import { TextSelect } from "lucide-react";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/sections/footer";
 
@@ -254,7 +254,7 @@ export default function DocsPage() {
               id="toc-title"
               className="inline-flex items-center gap-1.5 text-sm text-[#9CA3AF] mb-4"
             >
-              <TextAlignStart className="size-4" aria-hidden="true" />
+              <TextSelect className="size-4" aria-hidden="true" />
               On this page
             </h3>
             <div className="relative min-h-0 text-sm ms-px overflow-auto [scrollbar-width:none] mask-[linear-gradient(to_bottom,transparent,white_16px,white_calc(100%-16px),transparent)] py-3">

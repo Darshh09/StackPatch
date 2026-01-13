@@ -12,7 +12,6 @@ import { TrustStrip } from "@/components/sections/trust-strip";
 // import { HowStackPatchWorksSection } from "@/components/sections/how-stackpatch-works-section";
 // import { FrameworksIntegrationsSection } from "@/components/sections/frameworks-integrations-section";
 import { StackPatchFeaturesSection } from "@/components/sections/stackpatch-features-section";
-import { AuthPreviewSection } from "@/components/sections/auth-preview-section";
 import { WorkflowSection } from "@/components/sections/workflow-section";
 import { Footer } from "@/components/sections/footer";
 
@@ -43,8 +42,6 @@ export default function Home() {
       <WorkflowSection />
 
      {/*  <FrameworksIntegrationsSection /> */}
-
-      <AuthPreviewSection />
 
       <Footer />
     </div>
