@@ -67,7 +67,7 @@ export default function SignupPage() {
           router.refresh();
         }, 1000);
       }
-    } catch (err) {
+    } catch (_err) {
       setError("Something went wrong. Please try again.");
       toast.error("Something went wrong. Please try again.");
     } finally {

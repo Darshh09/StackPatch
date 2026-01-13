@@ -48,7 +48,6 @@ async function copyFiles(src: string, dest: string) {
 
   const conflicts: string[] = [];
   fse.readdirSync(src, { withFileTypes: true }).forEach((entry) => {
-    const srcPath = path.join(src, entry.name);
     const destPath = path.join(dest, entry.name);
     if (fs.existsSync(destPath)) conflicts.push(destPath);
   });
@@ -168,8 +167,9 @@ function updateLayoutForToaster(target: string): boolean {
     fs.writeFileSync(layoutPath, layoutContent, "utf-8");
     console.log(chalk.green("✅ Updated layout.tsx with Toaster!"));
     return true;
-  } catch (error: any) {
-    console.log(chalk.yellow(`⚠️  Failed to update layout with Toaster: ${error?.message || error}`));
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.log(chalk.yellow(`⚠️  Failed to update layout with Toaster: ${errorMessage}`));
     return false;
   }
 }
@@ -255,8 +255,9 @@ function updateLayoutForAuth(target: string): boolean {
     fs.writeFileSync(layoutPath, layoutContent, "utf-8");
     console.log(chalk.green("✅ Updated layout.tsx with AuthSessionProvider!"));
     return true;
-  } catch (error: any) {
-    console.log(chalk.red(`❌ Failed to update layout.tsx: ${error?.message || error}`));
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.log(chalk.red(`❌ Failed to update layout.tsx: ${errorMessage}`));
     return false;
   }
 }
@@ -276,8 +277,8 @@ function getRainbowColor(char: string, index: number, total: number): string {
   return colors[colorIndex].bold(char);
 }
 
-// Convert PNG to colored ASCII art
-async function pngToAscii(imagePath: string, width: number = 80): Promise<string[]> {
+// Convert PNG to colored ASCII art (unused but kept for future use)
+async function _pngToAscii(imagePath: string, width: number = 80): Promise<string[]> {
   try {
     const image = await Jimp.read(imagePath);
 
