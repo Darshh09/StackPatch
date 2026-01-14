@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
+import { RootProvider } from 'fumadocs-ui/provider/next';
 
 const inter = Inter({
   variable: "--font-inter",
@@ -28,7 +29,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link
           href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap"
@@ -36,10 +37,22 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${inter.variable} ${spaceGrotesk.variable} antialiased`}
+        className={`${inter.variable} ${spaceGrotesk.variable} antialiased flex flex-col min-h-screen`}
       >
-
+        <RootProvider
+          search={{
+            options: {
+              type: "fetch",
+              api: "/api/search",
+            },
+          }}
+          theme={{
+            enableSystem: true,
+            defaultTheme: "system",
+          }}
+        >
           {children}
+        </RootProvider>
       </body>
     </html>
   );

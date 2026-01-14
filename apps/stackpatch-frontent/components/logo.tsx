@@ -74,7 +74,7 @@ export function LogoText({ className = "" }: { className?: string }) {
   return (
     <div className={`flex items-center gap-2 ${className}`}>
       <Logo size={28} />
-      <span className="font-heading font-semibold text-lg text-foreground">
+      <span className="font-heading font-semibold text-lg text-[#A78BFA]">
         StackPatch
       </span>
     </div>

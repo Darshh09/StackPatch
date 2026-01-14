@@ -1,0 +1,266 @@
+---
+title: Quick Start
+description: Create your first StackPatch project in minutes
+---
+
+## Philosophy
+
+- **Own your code**: Every line of code is yours to modify and customize
+- **Zero vendor lock-in**: No SaaS dependencies, everything runs on your infrastructure
+- **Production-ready**: Battle-tested patterns, not toy examples
+- **Incremental adoption**: Add features to existing projects seamlessly
+- **Fully reversible**: Track and revert any installation safely
+
+## Get Started
+
+### Prerequisites
+
+- **Node.js 18+** - [Download from nodejs.org](https://nodejs.org/)
+- **Bun 1.0+** (optional) - [Download from bun.sh](https://bun.sh/) - if you want to use Bun
+- **Next.js project** (App Router) - Create new or use existing
+
+### Add to Existing Project
+
+Navigate to your Next.js project and run:
+
+<Tabs groupId="installtab" defaultValue="npx" persist>
+  <TabsList>
+    <TabsTrigger value="npx">
+      npx
+    </TabsTrigger>
+    <TabsTrigger value="npm">
+      npm
+    </TabsTrigger>
+    <TabsTrigger value="bun">
+      bun
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="npx">
+    ```bash
+    npx stackpatch add auth
+    ```
+  </TabsContent>
+  <TabsContent value="npm">
+    ```bash
+    npm create stackpatch@latest
+    ```
+  </TabsContent>
+  <TabsContent value="bun">
+    ```bash
+    bunx stackpatch add auth
+    ```
+  </TabsContent>
+</Tabs>
+
+Follow the interactive prompts to select OAuth providers (Google, GitHub, Email/Password).
+
+### Create New Project
+
+Create a new StackPatch project from scratch:
+
+<Tabs groupId="installtab" defaultValue="npx" persist>
+  <TabsList>
+    <TabsTrigger value="npx">
+      npx
+    </TabsTrigger>
+    <TabsTrigger value="npm">
+      npm
+    </TabsTrigger>
+    <TabsTrigger value="bun">
+      bun
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="npx">
+    ```bash
+    npx stackpatch create my-app
+    ```
+  </TabsContent>
+  <TabsContent value="npm">
+    ```bash
+    npm create stackpatch@latest my-app
+    ```
+  </TabsContent>
+  <TabsContent value="bun">
+    ```bash
+    bunx create-stackpatch@latest my-app
+    ```
+  </TabsContent>
+</Tabs>
+
+Then add patches to your new project:
+
+<Tabs groupId="installtab" defaultValue="npx" persist>
+  <TabsList>
+    <TabsTrigger value="npx">
+      npx
+    </TabsTrigger>
+    <TabsTrigger value="npm">
+      npm
+    </TabsTrigger>
+    <TabsTrigger value="bun">
+      bun
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="npx">
+    ```bash
+    cd my-app
+    npx stackpatch add auth
+    ```
+  </TabsContent>
+  <TabsContent value="npm">
+    ```bash
+    cd my-app
+    npx stackpatch add auth
+    ```
+  </TabsContent>
+  <TabsContent value="bun">
+    ```bash
+    cd my-app
+    bunx stackpatch add auth
+    ```
+  </TabsContent>
+</Tabs>
+
+## Common Setups
+
+### Authentication with Google & GitHub
+
+Add authentication with multiple OAuth providers:
+
+<Tabs groupId="installtab" defaultValue="npx" persist>
+  <TabsList>
+    <TabsTrigger value="npx">
+      npx
+    </TabsTrigger>
+    <TabsTrigger value="npm">
+      npm
+    </TabsTrigger>
+    <TabsTrigger value="bun">
+      bun
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="npx">
+    ```bash
+    npx stackpatch add auth
+    # Select: Google, GitHub
+    ```
+  </TabsContent>
+  <TabsContent value="npm">
+    ```bash
+    npm create stackpatch@latest
+    # Then: npx stackpatch add auth
+    ```
+  </TabsContent>
+  <TabsContent value="bun">
+    ```bash
+    bunx stackpatch add auth
+    # Select: Google, GitHub
+    ```
+  </TabsContent>
+</Tabs>
+
+### Email/Password Authentication
+
+Add email/password authentication (demo mode):
+
+<Tabs groupId="installtab" defaultValue="npx" persist>
+  <TabsList>
+    <TabsTrigger value="npx">
+      npx
+    </TabsTrigger>
+    <TabsTrigger value="npm">
+      npm
+    </TabsTrigger>
+    <TabsTrigger value="bun">
+      bun
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="npx">
+    ```bash
+    npx stackpatch add auth
+    # Select: Email/Password
+    ```
+  </TabsContent>
+  <TabsContent value="npm">
+    ```bash
+    npm create stackpatch@latest
+    # Then: npx stackpatch add auth
+    ```
+  </TabsContent>
+  <TabsContent value="bun">
+    ```bash
+    bunx stackpatch add auth
+    # Select: Email/Password
+    ```
+  </TabsContent>
+</Tabs>
+
+### Revert Installation
+
+If you need to undo an installation:
+
+<Tabs groupId="installtab" defaultValue="npx" persist>
+  <TabsList>
+    <TabsTrigger value="npx">
+      npx
+    </TabsTrigger>
+    <TabsTrigger value="npm">
+      npm
+    </TabsTrigger>
+    <TabsTrigger value="bun">
+      bun
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="npx">
+    ```bash
+    npx stackpatch revert
+    ```
+  </TabsContent>
+  <TabsContent value="npm">
+    ```bash
+    npx stackpatch revert
+    ```
+  </TabsContent>
+  <TabsContent value="bun">
+    ```bash
+    bunx stackpatch revert
+    ```
+  </TabsContent>
+</Tabs>
+
+## What Gets Added
+
+When you run `npx stackpatch add auth`, StackPatch automatically:
+
+- ✅ Detects your project structure (`app/` vs `src/app/`)
+- ✅ Adds authentication pages (`/auth/login`, `/auth/signup`)
+- ✅ Configures NextAuth.js with selected providers
+- ✅ Creates protected route components
+- ✅ Sets up middleware for route protection
+- ✅ Installs dependencies (`next-auth`, `react-hot-toast`)
+- ✅ Updates your `layout.tsx` with providers
+- ✅ Uses your TypeScript path aliases
+- ✅ Tracks all changes for safe reversion
+
+## Next Steps
+
+<Cards>
+  <Card href="/docs/cli/commands" title="Commands">
+    Complete CLI reference with all options
+  </Card>
+  <Card href="/docs/guides" title="Guides">
+    Practical guides for common setups
+  </Card>
+  <Card href="/docs/guides" title="Guides">
+    Practical guides for common setups
+  </Card>
+  <Card href="/docs/project-structure" title="Project Structure">
+    Understand how StackPatch organizes your project
+  </Card>
+  <Card href="/docs/contribution" title="Contributing">
+    Learn how to contribute to StackPatch
+  </Card>
+  <Card href="/docs/faq" title="FAQ">
+    Frequently asked questions
+  </Card>
+</Cards>

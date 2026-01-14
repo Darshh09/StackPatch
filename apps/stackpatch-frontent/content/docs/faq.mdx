@@ -1,0 +1,120 @@
+---
+title: FAQ
+description: Frequently asked questions about StackPatch
+---
+
+## FAQ
+
+Common questions and answers about StackPatch.
+
+## General
+
+### What is StackPatch?
+
+StackPatch is a CLI tool that helps you add production-ready features to your Next.js projects. Think of it as shadcn/ui, but for complete features instead of components.
+
+### How is StackPatch different from other tools?
+
+- **No vendor lock-in** - You own every line of code
+- **Incremental adoption** - Add features to existing projects
+- **Fully reversible** - Track and revert any installation
+- **Smart detection** - Automatically adapts to your project structure
+
+### Is StackPatch free?
+
+Yes! StackPatch is completely free and open source.
+
+## Installation
+
+### What do I need to use StackPatch?
+
+- Node.js 18+ or Bun 1.0+
+- A Next.js project with App Router
+- TypeScript (recommended)
+
+### Can I use StackPatch with an existing project?
+
+Yes! StackPatch is designed to work with existing Next.js projects. Just navigate to your project and run `npx stackpatch add auth`.
+
+### Can I create a new project with StackPatch?
+
+Yes! Use `npx stackpatch create my-app` to create a new Next.js project, then add patches as needed.
+
+## Usage
+
+### How do I add authentication?
+
+```bash
+npx stackpatch add auth
+```
+
+Then select which OAuth providers you want (Google, GitHub, Email/Password).
+
+### Can I customize the generated code?
+
+Absolutely! All code is yours to modify. StackPatch generates production-ready code that you can customize however you want.
+
+### What if I want to remove a patch?
+
+Use `npx stackpatch revert` to safely remove all files and restore your project to its previous state.
+
+## OAuth Setup
+
+### Do I need to set up OAuth providers immediately?
+
+No. StackPatch will create the configuration files. You can set up OAuth credentials later when you're ready to deploy.
+
+### Can I add more OAuth providers later?
+
+Yes! You can manually add more providers to the NextAuth configuration file after installation.
+
+### Is email/password authentication production-ready?
+
+The email/password authentication is in demo mode by default. You'll need to implement database integration for production use.
+
+## Technical
+
+### How does StackPatch detect my project structure?
+
+StackPatch checks for the existence of `app/` or `src/app/` directories and places files accordingly.
+
+### Does StackPatch modify my existing files?
+
+StackPatch only modifies `layout.tsx` to add providers. All changes are tracked and can be reverted. Original content is backed up in `.stackpatch/backups/`.
+
+### What if I have a custom project structure?
+
+StackPatch works best with standard Next.js App Router structures. If you have a custom setup, you may need to adjust file paths manually.
+
+### Can I use StackPatch with TypeScript path aliases?
+
+Yes! StackPatch automatically reads your `tsconfig.json` and uses your path aliases for imports.
+
+## Troubleshooting
+
+### The revert command isn't working
+
+Make sure you're in the directory where you ran `stackpatch add`. The command uses `.stackpatch/manifest.json` to track changes.
+
+### Files aren't in the right location
+
+StackPatch detects your structure automatically. If files are in the wrong place, check that your project follows standard Next.js App Router conventions.
+
+### Import errors after installation
+
+- Check your `tsconfig.json` paths configuration
+- Make sure StackPatch detected your path aliases correctly
+- Verify that the generated import paths match your alias patterns
+
+### OAuth buttons not working
+
+- Verify credentials in `.env.local`
+- Restart your dev server after adding credentials
+- Make sure you selected the provider during installation
+- Check browser console for errors
+
+## Next Steps
+
+- [Quick Start](/docs/quick-start) - Get started quickly
+- [Commands](/docs/cli/commands) - Complete CLI reference
+- [Guides](/docs/guides) - Practical guides including OAuth setup

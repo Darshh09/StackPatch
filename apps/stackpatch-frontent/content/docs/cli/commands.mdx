@@ -1,0 +1,162 @@
+---
+title: Commands
+description: Complete reference for all CLI commands
+---
+
+# Commands
+
+Complete reference for all StackPatch CLI commands.
+
+## `create`
+
+Creates a new StackPatch project from scratch.
+
+```bash
+npx stackpatch create [project-directory]
+```
+
+### Usage
+
+```bash
+# Interactive (prompts for project name)
+npx stackpatch create
+
+# With project name
+npx stackpatch create my-app
+
+# Using npm create
+npm create stackpatch@latest my-app
+
+# Using bunx
+bunx create-stackpatch@latest my-app
+```
+
+### What Gets Created
+
+- ✅ New Next.js project with TypeScript and Tailwind CSS
+- ✅ Basic project structure
+- ✅ All dependencies installed
+- ✅ Welcome screen
+
+After creation, add patches with `npx stackpatch add`.
+
+## `add`
+
+Adds patches (features) to an existing Next.js project.
+
+```bash
+npx stackpatch add [patch-name]
+```
+
+### Available Patches
+
+- **`auth`** or **`auth-ui`** - Complete authentication setup
+
+### Usage
+
+```bash
+# Interactive mode (select patch)
+npx stackpatch add
+
+# Add auth patch directly
+npx stackpatch add auth
+
+# Alternative name
+npx stackpatch add auth-ui
+```
+
+### Interactive Mode
+
+If you don't specify a patch name, you'll be prompted to:
+
+1. **Select a patch** from available options
+2. **Choose OAuth providers** (if installing auth):
+   - Google OAuth
+   - GitHub OAuth
+   - Email/Password (Credentials)
+
+### What Gets Added
+
+When you add a patch, StackPatch:
+
+1. **Detects** your project structure (`app/` vs `src/app/`)
+2. **Copies** files to correct locations
+3. **Installs** missing dependencies
+4. **Updates** your code (e.g., adds providers to `layout.tsx`)
+5. **Tracks** all changes in `.stackpatch/manifest.json`
+
+See [Guides](/docs/guides) for details on available patches.
+
+## `revert`
+
+Reverts a StackPatch installation, restoring your project to its previous state.
+
+```bash
+npx stackpatch revert
+```
+
+### Usage
+
+```bash
+# Revert the last installation
+npx stackpatch revert
+```
+
+### What Happens
+
+1. **Shows** what will be reverted (patch name, files, timestamp)
+2. **Asks** for confirmation
+3. **Removes** all files added by StackPatch
+4. **Restores** all modified files to original state
+5. **Uninstalls** dependencies added by StackPatch
+6. **Cleans up** the `.stackpatch` directory
+
+> **Note:** You must be in the directory where you ran `stackpatch add`. The command uses `.stackpatch/manifest.json` to track changes.
+
+See [FAQ](/docs/faq) for information about reverting changes.
+
+## Command Examples
+
+### Create and Setup
+
+```bash
+# 1. Create a new project
+npx stackpatch create my-app
+
+# 2. Navigate to project
+cd my-app
+
+# 3. Add authentication
+npx stackpatch add auth
+```
+
+### Add to Existing Project
+
+```bash
+# Navigate to your Next.js project
+cd my-existing-project
+
+# Add authentication
+npx stackpatch add auth
+```
+
+### Revert Installation
+
+```bash
+# Undo the last installation
+npx stackpatch revert
+```
+
+## Global Options
+
+These options work with any command:
+
+- `--help, -h` - Display help information
+- `--version, -V` - Display CLI version
+- `--yes, -y` - Skip prompts (for `create` command)
+
+## Next Steps
+
+- [Quick Start](/docs/quick-start) - Learn how to add your first patch
+- [Guides](/docs/guides) - Practical guides for common setups
+- [FAQ](/docs/faq) - Frequently asked questions

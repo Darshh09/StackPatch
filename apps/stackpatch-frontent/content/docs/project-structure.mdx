@@ -1,0 +1,120 @@
+---
+title: Project Structure
+description: Understanding how StackPatch organizes your project
+---
+
+## Project Structure
+
+StackPatch intelligently detects your project structure and places files in the correct locations automatically.
+
+## Directory Detection
+
+### App Directory
+
+StackPatch automatically detects whether your app is in:
+
+- **`app/`** - Standard Next.js App Router structure
+- **`src/app/`** - Next.js with `src/` directory
+
+Files are placed accordingly:
+- Auth pages: `app/auth/` or `src/app/auth/`
+- API routes: `app/api/` or `src/app/api/`
+
+### Components Directory
+
+Components are placed in matching locations:
+
+- **`components/`** - If app is in `app/`
+- **`src/components/`** - If app is in `src/app/`
+
+## File Structure After Installation
+
+After running `npx stackpatch add auth`, your project structure will look like:
+
+### Standard Structure (`app/` at root)
+
+```
+your-project/
+├── app/
+│   ├── auth/
+│   │   ├── login/
+│   │   │   └── page.tsx
+│   │   └── signup/
+│   │       └── page.tsx
+│   ├── api/
+│   │   └── auth/
+│   │       └── [...nextauth]/
+│   │           └── route.ts
+│   └── layout.tsx (modified)
+├── components/
+│   ├── auth-button.tsx
+│   ├── protected-route.tsx
+│   ├── session-provider.tsx
+│   └── toaster.tsx
+├── middleware.ts
+├── .env.example
+└── .stackpatch/
+    ├── manifest.json
+    └── backups/
+```
+
+### With `src/` Directory
+
+```
+your-project/
+├── src/
+│   ├── app/
+│   │   ├── auth/
+│   │   │   ├── login/
+│   │   │   │   └── page.tsx
+│   │   │   └── signup/
+│   │   │       └── page.tsx
+│   │   ├── api/
+│   │   │   └── auth/
+│   │   │       └── [...nextauth]/
+│   │   │           └── route.ts
+│   │   └── layout.tsx (modified)
+│   └── components/
+│       ├── auth-button.tsx
+│       ├── protected-route.tsx
+│       ├── session-provider.tsx
+│       └── toaster.tsx
+├── middleware.ts
+├── .env.example
+└── .stackpatch/
+    ├── manifest.json
+    └── backups/
+```
+
+## Path Alias Support
+
+StackPatch automatically uses your TypeScript path aliases from `tsconfig.json`:
+
+```json
+{
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./*"]
+    }
+  }
+}
+```
+
+StackPatch will generate imports like:
+- `@/components/auth-button` instead of `../../components/auth-button`
+- `@/app/api/auth/[...nextauth]/route` instead of relative paths
+
+## StackPatch Tracking
+
+All changes are tracked in `.stackpatch/`:
+
+- **`manifest.json`** - Records all files added/modified
+- **`backups/`** - Backups of modified files
+
+This allows safe reversion with `npx stackpatch revert`.
+
+## Next Steps
+
+- [Quick Start](/docs) - Get started with StackPatch
+- [Commands](/docs/cli/commands) - Learn all CLI commands
+- [FAQ](/docs/faq) - Learn about reverting changes
