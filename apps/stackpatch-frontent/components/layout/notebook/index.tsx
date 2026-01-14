@@ -151,8 +151,8 @@ export function DocsLayout(props: DocsLayoutProps) {
                   <SidebarCollapseTrigger
                     className={cn(
                       buttonVariants({
-                        color: 'ghost',
-                        size: 'icon-sm',
+                        variant: 'ghost',
+                        size: 'icon',
                         className: 'mt-px mb-auto text-fd-muted-foreground',
                       }),
                     )}
@@ -177,9 +177,9 @@ export function DocsLayout(props: DocsLayoutProps) {
                 item={item}
                 className={cn(
                   buttonVariants({
-                    size: 'icon-sm',
-                    color: 'ghost',
-                    className: 'lg:hidden',
+                    size: 'icon',
+                    variant: 'ghost',
+                    className: 'h-8 w-8 lg:hidden',
                   }),
                 )}
                 aria-label={item.label}
@@ -194,9 +194,9 @@ export function DocsLayout(props: DocsLayoutProps) {
             <SidebarTrigger
               className={cn(
                 buttonVariants({
-                  size: 'icon-sm',
-                  color: 'ghost',
-                  className: 'ms-auto text-fd-muted-foreground',
+                  size: 'icon',
+                  variant: 'ghost',
+                  className: 'h-8 w-8 ms-auto text-fd-muted-foreground',
                 }),
               )}
             >
@@ -218,10 +218,10 @@ export function DocsLayout(props: DocsLayoutProps) {
                 item={item}
                 className={cn(
                   buttonVariants({
-                    size: 'icon-sm',
-                    color: 'ghost',
+                    size: 'icon',
+                    variant: 'ghost',
                   }),
-                  'text-fd-muted-foreground lg:hidden',
+                  'h-8 w-8 text-fd-muted-foreground lg:hidden',
                   i === iconLinks.length - 1 && 'me-auto',
                 )}
                 aria-label={item.label}
@@ -236,7 +236,7 @@ export function DocsLayout(props: DocsLayoutProps) {
             )}
             {themeSwitch.enabled !== false &&
               (themeSwitch.component ?? (
-                <ThemeToggle mode={themeSwitch.mode ?? 'light-dark-system'} />
+                <ThemeToggle />
               ))}
           </Footer>
         </SidebarDrawer>
@@ -299,8 +299,9 @@ function DocsNavbar({
             <SidebarCollapseTrigger
               className={cn(
                 buttonVariants({
-                  color: 'ghost',
-                  size: 'icon-sm',
+                  variant: 'ghost',
+                  size: 'icon',
+                  className: 'h-8 w-8',
                 }),
                 'text-fd-muted-foreground data-[collapsed=false]:hidden max-md:hidden',
               )}
@@ -350,7 +351,7 @@ function DocsNavbar({
                 key={i}
                 item={item}
                 className={cn(
-                  buttonVariants({ size: 'icon-sm', color: 'ghost' }),
+                  buttonVariants({ size: 'icon', variant: 'ghost', className: 'h-8 w-8' }),
                   'text-fd-muted-foreground max-lg:hidden',
                 )}
                 aria-label={item.label}
@@ -365,9 +366,9 @@ function DocsNavbar({
             <SidebarTrigger
               className={cn(
                 buttonVariants({
-                  color: 'ghost',
-                  size: 'icon-sm',
-                  className: 'p-2 -me-1.5',
+                  variant: 'ghost',
+                  size: 'icon',
+                  className: 'h-8 w-8 p-2 -me-1.5',
                 }),
               )}
             >
@@ -383,14 +384,15 @@ function DocsNavbar({
             )}
             {themeSwitch.enabled !== false &&
               (themeSwitch.component ?? (
-                <ThemeToggle mode={themeSwitch.mode ?? 'light-dark-system'} />
+                <ThemeToggle />
               ))}
             {sidebarCollapsible && navMode === 'top' && (
               <SidebarCollapseTrigger
                 className={cn(
                   buttonVariants({
-                    color: 'secondary',
-                    size: 'icon-sm',
+                    variant: 'secondary',
+                    size: 'icon',
+                    className: 'h-8 w-8',
                   }),
                   'text-fd-muted-foreground rounded-full -me-1.5',
                 )}
