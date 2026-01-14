@@ -1,0 +1,10 @@
+{
+  "pages": [
+    "index",
+    "cli",
+    "guides",
+    "project-structure",
+    "contribution",
+    "faq"
+  ]
+}

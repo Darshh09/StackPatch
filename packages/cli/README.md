@@ -10,12 +10,16 @@ StackPatch is a CLI tool that helps you quickly add production-ready features to
 ## ✨ Features
 
 - 🚀 **Zero Configuration** - Add features with a single command
-- 🔐 **Authentication** - Full NextAuth.js setup with Google, GitHub, and email/password
+- 🔐 **Authentication** - Full NextAuth.js setup with customizable OAuth providers
 - 🛡️ **Protected Routes** - Easy route protection with components or middleware
 - 🎨 **UI Components** - Pre-built, production-ready components
 - 📦 **Composable** - Add only what you need, when you need it
 - ⚡ **Fast** - Built with Bun for lightning-fast execution
 - 🛡️ **Type-Safe** - Full TypeScript support
+- 🧠 **Smart Detection** - Automatically detects `app/` vs `src/app/` and places files correctly
+- 🔄 **Revert Support** - Safely revert any installation with `npx stackpatch revert`
+- 🎯 **Path Alias Aware** - Automatically uses your `tsconfig.json` path aliases for imports
+- 🔧 **Provider Selection** - Choose which OAuth providers to configure (Google, GitHub, Email/Password)
 
 ## 📋 Prerequisites
 
@@ -68,23 +72,56 @@ npx stackpatch add auth-ui
 
 > **Note:** Both `auth` and `auth-ui` commands are identical - they add the complete authentication setup.
 
+### Revert an Installation
+
+If you want to undo a StackPatch installation:
+
+```bash
+npx stackpatch revert
+```
+
+This will:
+- Remove all files added by StackPatch
+- Restore modified files to their original state
+- Clean up the `.stackpatch` tracking directory
+
+> **Note:** The revert command only works if you're in the directory where you ran `stackpatch add`. It uses a manifest file (`.stackpatch/manifest.json`) to track changes.
+
 ## 📖 What Gets Added
 
 ### Authentication Setup
 
-When you run `npx stackpatch add auth`, StackPatch adds:
+When you run `npx stackpatch add auth`, StackPatch:
 
-- ✅ NextAuth.js configuration with Google, GitHub, and email/password providers
+1. **Asks which OAuth providers** you want to configure:
+   - Google OAuth
+   - GitHub OAuth
+   - Email/Password (Credentials)
+
+2. **Adds the following files**:
+   - ✅ NextAuth.js configuration with your selected providers
 - ✅ Login and signup pages (`/auth/login`, `/auth/signup`)
-- ✅ OAuth buttons (Google & GitHub) with email/password forms
-- ✅ Protected route component (`components/protected-route.tsx`)
+   - ✅ OAuth buttons for selected providers with email/password forms
+   - ✅ Protected route component (`components/protected-route.tsx` or `src/components/protected-route.tsx`)
 - ✅ Middleware for route protection (`middleware.ts`)
 - ✅ Session provider and toaster components
 - ✅ Environment file template (`.env.example`)
 
+3. **Smart file placement**:
+   - Detects if your app is in `app/` or `src/app/`
+   - Places components in matching location (`components/` or `src/components/`)
+   - Uses your `tsconfig.json` path aliases for imports
+   - Generates correct import paths automatically
+
+4. **Tracks all changes** in `.stackpatch/manifest.json` for safe reversion
+
 ## 🔐 OAuth Setup
 
+When you run `npx stackpatch add auth`, you'll be prompted to select which OAuth providers you want to configure. StackPatch will only set up the providers you select.
+
 ### Google OAuth
+
+If you selected Google OAuth:
 
 1. Go to [Google Cloud Console](https://console.cloud.google.com/)
 2. Create a project → APIs & Services → Credentials
@@ -98,6 +135,8 @@ When you run `npx stackpatch add auth`, StackPatch adds:
 
 ### GitHub OAuth
 
+If you selected GitHub OAuth:
+
 1. Go to [GitHub Developer Settings](https://github.com/settings/developers)
 2. New OAuth App
 3. Set callback URL: `http://localhost:3000/api/auth/callback/github`
@@ -110,15 +149,17 @@ When you run `npx stackpatch add auth`, StackPatch adds:
 
 ### Environment Variables
 
-Your `.env.local` should include:
+Your `.env.local` will include only the variables for providers you selected:
 
 ```env
 NEXTAUTH_URL=http://localhost:3000
 NEXTAUTH_SECRET=your_generated_secret
 
+# Only included if you selected Google
 GOOGLE_CLIENT_ID=your_google_client_id
 GOOGLE_CLIENT_SECRET=your_google_client_secret
 
+# Only included if you selected GitHub
 GITHUB_CLIENT_ID=your_github_client_id
 GITHUB_CLIENT_SECRET=your_github_client_secret
 ```
@@ -205,19 +246,28 @@ See code comments in the files for detailed implementation examples.
 
 ## 📁 File Locations
 
-After running `npx stackpatch add auth`, you'll find:
+After running `npx stackpatch add auth`, you'll find files in locations that match your project structure:
 
+### If your app is in `app/`:
 - **Auth pages**: `app/auth/login/page.tsx`, `app/auth/signup/page.tsx`
 - **NextAuth config**: `app/api/auth/[...nextauth]/route.ts`
-- **Components**:
-  - `components/auth-navbar.tsx` - Example navbar with session and sign out (demo)
-  - `components/protected-route.tsx` - Route protection component
-  - `components/auth-button.tsx` - Auth button component
-- **Example pages**:
-  - `app/page.tsx` - Landing page with navbar
-  - `app/dashboard/page.tsx` - Protected dashboard example
+- **Components**: `components/auth-navbar.tsx`, `components/protected-route.tsx`, etc.
 - **Middleware**: `middleware.ts` (root)
 - **Environment**: `.env.example`, `.env.local`
+- **Tracking**: `.stackpatch/manifest.json` (for revert)
+
+### If your app is in `src/app/`:
+- **Auth pages**: `src/app/auth/login/page.tsx`, `src/app/auth/signup/page.tsx`
+- **NextAuth config**: `src/app/api/auth/[...nextauth]/route.ts`
+- **Components**: `src/components/auth-navbar.tsx`, `src/components/protected-route.tsx`, etc.
+- **Middleware**: `middleware.ts` (root)
+- **Environment**: `.env.example`, `.env.local`
+- **Tracking**: `.stackpatch/manifest.json` (for revert)
+
+StackPatch automatically detects your project structure and places files accordingly. It also:
+- Uses your `tsconfig.json` path aliases (e.g., `@/components`) for imports
+- Generates correct relative paths if no aliases are found
+- Never hardcodes paths like `../../` - always uses smart detection
 
 ## 🔧 Customization
 
@@ -266,12 +316,27 @@ export async function GET() {
 
 - Verify credentials in `.env.local`
 - Restart dev server after adding credentials
+- Make sure you selected the provider during installation
 
 ### Email/password not working
 
 - Currently in demo mode - implement database auth (see above)
 
+### Import errors after installation
+
+- StackPatch automatically detects your path aliases from `tsconfig.json`
+- If imports are incorrect, check your `tsconfig.json` paths configuration
+- The CLI uses your existing alias patterns (e.g., `@/*` → `./*` or `./src/*`)
+
+### Revert not working
+
+- Make sure you're in the directory where you ran `stackpatch add`
+- Check that `.stackpatch/manifest.json` exists
+- The manifest tracks all changes for safe reversion
+
 ## 📚 Project Structure
+
+### Standard Structure (`app/` at root)
 
 ```
 your-project/
@@ -287,8 +352,78 @@ your-project/
 │   ├── auth-button.tsx          # Auth button component
 │   └── session-provider.tsx    # Session provider
 ├── middleware.ts                # Route protection middleware
-└── .env.local                   # Your environment variables
+├── .env.local                   # Your environment variables
+└── .stackpatch/                 # Tracking for revert (git-ignored)
+    ├── manifest.json            # Tracks all changes
+    └── backups/                 # Original file backups
 ```
+
+### With `src/` Directory (`src/app/`)
+
+```
+your-project/
+├── src/
+│   ├── app/
+│   │   ├── auth/
+│   │   │   ├── login/page.tsx
+│   │   │   └── signup/page.tsx
+│   │   └── api/
+│   │       └── auth/
+│   │           └── [...nextauth]/route.ts
+│   └── components/
+│       ├── protected-route.tsx
+│       ├── auth-button.tsx
+│       └── session-provider.tsx
+├── middleware.ts
+├── .env.local
+└── .stackpatch/
+    ├── manifest.json
+    └── backups/
+```
+
+StackPatch automatically detects and uses the correct structure!
+
+## 🔄 Reverting Changes
+
+If you want to undo a StackPatch installation:
+
+```bash
+npx stackpatch revert
+```
+
+This command will:
+1. Show you what was installed (patch name, timestamp)
+2. Ask for confirmation
+3. Remove all files that were added
+4. Restore all files that were modified to their original state
+5. Clean up the `.stackpatch` directory
+
+> **Important**: The revert command uses the manifest file (`.stackpatch/manifest.json`) to track changes. If you delete this file, you'll need to manually remove files.
+
+## 🧠 Smart Features
+
+### Automatic Directory Detection
+
+StackPatch automatically detects your project structure:
+- ✅ Detects `app/` vs `src/app/`
+- ✅ Places components in matching location (`components/` vs `src/components/`)
+- ✅ Works with both App Router and Pages Router structures
+
+### Path Alias Detection
+
+StackPatch reads your `tsconfig.json` to detect path aliases:
+- ✅ Uses your existing aliases (e.g., `@/*` → `./*` or `./src/*`)
+- ✅ Generates correct import paths automatically
+- ✅ Falls back to relative paths if no aliases are found
+- ✅ Never hardcodes paths like `../../`
+
+### Change Tracking
+
+Every installation is tracked:
+- ✅ All added files are recorded
+- ✅ All modified files are backed up before changes
+- ✅ Manifest file stores installation metadata
+- ✅ Safe reversion with `npx stackpatch revert`
 
 ## 🤝 Contributing
 

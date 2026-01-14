@@ -9,13 +9,30 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@radix-ui/react-collapsible": "^1.1.12",
+    "@radix-ui/react-popover": "^1.1.15",
+    "@radix-ui/react-presence": "^1.1.5",
+    "@radix-ui/react-scroll-area": "^1.2.10",
+    "@radix-ui/react-slot": "^1.2.4",
+    "@radix-ui/react-switch": "^1.2.6",
+    "@radix-ui/react-toggle": "^1.1.10",
+    "@radix-ui/react-tooltip": "^1.2.8",
+    "@types/mdx": "^2.0.13",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "framer-motion": "^11.11.17",
+    "fumadocs-core": "^16.4.7",
+    "fumadocs-mdx": "^14.2.5",
+    "fumadocs-ui": "npm:@fumadocs/base-ui@latest",
+    "lucide-react": "^0.469.0",
     "next": "16.1.1",
     "next-auth": "^4.24.13",
+    "next-themes": "^0.4.6",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-hot-toast": "^2.6.0",
-    "framer-motion": "^11.11.17",
-    "lucide-react": "^0.469.0"
+    "scroll-into-view-if-needed": "^3.1.0",
+    "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

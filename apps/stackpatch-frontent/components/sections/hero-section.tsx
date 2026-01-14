@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { CheckCircle2, Sparkles, ArrowRight } from "lucide-react";
 import { Logo } from "@/components/logo";
+import { ContainerTextFlip } from "@/components/container-text-flip";
 
 interface HeroSectionProps {
   command: string;
@@ -161,11 +162,24 @@ export function HeroSection({ command, copied, onCopy }: HeroSectionProps) {
             transition={{ duration: 0.6 }}
             className="space-y-8"
           >
-            <h1 className="font-heading text-6xl  font-bold tracking-tight">
-              Patch your stack.
-              <br />
-              <span className="text-primary">Not your sanity.</span>
-            </h1>
+            <div className="space-y-5">
+              <div className="flex flex-row items-center gap-2">
+
+              <h1 className="font-heading text-6xl font-bold tracking-tight">
+                Patch your
+              </h1>
+              <ContainerTextFlip
+                words={["stack", "auth", "ui", "routes"]}
+
+                animationDuration={700}
+                className="md:text-6xl dark:[background:linear-gradient(to_bottom,#0b0b0f,#0a0a0a)] [background:linear-gradient(to_bottom,#ffffff,#f3f4f6)] shadow-[inset_0_-1px_rgba(167,139,250,0.35),inset_0_0_0_1px_rgba(167,139,250,0.28),_0_10px_30px_rgba(167,139,250,0.15)] dark:shadow-[inset_0_-1px_rgba(167,139,250,0.22),inset_0_0_0_1px_rgba(167,139,250,0.18),_0_10px_30px_rgba(0,0,0,0.45)]"
+                textClassName="text-primary inline-block"
+              />
+              </div>
+              <h2 className="font-heading text-6xl font-semibold tracking-tight text-primary">
+                Not your sanity.
+              </h2>
+            </div>
             <p className="text-xl text-muted-foreground leading-relaxed max-w-xl">
               StackPatch is a CLI that installs opinionated, battle-tested features
               like Auth, Redis, Payments — directly into your existing Next.js app.
@@ -173,7 +187,7 @@ export function HeroSection({ command, copied, onCopy }: HeroSectionProps) {
             <div className="flex flex-wrap items-center gap-4">
               <motion.button
                 onClick={onCopy}
-                className="group relative isolate inline-flex items-center justify-center overflow-visible text-left font-medium transition-all duration-300 ease-[cubic-bezier(0.4,0.36,0,1)] text-sm rounded-md bg-white text-primary-foreground px-6 py-3 hover:bg-primary hover:text-primary-foreground shadow-sm hover:shadow-lg"
+                className="group relative isolate inline-flex items-center justify-center overflow-visible text-left font-medium transition-all duration-300 ease-[cubic-bezier(0.4,0.36,0,1)] text-sm rounded-md bg-black dark:bg-white text-primary-foreground px-6 py-3 hover:bg-primary hover:text-primary-foreground shadow-sm hover:shadow-lg"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >

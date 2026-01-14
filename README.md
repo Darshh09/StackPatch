@@ -21,11 +21,25 @@ npx stackpatch create my-app
 npx stackpatch add auth-ui
 ```
 
-The CLI will auto-detect your Next.js app and copy the necessary files.
+The CLI will:
+- Auto-detect your Next.js app structure (`app/` vs `src/app/`)
+- Ask which OAuth providers you want (Google, GitHub, Email/Password)
+- Place files in the correct locations automatically
+- Use your existing path aliases from `tsconfig.json`
+- Track all changes for safe reversion
+
+**Revert an installation:**
+```bash
+npx stackpatch revert
+```
 
 ## What's Included
 
 - **Auth UI** - Login, signup, and protected routes with NextAuth
+  - Choose which OAuth providers to configure (Google, GitHub, Email/Password)
+  - Smart directory detection (`app/` vs `src/app/`)
+  - Automatic path alias detection and import generation
+  - Full revert support
 - More patches coming soon (stripe, redux, etc.)
 
 ## How It Works
@@ -35,6 +49,10 @@ Each patch is self-contained. StackPatch:
 - Only adds files it owns
 - Never refactors existing code
 - Warns before overwriting
+- **Smart detection**: Automatically detects `app/` vs `src/app/` and places files correctly
+- **Path alias aware**: Uses your `tsconfig.json` aliases for imports
+- **Fully reversible**: Track all changes and revert with `npx stackpatch revert`
+- **Provider selection**: Choose which OAuth providers to configure during setup
 
 ## Development
 

@@ -1,0 +1,224 @@
+---
+title: Contributing
+description: How to contribute to StackPatch
+---
+
+# Contributing
+
+Thank you for your interest in contributing to StackPatch! This guide will help you get started.
+
+## Getting Started
+
+### Setup
+
+1. **Fork the repository** on GitHub
+2. **Clone your fork**:
+   ```bash
+   git clone https://github.com/your-username/StackPatch.git
+   cd StackPatch
+   ```
+3. **Install dependencies**:
+   ```bash
+   pnpm install
+   ```
+4. **Set up git hooks**:
+   ```bash
+   pnpm prepare
+   ```
+
+> **Important:** After adding new dependencies, always run `pnpm install` and commit the updated `pnpm-lock.yaml`. Pre-commit hooks will catch outdated lockfiles.
+
+## Development Workflow
+
+### 1. Create a Branch
+
+Never commit directly to `main`. Always use feature branches:
+
+```bash
+git checkout -b feature/your-feature-name
+```
+
+### 2. Make Your Changes
+
+- Write clean, readable code
+- Follow existing code style
+- Add comments for complex logic
+- Update documentation if needed
+
+### 3. Write Tests
+
+All new features need tests. Place them in `__tests__/` directories:
+
+```bash
+# Run tests
+pnpm test
+
+# Watch mode
+pnpm test:watch
+
+# Coverage
+pnpm test:coverage
+```
+
+### 4. Run Linter
+
+```bash
+pnpm lint
+```
+
+### 5. Commit Your Changes
+
+Pre-commit hooks will automatically:
+
+- Lint your code
+- Run related tests
+- Format with Prettier
+
+If hooks fail, fix the issues and commit again.
+
+### 6. Push and Create PR
+
+```bash
+git push origin feature/your-feature-name
+```
+
+Then create a Pull Request on GitHub.
+
+## Adding a New Patch
+
+To add a new patch to StackPatch:
+
+### 1. Create Patch Directory
+
+Create a new folder in `packages/cli/boilerplate/`:
+
+```bash
+mkdir packages/cli/boilerplate/your-patch-name
+```
+
+### 2. Add Boilerplate Files
+
+Add your patch files to the directory:
+
+```
+packages/cli/boilerplate/your-patch-name/
+├── app/
+│   └── your-feature/
+│       └── page.tsx
+└── components/
+    └── your-component.tsx
+```
+
+### 3. Register the Patch
+
+Add your patch to the `PATCHES` object in `packages/cli/bin/stackpatch.ts`:
+
+```typescript
+const PATCHES: Record<
+  string,
+  { path: string; dependencies: string[] }
+> = {
+  // ... existing patches
+  "your-patch-name": {
+    path: "your-patch-name",
+    dependencies: ["package1", "package2"],
+  },
+};
+```
+
+### 4. Add Tests
+
+Create tests in `packages/cli/__tests__/`:
+
+```typescript
+describe("your-patch-name", () => {
+  it("should add files correctly", () => {
+    // Your test
+  });
+});
+```
+
+### 5. Update Documentation
+
+- Add your patch to the documentation in `content/docs/guides.mdx`
+- Update any relevant documentation
+
+## Pull Request Guidelines
+
+### Before Submitting
+
+- ✅ All tests pass
+- ✅ Code is linted and formatted
+- ✅ Documentation is updated
+- ✅ Changes are focused and small
+- ✅ Commit messages are clear
+
+### PR Description
+
+Include:
+
+- What changes you made
+- Why you made them
+- How to test the changes
+- Screenshots (if UI changes)
+
+### Review Process
+
+- All PRs require review before merging
+- CI checks must pass
+- Address review comments promptly
+- Keep PRs focused and small
+
+## Branch Protection
+
+The `main` branch is protected:
+
+- ✅ All changes via Pull Request
+- ✅ Tests must pass
+- ✅ No direct commits (except merges)
+
+This is enforced by GitHub Actions and git hooks.
+
+## Code Style
+
+- Use TypeScript for all new code
+- Follow existing patterns and conventions
+- Keep functions small and focused
+- Add JSDoc comments for public APIs
+- Use meaningful variable and function names
+
+## Testing
+
+### Writing Tests
+
+- Test happy paths and edge cases
+- Use descriptive test names
+- Keep tests isolated and independent
+- Mock external dependencies
+
+### Running Tests
+
+```bash
+# Run all tests
+pnpm test
+
+# Watch mode
+pnpm test:watch
+
+# Coverage report
+pnpm test:coverage
+```
+
+## Questions?
+
+- **GitHub Issues** - Ask questions or report bugs
+- **Discussions** - Join the conversation
+- **Discord** - Chat with the community
+
+## Thank You!
+
+Your contributions make StackPatch better for everyone. We appreciate your time and effort!
+
+---
+
+**Ready to contribute?** Fork the repo, create a branch, and submit a PR!
