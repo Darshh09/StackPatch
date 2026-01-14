@@ -7,17 +7,16 @@ import { CheckCircle2, Folder, FolderOpen, File, Lock } from "lucide-react";
 
 export function StackPatchFeaturesSection() {
   return (
-    <section className=" px-4 my-20">
+    <section className="py-20 px-4">
       <div className="w-[76.75rem] max-w-[calc(100vw-1rem)] md:max-w-[calc(100vw-2rem)] mx-auto">
-      <div>
-        <h2 className="text-sm font-medium text-[#A78BFA]">StackPatch</h2>
-        <p className="mt-4 text-balance text-3xl font-heading font-semibold tracking-[-0.015em] text-white">
+      <div className="mb-12">
+        <h2 className="text-sm font-medium text-[#A78BFA] mb-4">StackPatch</h2>
+        <h3 className="text-3xl font-heading font-semibold text-foreground mb-4">
           The easy solution to feature integration
-        </p>
-        <p className="mb-4 mt-4 max-w-md text-pretty text-base/6 text-[#9CA3AF]">
+        </h3>
+        <p className="text-base text-muted-foreground max-w-2xl">
           StackPatch has all the features you need to add production-ready functionality to your existing app without restructuring or boilerplate bloat.
         </p>
-
       </div>
 
       {/* Bento Grid Layout */}

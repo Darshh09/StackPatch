@@ -4,81 +4,21 @@ import { motion } from "motion/react";
 
 export function WorkflowSection() {
   return (
-    <section className="py-20  border-y border-border">
+    <section className="py-20 px-4 border-y border-border">
       <div className="w-[76.75rem] max-w-[calc(100vw-1rem)] md:max-w-[calc(100vw-2rem)] mx-auto">
-        <div className="p-4 -top-10 relative w-full max-w-none overflow-hidden">
-          {/* Dotted background pattern */}
-
-
-          {/* Header */}
-          <div className="flex items-center gap-2 mb-4 relative z-10">
-            <svg
-              width="16"
-              height="17"
-              viewBox="0 0 16 17"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="text-primary"
-            >
-              <path
-                d="M7.99992 5.16658C8.92039 5.16658 9.66658 4.42039 9.66658 3.49992C9.66658 2.57944 8.92039 1.83325 7.99992 1.83325C7.07944 1.83325 6.33325 2.57944 6.33325 3.49992C6.33325 4.42039 7.07944 5.16658 7.99992 5.16658Z"
-                stroke="currentColor"
-                strokeWidth="1.33333"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M6.79995 4.69995L4.19995 7.29995"
-                stroke="currentColor"
-                strokeWidth="1.33333"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M2.99992 10.1666C3.92039 10.1666 4.66658 9.42039 4.66658 8.49992C4.66658 7.57944 3.92039 6.83325 2.99992 6.83325C2.07944 6.83325 1.33325 7.57944 1.33325 8.49992C1.33325 9.42039 2.07944 10.1666 2.99992 10.1666Z"
-                stroke="currentColor"
-                strokeWidth="1.33333"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M4.66675 8.5H11.3334"
-                stroke="currentColor"
-                strokeWidth="1.33333"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M12.9999 10.1666C13.9204 10.1666 14.6666 9.42039 14.6666 8.49992C14.6666 7.57944 13.9204 6.83325 12.9999 6.83325C12.0794 6.83325 11.3333 7.57944 11.3333 8.49992C11.3333 9.42039 12.0794 10.1666 12.9999 10.1666Z"
-                stroke="currentColor"
-                strokeWidth="1.33333"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M9.19995 12.3L11.8 9.69995"
-                stroke="currentColor"
-                strokeWidth="1.33333"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M7.99992 15.1666C8.92039 15.1666 9.66658 14.4204 9.66658 13.4999C9.66658 12.5794 8.92039 11.8333 7.99992 11.8333C7.07944 11.8333 6.33325 12.5794 6.33325 13.4999C6.33325 14.4204 7.07944 15.1666 7.99992 15.1666Z"
-                stroke="currentColor"
-                strokeWidth="1.33333"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <h3 className="text-foreground text-lg font-medium font-heading">
-              Seamless Integration Workflow
-            </h3>
-          </div>
-
-          <p className="mt-2 text-base text-muted-foreground mb-12 relative z-10">
+        <div className="mb-12">
+          <h2 className="text-sm font-medium text-[#A78BFA] mb-4">Workflow</h2>
+          <h3 className="text-3xl font-heading font-semibold text-foreground mb-4">
+            Seamless Integration Workflow
+          </h3>
+          <p className="text-base text-muted-foreground max-w-2xl">
             StackPatch seamlessly integrates authentication into your Next.js app with zero configuration.
             Watch how it connects all the pieces together.
           </p>
+        </div>
+
+        <div className="p-4 -top-10 relative w-full max-w-none overflow-hidden">
+          {/* Dotted background pattern */}
 
           {/* Workflow Visualization - Desktop */}
           <div className="relative mx-auto  hidden h-full min-h-80 max-w-[67rem] grid-cols-2 p-4 lg:grid">
@@ -487,7 +427,7 @@ export function WorkflowSection() {
 
 
               {/* Output Cards - Code Changes & Auth UI */}
-              <div className="absolute -top-45 right-10 flex flex-col z-10">
+              <div className="absolute -top-43 right-10 flex flex-col z-0">
                 {/* Code Changes Card - Small inner card only */}
                 <div className="relative p-0.5 rounded-lg w-[200px] overflow-hidden">
                 <motion.div
@@ -500,7 +440,7 @@ export function WorkflowSection() {
                   delay: 1,
                 }}
               />
-                  <div className="relative rounded-lg bg-muted bg-gradient-to-br from-white/5 to-65% p-3 font-mono text-xs ring-[0.25rem] ring-background/50">
+                  <div className="relative z-10 rounded-lg shadow-xl bg-white dark:bg-muted bg-gradient-to-br from-white/5 to-65% p-3 font-mono text-xs ring-[0.25rem] ring-background/50">
                     <div className="text-muted-foreground mb-1.5 text-[10px]">app/layout.tsx</div>
                     <div className="space-y-0.5" style={{ color: "#A78BFA" }}>
                       <div className="text-[10px]">+ AuthSessionProvider</div>
@@ -603,7 +543,7 @@ export function WorkflowSection() {
                   ease: "linear",
                 }}
               />
-                  <div className="mx-auto relative rounded-lg bottom-[0.5px] bg-muted bg-gradient-to-br from-white/5 to-65% p-3 ring-[0.25rem] ring-background/50">
+                  <div className="mx-auto relative rounded-lg bottom-[0.5px] shadow-xl bg-white dark:bg-muted bg-gradient-to-br from-white/5 to-65% p-3 ring-[0.25rem] ring-background/50">
                     <div className="space-y-1.5">
                       <div className="h-6 rounded bg-background border border-border"></div>
                       <div className="space-y-1">

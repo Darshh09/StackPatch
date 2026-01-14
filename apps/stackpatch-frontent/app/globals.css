@@ -56,7 +56,7 @@
   --shadow-2xl: 0px 1px 2px 0px hsl(0 0% 0% / 0.45);
   --tracking-normal: 0em;
   --spacing: 0.25rem;
-
+  --text-primary : "#A78BFA"
   /* Custom StackPatch variables */
   --font-inter: var(--font-inter);
   --font-space-grotesk: var(--font-space-grotesk);
@@ -134,6 +134,7 @@
   --color-fd-accent-foreground: hsl(260, 92%, 40%);
   --color-fd-ring: hsl(260, 92%, 70%);
   --bg-primary : "#06B6D4"
+  --text-primary : "#A78BFA"
 }
 
 .dark {
@@ -205,6 +206,7 @@
   --color-fd-accent-foreground: hsl(260, 92%, 75%);
   --color-fd-ring: hsl(260, 92%, 70%);
     --bg-primary : "#06B6D4"
+    --text-primary : "#A78BFA"
 }
 
 body {

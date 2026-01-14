@@ -20,47 +20,72 @@ export function Footer() {
             <p className="mb-4 text-muted-foreground text-sm leading-relaxed sm:mb-6 sm:text-base lg:pr-4">
               Add production-ready features to your existing Next.js projects without restructuring. Own your code, ship faster.
             </p>
-            <div className="flex space-x-4">
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://twitter.com/Darshhh1800"
-                className="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
-                aria-label="Twitter Profile"
-              >
-                <svg
-                  className="h-5 w-5"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
+            <div className="flex flex-col gap-4">
+              <div className="flex space-x-4">
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://twitter.com/Darshhh1800"
+                  className="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
+                  aria-label="Twitter Profile"
                 >
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                </svg>
-              </a>
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://www.npmjs.com/package/stackpatch"
-                className="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
-                aria-label="npm Package"
-              >
-                <svg
-                  className="h-5 w-5"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
+                  <svg
+                    className="h-5 w-5"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                  </svg>
+                </a>
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://www.npmjs.com/package/stackpatch"
+                  className="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
+                  aria-label="npm Package"
                 >
-                  <path d="M1.763 0C.786 0 0 .786 0 1.763v20.474C0 23.214.786 24 1.763 24h20.474c.977 0 1.763-.786 1.763-1.763V1.763C24 .786 23.214 0 22.237 0zM5.13 5.323l13.837.019-.009 13.836h-3.464l.01-10.382h-3.456L12.04 19.17H5.113z" />
-                </svg>
-              </a>
+                  <svg
+                    className="h-5 w-5"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path d="M1.763 0C.786 0 0 .786 0 1.763v20.474C0 23.214.786 24 1.763 24h20.474c.977 0 1.763-.786 1.763-1.763V1.763C24 .786 23.214 0 22.237 0zM5.13 5.323l13.837.019-.009 13.836h-3.464l.01-10.382h-3.456L12.04 19.17H5.113z" />
+                  </svg>
+                </a>
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://github.com/Darshh09/StackPatch"
+                  className="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
+                  aria-label="GitHub Repository"
+                >
+                  <Github className="h-5 w-5" aria-hidden="true" />
+                </a>
+              </div>
+              {/* Product Hunt Badge */}
               <a
+                href="https://www.producthunt.com/products/stackpatch?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-stackpatch"
                 target="_blank"
                 rel="noopener noreferrer"
-                href="https://github.com/Darshh09/StackPatch"
-                className="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
-                aria-label="GitHub Repository"
+                className="inline-block transition-opacity hover:opacity-80"
+                aria-label="StackPatch on Product Hunt"
               >
-                <Github className="h-5 w-5" aria-hidden="true" />
+                <img
+                  alt="StackPatch - Patch authentication into your Next.js app with one command | Product Hunt"
+                  width="250"
+                  height="54"
+                  src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1063012&theme=light&t=1768419170786"
+                  className="h-auto w-[200px] dark:hidden"
+                />
+                <img
+                  alt="StackPatch - Patch authentication into your Next.js app with one command | Product Hunt"
+                  width="250"
+                  height="54"
+                  src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1063012&theme=dark&t=1768419170786"
+                  className="hidden h-auto w-[200px] dark:block"
+                />
               </a>
             </div>
           </div>

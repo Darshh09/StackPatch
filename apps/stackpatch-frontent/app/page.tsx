@@ -45,11 +45,12 @@ export default function Home() {
       {/* Revert Feature Section */}
       <section className="py-20 px-4 border-y border-border">
         <div className="w-[76.75rem] max-w-[calc(100vw-1rem)] md:max-w-[calc(100vw-2rem)] mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4 font-heading">
+          <div className="mb-12">
+            <h2 className="text-sm font-medium text-[#A78BFA] mb-4">Reversible</h2>
+            <h3 className="text-3xl font-heading font-semibold text-foreground mb-4">
               Fully Reversible
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            </h3>
+            <p className="text-base text-muted-foreground max-w-2xl">
               Changed your mind? No problem. StackPatch tracks every change it makes,
               allowing you to safely revert any installation with a single command.
             </p>
@@ -57,7 +58,7 @@ export default function Home() {
 
           <RevertDemo />
 
-          <div className="mt-8 text-center">
+          <div className="mt-8">
             <p className="text-sm text-muted-foreground">
               All changes are tracked in <code className="bg-muted px-1.5 py-0.5 rounded text-xs">.stackpatch/manifest.json</code> for safe reversion
             </p>
