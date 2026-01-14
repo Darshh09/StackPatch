@@ -2,6 +2,8 @@
 
 Composable frontend features for modern React & Next.js apps. Add production-ready features to existing projects without restructuring.
 
+<a href="https://www.producthunt.com/products/stackpatch?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-stackpatch" target="_blank" rel="noopener noreferrer"><img alt="StackPatch - Patch authentication into your Next.js app with one command | Product Hunt" width="250" height="54" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1063012&theme=light&t=1768419170786"></a>
+
 ## Quick Start
 
 **Create a new project:**
