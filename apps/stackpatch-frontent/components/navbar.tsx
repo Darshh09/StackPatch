@@ -80,7 +80,7 @@ export function Navbar(props: NavbarProps = {}) {
             <LogoText />
             <div
               aria-hidden="true"
-              className="hidden h-6 w-px bg-border/60 dark:bg-border/40 md:block"
+              className="hidden h-6 w-px bg-neutral-500 md:block"
             />
           </a>
 
@@ -89,15 +89,13 @@ export function Navbar(props: NavbarProps = {}) {
             <ul className="flex items-center gap-1">
               {[
                 { href: "/docs", label: "Docs" },
-                { href: "#examples", label: "Examples" },
               ].map((item) => (
                 <li key={item.href}>
                   <a
                     href={item.href}
-                    className="group relative flex items-center rounded-lg px-3 py-1.5 text-sm font-medium text-foreground/80 transition-all duration-200 hover:text-foreground hover:bg-accent/50"
+                    className="flex items-center rounded-lg text-sm font-medium hover:text-neutral-400 transition-colors duration-200"
                   >
-                    <span className="relative z-10">{item.label}</span>
-                    <span className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 rounded-full bg-primary transition-transform duration-200 group-hover:scale-x-100" />
+                    {item.label}
                   </a>
                 </li>
               ))}
@@ -121,7 +119,7 @@ export function Navbar(props: NavbarProps = {}) {
               </button>
             </div>
             {/* Divider */}
-            <div className="hidden h-6 w-px bg-border/60 dark:bg-border/40 sm:block" />
+            <div className="hidden h-6 w-px bg-neutral-500 sm:block" />
 
             {/* Theme Toggle */}
             <div className="hidden sm:flex items-center">

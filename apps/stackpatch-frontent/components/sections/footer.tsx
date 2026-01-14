@@ -24,29 +24,43 @@ export function Footer() {
               <a
                 target="_blank"
                 rel="noopener noreferrer"
-                href="https://github.com/Darshh09/StackPatch"
+                href="https://twitter.com/Darshhh1800"
                 className="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
-                aria-label="GitHub Repository"
+                aria-label="Twitter Profile"
               >
-                <Github className="w-5 h-5" aria-hidden="true" />
+                <svg
+                  className="h-5 w-5"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                </svg>
               </a>
               <a
                 target="_blank"
                 rel="noopener noreferrer"
-                href="https://www.npmjs.com"
+                href="https://www.npmjs.com/package/stackpatch"
                 className="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
-                aria-label="NPM Package"
+                aria-label="npm Package"
               >
                 <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
+                  className="h-5 w-5"
                   fill="currentColor"
+                  viewBox="0 0 24 24"
                   aria-hidden="true"
                 >
-                  <path d="M1.763 0C.786 0 .002.785.002 1.763v20.474c0 .978.784 1.763 1.763 1.763h20.474c.978 0 1.763-.785 1.763-1.763V1.763C24.002.785 23.217 0 22.237 0H1.763zm9.436 2.192h2.602v2.602h2.602v2.602h-2.602v2.602h-2.602V7.396H6.597V4.794h4.602V2.192zm-7.396 9.406h2.602v2.602h2.602v2.602H6.597v2.602H3.995v-2.602H1.393v-2.602h2.602v-2.602z" />
+                  <path d="M1.763 0C.786 0 0 .786 0 1.763v20.474C0 23.214.786 24 1.763 24h20.474c.977 0 1.763-.786 1.763-1.763V1.763C24 .786 23.214 0 22.237 0zM5.13 5.323l13.837.019-.009 13.836h-3.464l.01-10.382h-3.456L12.04 19.17H5.113z" />
                 </svg>
+              </a>
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://github.com/Darshh09/StackPatch"
+                className="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
+                aria-label="GitHub Repository"
+              >
+                <Github className="h-5 w-5" aria-hidden="true" />
               </a>
             </div>
           </div>
@@ -67,7 +81,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="https://www.npmjs.com"
+                  href="https://www.npmjs.com/package/stackpatch"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-block transition-colors hover:text-primary focus:text-primary focus:outline-none"
