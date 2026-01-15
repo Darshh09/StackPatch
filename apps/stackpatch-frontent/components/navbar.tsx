@@ -6,7 +6,6 @@ import { LogoText } from "@/components/logo";
 import { useState, useEffect } from "react";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
 import DocsSearchDialog from "@/components/docs-search-dialog";
-import { DocsMenuDrawer } from "@/components/docs-menu-drawer";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import Link from "next/link";
 
@@ -106,19 +105,18 @@ export function Navbar(props: NavbarProps = {}) {
             }}
             className="navbar-backdrop-blur relative z-30 mx-auto flex h-14 w-full items-center gap-6 rounded-2xl border border-border/50 px-4 py-1.5 shadow-[0_1px_3px_0_rgba(0,0,0,0.05),0_4px_12px_0_rgba(0,0,0,0.08),0_0_0_1px_rgba(255,255,255,0.05)_inset] transition-all duration-500 ease-out dark:border-border/30 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.2),0_4px_12px_0_rgba(0,0,0,0.3),0_0_0_1px_rgba(255,255,255,0.03)_inset] md:px-6"
           >
-            {/* Logo */}
+          {/* Logo */}
             <Link
-              href="/"
+            href="/"
               className="group flex select-none items-center gap-2.5 transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]"
-              style={{ WebkitTouchCallout: "none" }}
-            >
-              <LogoText />
-              <span className="font-medium font-mono text-md tracking-tighter hidden sm:inline">StackPatch</span>
+            style={{ WebkitTouchCallout: "none" }}
+          >
+            <LogoText />
             </Link>
-
+            <div className="hidden sm:block h-6 border-l border-border" aria-hidden="true"></div>
             {/* Desktop Navigation */}
             <nav aria-label="Main" className="hidden sm:block">
-              <ul className="flex items-center gap-2 px-6">
+              <ul className="flex items-center gap-2 ">
                 {navigationItems.map((item) => (
                   <li key={item.href} className="list-none text-sm">
                     <Link
@@ -127,10 +125,10 @@ export function Navbar(props: NavbarProps = {}) {
                     >
                       {item.label}
                     </Link>
-                  </li>
+              </li>
                 ))}
-              </ul>
-            </nav>
+            </ul>
+          </nav>
 
             {/* Right Side Actions - Desktop */}
             <div className="ml-auto flex items-center justify-end gap-1.5 flex-1 max-lg:hidden">
@@ -149,16 +147,8 @@ export function Navbar(props: NavbarProps = {}) {
                 </div>
               </button>
 
-              {/* Docs Menu Button (Desktop) */}
-              <button
-                type="button"
-                onClick={() => setIsDocsMenuOpen(true)}
-                className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors duration-100 hover:bg-accent hover:text-accent-foreground p-2"
-                aria-label="Open docs menu"
-              >
-                <Menu className="h-4 w-4" />
-              </button>
 
+              <div className="hidden sm:block h-6 border-l border-border" aria-hidden="true"></div>
               {/* Theme Toggle */}
               <ThemeToggle />
 
@@ -200,14 +190,14 @@ export function Navbar(props: NavbarProps = {}) {
                   aria-label="Toggle Menu"
                 >
                   <ChevronDown className="h-5 w-5 transition-transform duration-300 group-data-[state=open]:rotate-180" />
-                </button>
+                  </button>
               </CollapsibleTrigger>
             </div>
           </motion.div>
 
-          {/* Mobile Menu Content */}
-          <CollapsibleContent className="overflow-hidden data-[state=closed]:animate-fd-collapsible-up data-[state=open]:animate-fd-collapsible-down flex flex-col px-4">
-            <div className="mt-4 space-y-1">
+          {/* Mobile Menu Content (mobile only) */}
+          <CollapsibleContent className="relative z-20 px-4 lg:hidden">
+            <div className="mt-2 mb-3 rounded-2xl border border-border bg-background/90 backdrop-blur-sm shadow-lg px-3 py-3 space-y-1">
               {/* Mobile Navigation Links */}
               {navigationItems.map((item) => (
                 <Link
@@ -242,7 +232,6 @@ export function Navbar(props: NavbarProps = {}) {
         </Collapsible>
       </div>
       <DocsSearchDialog open={isSearchOpen} onOpenChange={setIsSearchOpen} />
-      <DocsMenuDrawer open={isDocsMenuOpen} onOpenChange={setIsDocsMenuOpen} />
     </motion.nav>
   );
 }
