@@ -152,42 +152,40 @@ export function HeroSection({ command, copied, onCopy }: HeroSectionProps) {
   }, []);
 
   return (
-    <section ref={heroRef} className="pt-32 pb-20 px-4">
+    <section ref={heroRef} className="pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-16 md:pb-20 px-4">
       <div className="w-[76.75rem] max-w-[calc(100vw-1rem)] md:max-w-[calc(100vw-2rem)] mx-auto">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
           {/* Left: Headline & CTA */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="space-y-8"
+            className="space-y-6 sm:space-y-8"
           >
-            <div className="space-y-5">
-              <div className="flex flex-row items-center gap-2">
-
-              <h1 className="font-heading text-6xl font-bold tracking-tight">
-                Patch your
-              </h1>
-              <ContainerTextFlip
-                words={["stack", "auth", "ui", "routes"]}
-
-                animationDuration={700}
-                className="md:text-6xl dark:[background:linear-gradient(to_bottom,#0b0b0f,#0a0a0a)] [background:linear-gradient(to_bottom,#ffffff,#f3f4f6)] shadow-[inset_0_-1px_rgba(167,139,250,0.35),inset_0_0_0_1px_rgba(167,139,250,0.28),_0_10px_30px_rgba(167,139,250,0.15)] dark:shadow-[inset_0_-1px_rgba(167,139,250,0.22),inset_0_0_0_1px_rgba(167,139,250,0.18),_0_10px_30px_rgba(0,0,0,0.45)]"
-                textClassName="text-primary inline-block"
-              />
+            <div className="space-y-3 sm:space-y-5">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-2">
+                <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
+                  Patch your
+                </h1>
+                <ContainerTextFlip
+                  words={["stack", "auth", "ui", "routes"]}
+                  animationDuration={700}
+                  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl dark:[background:linear-gradient(to_bottom,#0b0b0f,#0a0a0a)] [background:linear-gradient(to_bottom,#ffffff,#f3f4f6)] shadow-[inset_0_-1px_rgba(167,139,250,0.35),inset_0_0_0_1px_rgba(167,139,250,0.28),_0_10px_30px_rgba(167,139,250,0.15)] dark:shadow-[inset_0_-1px_rgba(167,139,250,0.22),inset_0_0_0_1px_rgba(167,139,250,0.18),_0_10px_30px_rgba(0,0,0,0.45)]"
+                  textClassName="text-primary inline-block"
+                />
               </div>
-              <h2 className="font-heading text-6xl font-semibold tracking-tight text-primary">
+              <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight text-primary">
                 Not your sanity.
               </h2>
             </div>
-            <p className="text-xl text-muted-foreground leading-relaxed max-w-xl">
+            <p className="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed max-w-xl">
               StackPatch is a CLI that installs opinionated, battle-tested features
               like Auth, Redis, Payments — directly into your existing Next.js app.
             </p>
-            <div className="flex flex-wrap items-center gap-4">
+            <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 sm:gap-4">
               <motion.button
                 onClick={onCopy}
-                className="group relative isolate inline-flex items-center justify-center overflow-visible text-left font-medium transition-all duration-300 ease-[cubic-bezier(0.4,0.36,0,1)] text-sm rounded-md bg-black dark:bg-white text-primary-foreground px-6 py-3 hover:bg-primary hover:text-primary-foreground shadow-sm hover:shadow-lg"
+                className="group relative isolate inline-flex items-center justify-center overflow-visible text-left font-medium transition-all duration-300 ease-[cubic-bezier(0.4,0.36,0,1)] text-sm rounded-md bg-black dark:bg-white text-primary-foreground px-4 sm:px-6 py-2.5 sm:py-3 hover:bg-primary hover:text-primary-foreground shadow-sm hover:shadow-lg w-full sm:w-auto"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -220,7 +218,7 @@ export function HeroSection({ command, copied, onCopy }: HeroSectionProps) {
                 </motion.div>
               </motion.button>
               <motion.button
-                className="relative flex items-center gap-2 px-6 py-3 border border-border text-foreground font-semibold rounded-lg overflow-hidden group transition-all duration-300"
+                className="relative flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 border border-border text-foreground font-semibold rounded-lg overflow-hidden group transition-all duration-300 w-full sm:w-auto"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -247,23 +245,22 @@ export function HeroSection({ command, copied, onCopy }: HeroSectionProps) {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="relative"
+            className="relative mt-8 md:mt-0"
           >
-            <div className="bg-card border border-border rounded-xl p-6 font-mono text-sm shadow-2xl">
+            <div className="bg-card border border-border rounded-xl p-4 sm:p-6 font-mono text-xs sm:text-sm shadow-2xl">
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-3 h-3 rounded-full bg-destructive"></div>
-                <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                <span className="ml-4 text-muted-foreground text-xs">Terminal</span>
-                <div className="ml-auto flex items-center gap-2 text-xs text-muted-foreground">
+                <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-destructive"></div>
+                <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-yellow-500"></div>
+                <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-green-500"></div>
+                <span className="ml-2 sm:ml-4 text-muted-foreground text-[10px] sm:text-xs">Terminal</span>
+                <div className="ml-auto hidden sm:flex items-center gap-2 text-xs text-muted-foreground">
                   <span>Press 'b' to go back</span>
                 </div>
               </div>
-              <div className="space-y-2 min-h-[250px]">
+              <div className="space-y-2 min-h-[200px] sm:min-h-[250px]">
                 {/* Command line */}
-                <div className="flex items-center gap-2">
-
-                  <span className="text-foreground">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="text-foreground break-all">
                     {typedText}
                     {isAnimating && showCursor && (
                       <span className="ml-1 text-primary">▋</span>
@@ -300,16 +297,16 @@ export function HeroSection({ command, copied, onCopy }: HeroSectionProps) {
                       >
                         {step.status === "processing" && (
                           <>
-                            <CheckCircle2 className="w-4 h-4 text-primary fill-primary shrink-0" />
-                            <span className="text-muted-foreground">
+                            <CheckCircle2 className="w-3 h-3 sm:w-4 sm:h-4 text-primary fill-primary shrink-0" />
+                            <span className="text-muted-foreground text-xs sm:text-sm">
                               Applying <span className="text-primary font-medium">{step.text}</span>...
                             </span>
                           </>
                         )}
                         {step.status === "done" && (
                           <>
-                            <CheckCircle2 className="w-4 h-4 text-green-500 fill-green-500 flex-shrink-0" />
-                            <span className="text-foreground">
+                            <CheckCircle2 className="w-3 h-3 sm:w-4 sm:h-4 text-green-500 fill-green-500 flex-shrink-0" />
+                            <span className="text-foreground text-xs sm:text-sm">
                               ✓ Applied <span className="text-primary font-medium">{step.text}</span>
                             </span>
                           </>
@@ -324,10 +321,10 @@ export function HeroSection({ command, copied, onCopy }: HeroSectionProps) {
                   <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="mt-4 p-3 bg-green-500/10 border border-green-500/30 rounded flex items-center gap-2"
+                    className="mt-4 p-2 sm:p-3 bg-green-500/10 border border-green-500/30 rounded flex items-center gap-2"
                   >
-                    <CheckCircle2 className="w-5 h-5 text-green-500 fill-green-500" />
-                    <span className="text-green-500 font-semibold">✓ Auth-UI patch applied successfully!</span>
+                    <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 fill-green-500 shrink-0" />
+                    <span className="text-green-500 font-semibold text-xs sm:text-sm">✓ Auth-UI patch applied successfully!</span>
                   </motion.div>
                 )}
 

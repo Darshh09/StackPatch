@@ -4,14 +4,14 @@ import { motion } from "motion/react";
 
 export function WorkflowSection() {
   return (
-    <section className="py-20 px-4 border-y border-border">
+    <section className="py-12 sm:py-16 md:py-20 px-4 border-y border-border">
       <div className="w-[76.75rem] max-w-[calc(100vw-1rem)] md:max-w-[calc(100vw-2rem)] mx-auto">
-        <div className="mb-12">
-          <h2 className="text-sm font-medium text-[#A78BFA] mb-4">Workflow</h2>
-          <h3 className="text-3xl font-heading font-semibold text-foreground mb-4">
+        <div className="mb-8 sm:mb-10 md:mb-12">
+          <h2 className="text-xs sm:text-sm font-medium text-[#A78BFA] mb-3 sm:mb-4">Workflow</h2>
+          <h3 className="text-2xl sm:text-3xl md:text-4xl font-heading font-semibold text-foreground mb-3 sm:mb-4">
             Seamless Integration Workflow
           </h3>
-          <p className="text-base text-muted-foreground max-w-2xl">
+          <p className="text-sm sm:text-base text-muted-foreground max-w-2xl">
             StackPatch seamlessly integrates authentication into your Next.js app with zero configuration.
             Watch how it connects all the pieces together.
           </p>
@@ -562,7 +562,7 @@ export function WorkflowSection() {
           </div>
 
           {/* Mobile View - Simplified */}
-          <div className="relative mx-auto my-24 h-full w-full scale-[2] sm:scale-[1.5] md:scale-[1.2] lg:hidden">
+          <div className="relative mx-auto my-12 sm:my-16 md:my-20 h-full w-full scale-[1.8] sm:scale-[1.5] md:scale-[1.2] lg:hidden overflow-x-auto">
             <div className="flex flex-col items-center gap-8 p-8">
               <div className="text-center">
                 <h4 className="text-foreground font-semibold mb-2">Next.js App</h4>

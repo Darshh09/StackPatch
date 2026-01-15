@@ -9,9 +9,9 @@ export function TrustStrip() {
   const inView = useInView(ref, { once: true, amount: 0.3 });
 
   return (
-    <section ref={ref} className="py-20 px-4 border-y border-border bg-muted/30">
+    <section ref={ref} className="py-12 sm:py-16 md:py-20 px-4 border-y border-border bg-muted/30">
       <div className="w-[76.75rem] max-w-[calc(100vw-1rem)] md:max-w-[calc(100vw-2rem)] mx-auto">
-        <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8 text-sm text-muted-foreground">
+        <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 md:gap-8 text-xs sm:text-sm text-muted-foreground">
           {/* Next.js Logo and Text */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}

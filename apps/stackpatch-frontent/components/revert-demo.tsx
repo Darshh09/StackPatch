@@ -91,34 +91,34 @@ export function RevertDemo() {
   };
 
   return (
-    <div ref={sectionRef} className="my-8">
+    <div ref={sectionRef} className="my-6 sm:my-8">
       <div className="bg-[#0A0A0A] border border-white/10 rounded-lg overflow-hidden">
         {/* Terminal Header */}
-        <div className="bg-[#161B22] border-b border-white/10 px-4 py-2 flex items-center gap-2">
-          <div className="flex gap-1.5">
-            <div className="w-3 h-3 rounded-full bg-[#FF5F56]"></div>
-            <div className="w-3 h-3 rounded-full bg-[#FFBD2E]"></div>
-            <div className="w-3 h-3 rounded-full bg-[#27C93F]"></div>
+        <div className="bg-[#161B22] border-b border-white/10 px-3 sm:px-4 py-2 flex items-center gap-2">
+          <div className="flex gap-1 sm:gap-1.5">
+            <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#FF5F56]"></div>
+            <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#FFBD2E]"></div>
+            <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#27C93F]"></div>
           </div>
-          <span className="text-xs text-[#9CA3AF] ml-2">Terminal</span>
+          <span className="text-[10px] sm:text-xs text-[#9CA3AF] ml-1 sm:ml-2">Terminal</span>
           <button
             onClick={resetDemo}
-            className="ml-auto text-xs text-[#9CA3AF] hover:text-white transition-colors flex items-center gap-1"
+            className="ml-auto text-[10px] sm:text-xs text-[#9CA3AF] hover:text-white transition-colors flex items-center gap-1"
           >
             <RotateCcw className="w-3 h-3" />
-            Reset
+            <span className="hidden sm:inline">Reset</span>
           </button>
         </div>
 
         {/* Terminal Content */}
-        <div className="p-4 font-mono text-sm">
+        <div className="p-3 sm:p-4 font-mono text-xs sm:text-sm">
           {/* Add Command */}
           <div className="mb-4">
-            <div className="flex items-center gap-2 mb-2">
+            <div className="flex items-center gap-2 mb-2 flex-wrap">
               <span className="text-[#06B6D4]">$</span>
-              <span className="text-white">npx stackpatch add auth</span>
+              <span className="text-white break-all">npx stackpatch add auth</span>
             </div>
-            <div className="text-[#9CA3AF] text-xs ml-4 space-y-1">
+            <div className="text-[#9CA3AF] text-[10px] sm:text-xs ml-2 sm:ml-4 space-y-1">
               <div className="flex items-center gap-2">
                 <span className="animate-pulse">⠋</span>
                 <span>Detecting project structure...</span>
@@ -157,11 +157,11 @@ export function RevertDemo() {
           {/* Revert Command */}
           {showRevert && (
             <div className="border-t border-white/10 pt-4">
-              <div className="flex items-center gap-2 mb-2">
+              <div className="flex items-center gap-2 mb-2 flex-wrap">
                 <span className="text-[#06B6D4]">$</span>
-                <span className="text-white">npx stackpatch revert</span>
+                <span className="text-white break-all">npx stackpatch revert</span>
               </div>
-              <div className="text-[#9CA3AF] text-xs ml-4 space-y-1">
+              <div className="text-[#9CA3AF] text-[10px] sm:text-xs ml-2 sm:ml-4 space-y-1">
                 <div className="text-yellow-400 mb-2">
                   🔄 Reverting StackPatch installation
                 </div>
