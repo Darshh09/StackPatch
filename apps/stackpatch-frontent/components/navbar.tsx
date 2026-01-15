@@ -168,6 +168,113 @@ export function Navbar(props: NavbarProps = {}) {
                   </li>
                 ))}
               </ul>
+
+              {/* Start Building Button */}
+              <div className="hidden sm:contents">
+                {onCopyCommand ? (
+                  <button
+                    onClick={onCopyCommand}
+                    className="group relative isolate inline-flex items-center justify-center overflow-visible text-left font-medium transition-all duration-300 ease-[cubic-bezier(0.4,0.36,0,1)] text-sm rounded-md bg-black text-white h-[1.625rem] px-3 shadow-sm hover:shadow-lg"
+                  >
+                    {/* Enhanced shadow glow from left corner */}
+                    <div
+                      className="absolute -inset-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                      style={{
+                        background: "radial-gradient(circle at 0% 0%, rgba(167, 139, 250, 0.6) 0%, rgba(167, 139, 250, 0.3) 40%, transparent 70%)",
+                        filter: "blur(12px)",
+                      }}
+                    />
+                    {/* Additional shine layer */}
+                    <div
+                      className="absolute -inset-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                      style={{
+                        background: "radial-gradient(circle at 0% 0%, rgba(255, 255, 255, 0.2) 0%, transparent 50%)",
+                        filter: "blur(4px)",
+                      }}
+                    />
+                    <span className="relative z-10 text-white">Start building</span>
+                    <svg
+                      viewBox="0 0 10 10"
+                      aria-hidden="true"
+                      className="ml-2 h-2.5 w-2.5 flex-none opacity-60 group-hover:translate-x-6 group-hover:opacity-0 transition duration-300 ease-[cubic-bezier(0.4,0.36,0,1)]"
+                    >
+                      <path
+                        fill="currentColor"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="1.5"
+                        d="m7.25 5-3.5-2.25v4.5L7.25 5Z"
+                      />
+                    </svg>
+                    <svg
+                      viewBox="0 0 10 10"
+                      aria-hidden="true"
+                      className="-ml-2.5 h-2.5 w-2.5 flex-none -translate-x-2 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition duration-300 ease-[cubic-bezier(0.4,0.36,0,1)]"
+                    >
+                      <path
+                        fill="currentColor"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="1.5"
+                        d="m7.25 5-3.5-2.25v4.5L7.25 5Z"
+                      />
+                    </svg>
+                  </button>
+                ) : (
+                  <a
+                    href="/"
+                    className="group relative isolate inline-flex items-center justify-center overflow-visible text-left font-medium transition-all duration-300 ease-[cubic-bezier(0.4,0.36,0,1)] text-sm rounded-md bg-background border border-border text-foreground h-[1.625rem] px-2.5 hover:bg-primary hover:text-primary-foreground hover:border-primary shadow-sm hover:shadow-lg"
+                  >
+                    {/* Enhanced shadow glow from left corner */}
+                    <div
+                      className="absolute -inset-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                      style={{
+                        background: "radial-gradient(circle at 0% 0%, rgba(167, 139, 250, 0.6) 0%, rgba(167, 139, 250, 0.3) 40%, transparent 70%)",
+                        filter: "blur(12px)",
+                      }}
+                    />
+                    {/* Additional shine layer */}
+                    <div
+                      className="absolute -inset-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                      style={{
+                        background: "radial-gradient(circle at 0% 0%, rgba(255, 255, 255, 0.2) 0%, transparent 50%)",
+                        filter: "blur(4px)",
+                      }}
+                    />
+                    <span className="relative z-10">Get started</span>
+                    <svg
+                      viewBox="0 0 10 10"
+                      aria-hidden="true"
+                      className="ml-2 h-2.5 w-2.5 flex-none opacity-60 group-hover:translate-x-6 group-hover:opacity-0 transition duration-300 ease-[cubic-bezier(0.4,0.36,0,1)]"
+                    >
+                      <path
+                        fill="currentColor"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="1.5"
+                        d="m7.25 5-3.5-2.25v4.5L7.25 5Z"
+                      />
+                    </svg>
+                    <svg
+                      viewBox="0 0 10 10"
+                      aria-hidden="true"
+                      className="-ml-2.5 h-2.5 w-2.5 flex-none -translate-x-2 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition duration-300 ease-[cubic-bezier(0.4,0.36,0,1)]"
+                    >
+                      <path
+                        fill="currentColor"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="1.5"
+                        d="m7.25 5-3.5-2.25v4.5L7.25 5Z"
+                      />
+                    </svg>
+                  </a>
+                )}
+              </div>
             </div>
 
             {/* Mobile Actions */}
