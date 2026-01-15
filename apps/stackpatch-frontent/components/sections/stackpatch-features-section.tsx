@@ -7,33 +7,37 @@ import { CheckCircle2, Folder, FolderOpen, File, Lock } from "lucide-react";
 
 export function StackPatchFeaturesSection() {
   return (
-    <section className="py-20 px-4">
+    <section className="py-12 sm:py-16 md:py-20 px-4">
       <div className="w-[76.75rem] max-w-[calc(100vw-1rem)] md:max-w-[calc(100vw-2rem)] mx-auto">
-      <div className="mb-12">
-        <h2 className="text-sm font-medium text-[#A78BFA] mb-4">StackPatch</h2>
-        <h3 className="text-3xl font-heading font-semibold text-foreground mb-4">
+      <div className="mb-8 sm:mb-10 md:mb-12">
+        <h2 className="text-xs sm:text-sm font-medium text-[#A78BFA] mb-3 sm:mb-4">StackPatch</h2>
+        <h3 className="text-2xl sm:text-3xl md:text-4xl font-heading font-semibold text-foreground mb-3 sm:mb-4">
           The easy solution to feature integration
         </h3>
-        <p className="text-base text-muted-foreground max-w-2xl">
+        <p className="text-sm sm:text-base text-muted-foreground max-w-2xl">
           StackPatch has all the features you need to add production-ready functionality to your existing app without restructuring or boilerplate bloat.
         </p>
       </div>
 
       {/* Bento Grid Layout */}
-      <div className="mt-12 grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-4">
+      <div className="mt-8 sm:mt-10 md:mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4">
         {/* Auto-Detection Card - Large (spans 2 cols) */}
-        <div className="col-span-2 row-span-2 ">
+        <div className="col-span-1 sm:col-span-2 md:col-span-2 row-span-2">
           <AutoDetectionCard />
         </div>
 
         {/* Code Injection Card - Medium (spans 2 cols) */}
-        <CodeInjectionCard />
+        <div className="col-span-1 sm:col-span-2 md:col-span-2">
+          <CodeInjectionCard />
+        </div>
 
         {/* File Tree Preview Card - Small (spans 2 cols) */}
-        <FileTreePreviewCard />
+        <div className="col-span-1 sm:col-span-2 md:col-span-2">
+          <FileTreePreviewCard />
+        </div>
 
         {/* Zero Configuration Card - Large (spans 2 cols) */}
-        <div className="md:col-span-2 h-full group isolate flex flex-col rounded-2xl bg-card border border-border shadow-lg overflow-hidden">
+        <div className="col-span-1 sm:col-span-2 md:col-span-2 h-full group isolate flex flex-col rounded-xl sm:rounded-2xl bg-card border border-border shadow-lg overflow-hidden">
           <div className="relative z-10 flex-none px-6 pt-6">
             <h3 className="text-sm font-medium text-foreground">Zero configuration</h3>
             <p className="mt-2 text-pretty text-sm/5 text-muted-foreground">
@@ -61,7 +65,7 @@ export function StackPatchFeaturesSection() {
         </div>
 
         {/* Own Your Code Card - Medium (spans 2 cols) */}
-        <div className="md:col-span-2 h-full group isolate flex flex-col rounded-2xl bg-card border border-border shadow-lg overflow-hidden">
+        <div className="col-span-1 sm:col-span-2 md:col-span-2 h-full group isolate flex flex-col rounded-xl sm:rounded-2xl bg-card border border-border shadow-lg overflow-hidden">
           <div className="relative z-10 flex-none px-6 order-last pb-6">
             <h3 className="text-sm font-medium text-foreground">You own the code</h3>
             <p className="mt-2 text-pretty text-sm/5 text-muted-foreground">

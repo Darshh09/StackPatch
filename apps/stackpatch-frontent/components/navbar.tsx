@@ -1,11 +1,14 @@
 "use client";
 
 import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
-import { Github } from "lucide-react";
+import { Github, Search, Menu, ChevronDown } from "lucide-react";
 import { LogoText } from "@/components/logo";
 import { useState, useEffect } from "react";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
 import DocsSearchDialog from "@/components/docs-search-dialog";
+import { DocsMenuDrawer } from "@/components/docs-menu-drawer";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import Link from "next/link";
 
 interface NavbarProps {
   command?: string;
@@ -21,6 +24,8 @@ export function Navbar(props: NavbarProps = {}) {
   const [bgColor, setBgColor] = useState("rgba(248, 248, 248, 0.85)");
   const [isDark, setIsDark] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isDocsMenuOpen, setIsDocsMenuOpen] = useState(false);
 
   // Check for dark mode
   useEffect(() => {
@@ -56,6 +61,36 @@ export function Navbar(props: NavbarProps = {}) {
     );
   }, [isDark, backgroundOpacity]);
 
+  const navigationItems = [
+    { href: "/docs", label: "Docs" },
+  ];
+
+  const socialLinks = [
+    {
+      href: "https://twitter.com/Darshhh1800",
+      label: "Twitter Profile",
+      icon: (
+        <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+        </svg>
+      ),
+    },
+    {
+      href: "https://www.npmjs.com/package/stackpatch",
+      label: "npm Package",
+      icon: (
+        <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M1.763 0C.786 0 0 .786 0 1.763v20.474C0 23.214.786 24 1.763 24h20.474c.977 0 1.763-.786 1.763-1.763V1.763C24 .786 23.214 0 22.237 0zM5.13 5.323l13.837.019-.009 13.836h-3.464l.01-10.382h-3.456L12.04 19.17H5.113z" />
+        </svg>
+      ),
+    },
+    {
+      href: "https://github.com/Darshh09/StackPatch",
+      label: "GitHub Repository",
+      icon: <Github className="h-4 w-4" />,
+    },
+  ];
+
   return (
     <motion.nav
       style={{
@@ -64,231 +99,150 @@ export function Navbar(props: NavbarProps = {}) {
       className="fixed top-4 left-0 right-0 z-50 px-4"
     >
       <div className="m-auto w-[76.75rem] max-w-[calc(100vw-1rem)] md:max-w-[calc(100vw-2rem)]">
-        <motion.div
-          style={{
-            backgroundColor: bgColor,
-          }}
-          className="navbar-backdrop-blur relative z-30 mx-auto flex h-12 w-full items-center gap-6 rounded-2xl border border-border/50 px-4 py-1.5 shadow-[0_1px_3px_0_rgba(0,0,0,0.05),0_4px_12px_0_rgba(0,0,0,0.08),0_0_0_1px_rgba(255,255,255,0.05)_inset] transition-all duration-500 ease-out dark:border-border/30 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.2),0_4px_12px_0_rgba(0,0,0,0.3),0_0_0_1px_rgba(255,255,255,0.03)_inset] md:px-6"
-        >
-          {/* Logo */}
-          <a
-            aria-label="StackPatch Home Page"
-            href="/"
-            className="group flex select-none items-center gap-3 transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]"
-            style={{ WebkitTouchCallout: "none" }}
+        <Collapsible open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+          <motion.div
+            style={{
+              backgroundColor: bgColor,
+            }}
+            className="navbar-backdrop-blur relative z-30 mx-auto flex h-14 w-full items-center gap-6 rounded-2xl border border-border/50 px-4 py-1.5 shadow-[0_1px_3px_0_rgba(0,0,0,0.05),0_4px_12px_0_rgba(0,0,0,0.08),0_0_0_1px_rgba(255,255,255,0.05)_inset] transition-all duration-500 ease-out dark:border-border/30 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.2),0_4px_12px_0_rgba(0,0,0,0.3),0_0_0_1px_rgba(255,255,255,0.03)_inset] md:px-6"
           >
-            <LogoText />
-            <div
-              aria-hidden="true"
-              className="hidden h-6 w-px bg-neutral-500 md:block"
-            />
-          </a>
+            {/* Logo */}
+            <Link
+              href="/"
+              className="group flex select-none items-center gap-2.5 transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]"
+              style={{ WebkitTouchCallout: "none" }}
+            >
+              <LogoText />
+              <span className="font-medium font-mono text-md tracking-tighter hidden sm:inline">StackPatch</span>
+            </Link>
 
-          {/* Navigation */}
-          <nav aria-label="Main" className="hidden md:block">
-            <ul className="flex items-center gap-1">
-              {[
-                { href: "/docs", label: "Docs" },
-              ].map((item) => (
-                <li key={item.href}>
-                  <a
-                    href={item.href}
-                    className="flex items-center rounded-lg text-sm font-medium hover:text-neutral-400 transition-colors duration-200"
-                  >
-                    {item.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
+            {/* Desktop Navigation */}
+            <nav aria-label="Main" className="hidden sm:block">
+              <ul className="flex items-center gap-2 px-6">
+                {navigationItems.map((item) => (
+                  <li key={item.href} className="list-none text-sm">
+                    <Link
+                      href={item.href}
+                      className="inline-flex items-center gap-1 p-2 text-muted-foreground transition-colors hover:text-foreground data-[active=true]:text-primary"
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
 
-          {/* Right Side Actions */}
-          <div className="ml-auto flex items-center gap-2">
-            {/* Search (Fumadocs) */}
-            <div className="hidden md:flex items-center">
+            {/* Right Side Actions - Desktop */}
+            <div className="ml-auto flex items-center justify-end gap-1.5 flex-1 max-lg:hidden">
+              {/* Search Button */}
               <button
                 type="button"
                 onClick={() => setIsSearchOpen(true)}
-                className="flex h-9 items-center gap-2 rounded-lg border border-border bg-background/60 px-3 text-sm text-muted-foreground transition-all duration-200 hover:bg-accent/50 hover:text-foreground"
+                className="inline-flex items-center gap-2 border bg-background/50 p-1.5 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground w-full rounded-full ps-2.5 max-w-[240px]"
                 aria-label="Search docs"
               >
-                <span className="hidden md:inline">Search docs...</span>
-                <kbd className="rounded border border-border/60 bg-background/80 px-1.5 py-0.5 text-[0.7rem] font-mono text-muted-foreground">
-                  ⌘K
-                </kbd>
+                <Search className="h-4 w-4" />
+                <span className="flex-1 text-left">Search</span>
+                <div className="ms-auto inline-flex gap-0.5">
+                  <kbd className="rounded-md border bg-background px-1.5 text-xs">⌘</kbd>
+                  <kbd className="rounded-md border bg-background px-1.5 text-xs">K</kbd>
+                </div>
               </button>
-            </div>
-            {/* Divider */}
-            <div className="hidden h-6 w-px bg-neutral-500 sm:block" />
 
-            {/* Theme Toggle */}
-            <div className="hidden sm:flex items-center">
+              {/* Docs Menu Button (Desktop) */}
+              <button
+                type="button"
+                onClick={() => setIsDocsMenuOpen(true)}
+                className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors duration-100 hover:bg-accent hover:text-accent-foreground p-2"
+                aria-label="Open docs menu"
+              >
+                <Menu className="h-4 w-4" />
+              </button>
+
+              {/* Theme Toggle */}
               <ThemeToggle />
+
+              {/* Social Icons */}
+              <ul className="flex flex-row gap-2 items-center">
+                {socialLinks.map((social) => (
+                  <li key={social.href} className="list-none -mx-1 first:ms-0 last:me-0">
+                    <a
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors duration-100 hover:bg-accent hover:text-accent-foreground p-1.5 [&_svg]:size-5"
+                      aria-label={social.label}
+                    >
+                      {social.icon}
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </div>
 
-            {/* Social Icons */}
-            <div className="hidden sm:flex items-center gap-1">
-              {[
-                {
-                  href: "https://twitter.com/Darshhh1800",
-                  label: "Twitter Profile",
-                  icon: (
-                    <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                    </svg>
-                  ),
-                },
-                {
-                  href: "https://www.npmjs.com/package/stackpatch",
-                  label: "npm Package",
-                  icon: (
-                    <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="M1.763 0C.786 0 0 .786 0 1.763v20.474C0 23.214.786 24 1.763 24h20.474c.977 0 1.763-.786 1.763-1.763V1.763C24 .786 23.214 0 22.237 0zM5.13 5.323l13.837.019-.009 13.836h-3.464l.01-10.382h-3.456L12.04 19.17H5.113z" />
-                    </svg>
-                  ),
-                },
-                {
-                  href: "https://github.com/Darshh09/StackPatch",
-                  label: "GitHub Repository",
-                  icon: <Github className="h-4 w-4" />,
-                },
-              ].map((social) => (
-                <a
-                  key={social.href}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-all duration-200 hover:bg-accent/50 hover:text-foreground"
-                  aria-label={social.label}
+            {/* Mobile Actions */}
+            <div className="flex items-center ms-auto -me-1.5 lg:hidden">
+              {/* Search Icon */}
+              <button
+                type="button"
+                onClick={() => setIsSearchOpen(true)}
+                className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors duration-100 hover:bg-accent hover:text-accent-foreground [&_svg]:size-4.5 p-2"
+                aria-label="Open Search"
+              >
+                <Search className="h-4 w-4" />
+              </button>
+
+              {/* Menu Toggle */}
+              <CollapsibleTrigger asChild>
+                <button
+                  type="button"
+                  className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors duration-100 hover:bg-accent hover:text-accent-foreground p-1.5 group [&_svg]:size-5.5"
+                  aria-label="Toggle Menu"
                 >
-                  {social.icon}
-                </a>
-              ))}
+                  <ChevronDown className="h-5 w-5 transition-transform duration-300 group-data-[state=open]:rotate-180" />
+                </button>
+              </CollapsibleTrigger>
             </div>
+          </motion.div>
 
-            <div className="flex items-center gap-3 sm:gap-4 md:gap-4">
-              <div className="hidden sm:contents">
-                {onCopyCommand ? (
-                  <button
-                    onClick={onCopyCommand}
-                    className="group relative isolate inline-flex items-center justify-center overflow-visible text-left font-medium transition-all duration-300 ease-[cubic-bezier(0.4,0.36,0,1)] text-sm rounded-md bg-black  text-white h-[1.625rem] px-3 shadow-sm hover:shadow-lg "
-                  >
-                    {/* Enhanced shadow glow from left corner */}
-                    <div
-                      className="absolute -inset-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                      style={{
-                        background: "radial-gradient(circle at 0% 0%, rgba(167, 139, 250, 0.6) 0%, rgba(167, 139, 250, 0.3) 40%, transparent 70%)",
-                        filter: "blur(12px)",
-                      }}
-                    />
-                    {/* Additional shine layer */}
-                    <div
-                      className="absolute -inset-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                      style={{
-                        background: "radial-gradient(circle at 0% 0%, rgba(255, 255, 255, 0.2) 0%, transparent 50%)",
-                        filter: "blur(4px)",
-                      }}
-                    />
-                    <span className="relative z-10 text-white">Start building</span>
-                    <svg
-                      viewBox="0 0 10 10"
-                      aria-hidden="true"
-                      className="ml-2 h-2.5 w-2.5 flex-none opacity-60 group-hover:translate-x-6 group-hover:opacity-0 transition duration-300 ease-[cubic-bezier(0.4,0.36,0,1)]"
-                    >
-                      <path
-                        fill="currentColor"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="1.5"
-                        d="m7.25 5-3.5-2.25v4.5L7.25 5Z"
-                      />
-                    </svg>
-                    <svg
-                      viewBox="0 0 10 10"
-                      aria-hidden="true"
-                      className="-ml-2.5 h-2.5 w-2.5 flex-none -translate-x-2 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition duration-300 ease-[cubic-bezier(0.4,0.36,0,1)]"
-                    >
-                      <path
-                        fill="currentColor"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="1.5"
-                        d="m7.25 5-3.5-2.25v4.5L7.25 5Z"
-                      />
-                    </svg>
-                  </button>
-                ) : (
+          {/* Mobile Menu Content */}
+          <CollapsibleContent className="overflow-hidden data-[state=closed]:animate-fd-collapsible-up data-[state=open]:animate-fd-collapsible-down flex flex-col px-4">
+            <div className="mt-4 space-y-1">
+              {/* Mobile Navigation Links */}
+              {navigationItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="inline-flex items-center gap-2 py-1.5 transition-colors hover:text-foreground/50 data-[active=true]:font-medium data-[active=true]:text-primary [&_svg]:size-4 first:mt-4 sm:hidden"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              ))}
+
+              {/* Mobile Social Icons & Theme Toggle */}
+              <div className="-ms-1.5 flex flex-row pt-2 pb-4 items-center justify-end gap-2">
+                {socialLinks.map((social) => (
                   <a
-                    href="/"
-                    className="group relative isolate inline-flex items-center justify-center overflow-visible text-left font-medium transition-all duration-300 ease-[cubic-bezier(0.4,0.36,0,1)] text-sm rounded-md bg-background border border-border text-foreground h-[1.625rem] px-2.5 hover:bg-primary hover:text-primary-foreground hover:border-primary shadow-sm hover:shadow-lg"
+                    key={social.href}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors duration-100 hover:bg-accent hover:text-accent-foreground p-1.5 [&_svg]:size-5 -mx-1 first:ms-0"
+                    aria-label={social.label}
                   >
-                    {/* Enhanced shadow glow from left corner */}
-                    <div
-                      className="absolute -inset-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                      style={{
-                        background: "radial-gradient(circle at 0% 0%, rgba(167, 139, 250, 0.6) 0%, rgba(167, 139, 250, 0.3) 40%, transparent 70%)",
-                        filter: "blur(12px)",
-                      }}
-                    />
-                    {/* Additional shine layer */}
-                    <div
-                      className="absolute -inset-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                      style={{
-                        background: "radial-gradient(circle at 0% 0%, rgba(255, 255, 255, 0.2) 0%, transparent 50%)",
-                        filter: "blur(4px)",
-                      }}
-                    />
-                    <span className="relative z-10">Get started</span>
-                    <svg
-                      viewBox="0 0 10 10"
-                      aria-hidden="true"
-                      className="ml-2 h-2.5 w-2.5 flex-none opacity-60 group-hover:translate-x-6 group-hover:opacity-0 transition duration-300 ease-[cubic-bezier(0.4,0.36,0,1)]"
-                    >
-                      <path
-                        fill="currentColor"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="1.5"
-                        d="m7.25 5-3.5-2.25v4.5L7.25 5Z"
-                      />
-                    </svg>
-                    <svg
-                      viewBox="0 0 10 10"
-                      aria-hidden="true"
-                      className="-ml-2.5 h-2.5 w-2.5 flex-none -translate-x-2 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition duration-300 ease-[cubic-bezier(0.4,0.36,0,1)]"
-                    >
-                      <path
-                        fill="currentColor"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="1.5"
-                        d="m7.25 5-3.5-2.25v4.5L7.25 5Z"
-                      />
-                    </svg>
+                    {social.icon}
                   </a>
-                )}
+                ))}
+                <div role="separator" className="flex-1 sm:hidden" />
+                <ThemeToggle />
               </div>
             </div>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="ml-2 flex h-10 w-10 items-center justify-center rounded-lg text-muted-foreground outline-none transition-all duration-200 hover:bg-accent/50 hover:text-foreground md:hidden"
-            type="button"
-            aria-label="Open navigation"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" className="h-4 w-4">
-              <path stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" d="M4 4.667L12 4.667" />
-              <path stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" d="M4 11.333L12 11.333" />
-            </svg>
-          </button>
-        </motion.div>
+          </CollapsibleContent>
+        </Collapsible>
       </div>
       <DocsSearchDialog open={isSearchOpen} onOpenChange={setIsSearchOpen} />
+      <DocsMenuDrawer open={isDocsMenuOpen} onOpenChange={setIsDocsMenuOpen} />
     </motion.nav>
   );
 }

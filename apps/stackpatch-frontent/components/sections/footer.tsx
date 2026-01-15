@@ -77,14 +77,14 @@ export function Footer() {
                   width="250"
                   height="54"
                   src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1063012&theme=light&t=1768419170786"
-                  className="h-auto w-[200px] dark:hidden"
+                  className="h-auto w-[180px] sm:w-[200px] dark:hidden"
                 />
                 <img
                   alt="StackPatch - Patch authentication into your Next.js app with one command | Product Hunt"
                   width="250"
                   height="54"
                   src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1063012&theme=dark&t=1768419170786"
-                  className="hidden h-auto w-[200px] dark:block"
+                  className="hidden h-auto w-[180px] sm:w-[200px] dark:block"
                 />
               </a>
             </div>
