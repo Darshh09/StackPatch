@@ -7,13 +7,14 @@ export function PatchesSection() {
     {
       icon: "🔐",
       title: "Auth",
-      description: "NextAuth / Better-Auth / Clerk",
+      description: "Better Auth integration",
       files: [
         "app/",
-        "api/auth/[...nextauth]/",
+        "api/auth/[...all]/",
         "route.ts",
-        "providers.ts",
-        "auth.config.ts",
+        "lib/",
+        "auth.ts",
+        "protected-routes.ts",
       ],
     },
     {

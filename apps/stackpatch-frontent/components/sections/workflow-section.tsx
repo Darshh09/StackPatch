@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 
 export function WorkflowSection() {
   return (
-    <section className="py-12 sm:py-16 md:py-20 px-4 border-y border-border">
+    <section className="py-12 sm:py-16 md:py-20 px-4 border-b border-neutral-700">
       <div className="w-[76.75rem] max-w-[calc(100vw-1rem)] md:max-w-[calc(100vw-2rem)] mx-auto">
         <div className="mb-8 sm:mb-10 md:mb-12">
           <h2 className="text-xs sm:text-sm font-medium text-[#A78BFA] mb-3 sm:mb-4">Workflow</h2>
@@ -123,7 +123,7 @@ export function WorkflowSection() {
                   </svg>
                 </div>
 
-                {/* NextAuth */}
+                {/* Better Auth */}
                 <div className="relative flex items-center gap-2">
                   <svg
                     width="16"
@@ -148,7 +148,7 @@ export function WorkflowSection() {
                       strokeLinejoin="round"
                     />
                   </svg>
-                  <span className="text-foreground text-sm font-medium">NextAuth.js</span>
+                  <span className="text-foreground text-sm font-medium">Better Auth</span>
                   {/* Animated connecting line */}
                   <svg
                     width="323"
@@ -443,13 +443,17 @@ export function WorkflowSection() {
                   <div className="relative z-10 rounded-lg shadow-xl bg-white dark:bg-muted bg-gradient-to-br from-white/5 to-65% p-3 font-mono text-xs ring-[0.25rem] ring-background/50">
                     <div className="text-muted-foreground mb-1.5 text-[10px]">app/layout.tsx</div>
                     <div className="space-y-0.5" style={{ color: "#A78BFA" }}>
-                      <div className="text-[10px]">+ AuthSessionProvider</div>
+                      <div className="text-[10px]">+ AuthWrapper</div>
                       <div className="text-[10px]">+ Toaster</div>
                     </div>
                     <div className="text-muted-foreground mt-2 mb-1.5 text-[10px]">app/api/auth/</div>
                     <div className="space-y-0.5" style={{ color: "#A78BFA" }}>
-                      <div className="text-[10px]">+ route.ts</div>
-                      <div className="text-[10px]">+ providers.ts</div>
+                      <div className="text-[10px]">+ [...all]/route.ts</div>
+                    </div>
+                    <div className="text-muted-foreground mt-2 mb-1.5 text-[10px]">lib/</div>
+                    <div className="space-y-0.5" style={{ color: "#A78BFA" }}>
+                      <div className="text-[10px]">+ auth.ts</div>
+                      <div className="text-[10px]">+ protected-routes.ts</div>
                     </div>
                   </div>
                 </div>

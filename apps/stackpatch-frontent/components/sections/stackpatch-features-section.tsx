@@ -7,7 +7,7 @@ import { CheckCircle2, Folder, FolderOpen, File, Lock } from "lucide-react";
 
 export function StackPatchFeaturesSection() {
   return (
-    <section className="py-12 sm:py-16 md:py-20 px-4">
+    <section className="py-12 sm:py-16 md:py-20 px-4 border-b border-neutral-700">
       <div className="w-[76.75rem] max-w-[calc(100vw-1rem)] md:max-w-[calc(100vw-2rem)] mx-auto">
       <div className="mb-8 sm:mb-10 md:mb-12">
         <h2 className="text-xs sm:text-sm font-medium text-[#A78BFA] mb-3 sm:mb-4">StackPatch</h2>
@@ -320,13 +320,13 @@ function CodeInjectionCard() {
   const animationRef = useRef<NodeJS.Timeout | null>(null);
 
   const codeLines = useMemo(() => [
-    { id: 1, text: 'import {"{ AuthSessionProvider "}', type: "existing" },
-    { id: 2, text: 'from "@/components/session-provider"', type: "added" },
+    { id: 1, text: 'import {"{ AuthWrapper "}', type: "existing" },
+    { id: 2, text: 'from "@/components/auth-wrapper"', type: "added" },
     { id: 3, text: 'export default function RootLayout() {"{"}', type: "existing" },
     { id: 4, text: 'return (', type: "added" },
-    { id: 5, text: '{"<"}AuthSessionProvider{">"}', type: "added" },
+    { id: 5, text: '{"<"}AuthWrapper{">"}', type: "added" },
     { id: 6, text: '{"{children}"}', type: "existing" },
-    { id: 7, text: '{"</"}AuthSessionProvider{">"}', type: "added" },
+    { id: 7, text: '{"</"}AuthWrapper{">"}', type: "added" },
   ], []);
 
   const lineDelay = 500;

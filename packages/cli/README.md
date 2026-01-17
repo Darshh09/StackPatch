@@ -58,7 +58,7 @@ StackPatch solves this by:
 Navigate to your Next.js project directory and run:
 
 ```bash
-npx stackpatch add auth
+npx stackpatch@latest add auth
 ```
 
 The CLI will guide you through an interactive setup:
@@ -72,26 +72,33 @@ The CLI will guide you through an interactive setup:
 ### Create New Project
 
 ```bash
-# Using npm create (recommended)
-npm create stackpatch@latest my-app
-
-# Using npx
-npx create-stackpatch@latest my-app
+# Using npx (recommended - always gets latest version)
+npx stackpatch@latest create my-app
 # or
+npx create-stackpatch@latest my-app
+# or (shorter, but may use cached version)
 npx stackpatch create my-app
 
-# Using bunx (Bun's npx equivalent)
+# Or without project name (will prompt)
+npx stackpatch@latest create
+
+# Using bunx (Bun's npx equivalent - if you have Bun installed)
 bunx create-stackpatch@latest my-app
 ```
 
-> **Note:** All commands will prompt you for a project name if not provided.
+> **Note:**
+> - `npx stackpatch@latest create` or `npx create-stackpatch@latest` always gets the latest version from npm
+> - `npx stackpatch create` may use a cached version - use `@latest` to force the latest version
+> - `npm create stackpatch@latest` will work after the package is published to npm
+> - All commands will prompt you for a project name if not provided
+> - The CLI automatically detects and uses Bun if available, otherwise falls back to Node.js with tsx
 
 ### Revert an Installation
 
 If you want to undo a StackPatch installation:
 
 ```bash
-npx stackpatch revert
+npx stackpatch@latest revert
 ```
 
 This will:
@@ -105,7 +112,7 @@ This will:
 
 ### Setup Flow
 
-When you run `npx stackpatch add auth`, StackPatch automatically generates:
+When you run `npx stackpatch@latest add auth`, StackPatch automatically generates:
 
 - ✅ **Better Auth configuration** (`lib/auth.ts` or `src/lib/auth.ts`)
 - ✅ **Auth client utilities** (`lib/auth-client.ts` or `src/lib/auth-client.ts`)
@@ -129,7 +136,7 @@ StackPatch automatically:
 
 ## 🔐 OAuth Setup
 
-When you run `npx stackpatch add auth`, you'll be prompted to select which OAuth providers you want to configure. StackPatch will only set up the providers you select.
+When you run `npx stackpatch@latest add auth`, you'll be prompted to select which OAuth providers you want to configure. StackPatch will only set up the providers you select.
 
 ### Google OAuth
 
@@ -249,7 +256,7 @@ See Better Auth documentation for advanced configuration: https://better-auth.de
 
 ## 📁 File Locations
 
-After running `npx stackpatch add auth`, you'll find files in locations that match your project structure:
+After running `npx stackpatch@latest add auth`, you'll find files in locations that match your project structure:
 
 ### If your app is in `app/`:
 - **Auth pages**: `app/auth/login/page.tsx`, `app/auth/signup/page.tsx`
@@ -400,7 +407,7 @@ StackPatch automatically detects and uses the correct structure!
 If you want to undo a StackPatch installation:
 
 ```bash
-npx stackpatch revert
+npx stackpatch@latest revert
 ```
 
 This command will:
@@ -435,7 +442,7 @@ Every installation is tracked:
 - ✅ All added files are recorded
 - ✅ All modified files are backed up before changes
 - ✅ Manifest file stores installation metadata
-- ✅ Safe reversion with `npx stackpatch revert`
+- ✅ Safe reversion with `npx stackpatch@latest revert`
 
 ## 🤝 Contributing
 

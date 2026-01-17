@@ -20,10 +20,10 @@ export interface ContainerTextFlipProps {
 
 export function ContainerTextFlip({
   words = ["better", "modern", "beautiful", "awesome"],
-  interval = 3000,
+  interval = 600,
   className,
   textClassName,
-  animationDuration = 700,
+  animationDuration = 1800,
 }: ContainerTextFlipProps) {
   const id = useId();
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
@@ -40,8 +40,10 @@ export function ContainerTextFlip({
   };
 
   useEffect(() => {
-    // Update width whenever the word changes
-    updateWidthForWord();
+    // Update width whenever the word changes - use requestAnimationFrame to ensure DOM is updated
+    requestAnimationFrame(() => {
+      updateWidthForWord();
+    });
   }, [currentWordIndex]);
 
   useEffect(() => {
@@ -53,12 +55,18 @@ export function ContainerTextFlip({
     return () => clearInterval(intervalId);
   }, [words, interval]);
 
+  // Ensure animationDuration is reasonable (minimum 200ms)
+  const safeAnimationDuration = Math.max(animationDuration, 200);
+
   return (
     <motion.div
       layout
       layoutId={`words-here-${id}`}
       animate={{ width }}
-      transition={{ duration: animationDuration / 2000 }}
+      transition={{
+        duration: safeAnimationDuration / 1000,
+        ease: [0.4, 0, 0.2, 1] // cubic-bezier for smoother animation
+      }}
       className={cn(
         "relative inline-block rounded-lg pt-1.5 sm:pt-2 pb-2 sm:pb-3 text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-black dark:text-white",
         "[background:linear-gradient(to_bottom,#f3f4f6,#e5e7eb)]",
@@ -71,7 +79,7 @@ export function ContainerTextFlip({
     >
       <motion.div
         transition={{
-          duration: animationDuration / 1000,
+          duration: safeAnimationDuration / 1000,
           ease: "easeInOut",
         }}
         className={cn("inline-block", textClassName)}
@@ -81,7 +89,7 @@ export function ContainerTextFlip({
         <motion.div className="inline-block">
           {words[currentWordIndex].split("").map((letter, index) => (
             <motion.span
-              key={index}
+              key={`${words[currentWordIndex]}-${index}`}
               initial={{
                 opacity: 0,
                 filter: "blur(10px)",
@@ -92,6 +100,7 @@ export function ContainerTextFlip({
               }}
               transition={{
                 delay: index * 0.02,
+                duration: 0.3,
               }}
             >
               {letter}

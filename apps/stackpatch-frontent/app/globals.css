@@ -213,6 +213,32 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: var(--font-sans), system-ui, sans-serif;
+  scrollbar-width: thin;
+  scrollbar-color: lab(15.0353% 1.96067 1.53427);
+}
+
+/* Webkit scrollbar styling for Chrome, Safari, Edge */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: lab(15.0353% 1.96067 1.53427);
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: lab(9.34% 0.24 0.87);
+  border-radius: 4px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: lab(20% 1.96067 1.53427);
 }
 
 .font-heading {
@@ -272,6 +298,30 @@ body {
   .animate-fade-in {
     animation: fade-in 0.3s ease-out forwards;
     opacity: 0;
+  }
+
+  /* Spotlight Animation */
+  @keyframes spotlight {
+    0% {
+      opacity: 0;
+      transform: translate(-72%, -62%) scale(0.5);
+    }
+    100% {
+      opacity: 1;
+      transform: translate(-50%, -40%) scale(1);
+    }
+  }
+
+  .animate-spotlight {
+    animation: spotlight 2s ease-out forwards;
+  }
+
+  /* Grid Background Pattern */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, currentColor 1px, transparent 1px),
+      linear-gradient(to bottom, currentColor 1px, transparent 1px);
+    background-size: 20px 20px;
   }
 }
 

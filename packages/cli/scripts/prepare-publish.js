@@ -8,9 +8,10 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Copy boilerplate to cli package for publishing
-const sourceBoilerplate = path.resolve(__dirname, "../../boilerplate");
+// Boilerplate should already be in packages/cli/boilerplate
+// Check if it exists, if not, try to copy from root boilerplate (if it exists)
 const targetBoilerplate = path.resolve(__dirname, "../boilerplate");
+const sourceBoilerplate = path.resolve(__dirname, "../../boilerplate");
 
 // Files and directories to exclude when copying
 const excludePatterns = [
@@ -56,16 +57,36 @@ function copyDirectory(src, dest) {
   }
 }
 
-if (fs.existsSync(sourceBoilerplate)) {
-  // Remove old boilerplate if exists
-  if (fs.existsSync(targetBoilerplate)) {
-    fs.rmSync(targetBoilerplate, { recursive: true, force: true });
-  }
+// Check if dist directory exists (build output)
+const distDir = path.resolve(__dirname, "../dist");
+if (!fs.existsSync(distDir)) {
+  console.error("❌ Build output not found!");
+  console.error(`   Expected location: ${distDir}`);
+  console.error("   Please run 'npm run build' first");
+  process.exit(1);
+}
 
-  // Copy boilerplate (excluding node_modules and other build artifacts)
+// Make the CLI file executable
+const cliFile = path.join(distDir, "stackpatch.js");
+if (fs.existsSync(cliFile)) {
+  fs.chmodSync(cliFile, 0o755);
+  console.log("✅ Made stackpatch.js executable");
+}
+
+// Check if target boilerplate already exists
+if (fs.existsSync(targetBoilerplate)) {
+  console.log("✅ Boilerplate already exists in packages/cli/boilerplate");
+  console.log("   Skipping copy step (boilerplate is ready for publishing)");
+} else if (fs.existsSync(sourceBoilerplate)) {
+  // Copy boilerplate from root if target doesn't exist
+  console.log("📦 Copying boilerplate from root...");
   copyDirectory(sourceBoilerplate, targetBoilerplate);
   console.log("✅ Boilerplate copied for publishing (excluding node_modules and build artifacts)");
 } else {
-  console.error("❌ Source boilerplate not found");
+  console.error("❌ Boilerplate not found!");
+  console.error(`   Expected location: ${targetBoilerplate}`);
+  console.error(`   Or source location: ${sourceBoilerplate}`);
   process.exit(1);
 }
+
+console.log("✅ All files ready for publishing!");

@@ -52,7 +52,7 @@ export function DiffPreviewSection() {
             </div>
             <div className="font-mono text-sm space-y-1">
               <div className="text-[#9CA3AF]">/app</div>
-              <div className="ml-4 text-[#9CA3AF]">api/auth/[...nextauth]/</div>
+              <div className="ml-4 text-[#9CA3AF]">api/auth/[...all]/</div>
               <motion.div
                 initial={{ opacity: 0, x: -10 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -62,23 +62,24 @@ export function DiffPreviewSection() {
               >
                 route.ts
               </motion.div>
+              <div className="ml-4 text-[#9CA3AF] mt-2">/lib</div>
               <motion.div
                 initial={{ opacity: 0, x: -10 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.5 }}
-                className="ml-4 text-[#06B6D4]"
+                className="ml-8 text-[#06B6D4]"
               >
-                providers.ts
+                auth.ts
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, x: -10 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.6 }}
-                className="ml-4 text-[#06B6D4]"
+                className="ml-8 text-[#06B6D4]"
               >
-                auth.config.ts
+                protected-routes.ts
               </motion.div>
             </div>
           </motion.div>
