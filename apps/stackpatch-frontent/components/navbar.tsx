@@ -131,9 +131,9 @@ export function Navbar(props: NavbarProps = {}) {
       style={{
         opacity: navbarOpacity,
       }}
-      className="fixed top-4 left-0 right-0 z-50 px-4"
+      className="fixed top-4 left-0 right-0 z-50 px-5 md:px-4 sm:px-6 lg:px-8"
     >
-      <div className="m-auto w-[76.75rem] max-w-[calc(100vw-1rem)] md:max-w-[calc(100vw-2rem)]">
+      <div className="m-auto w-[76.75rem] max-w-[calc(100vw-2.5rem)] md:max-w-[calc(100vw-2rem)]">
         <Collapsible open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
           <motion.div
             style={{

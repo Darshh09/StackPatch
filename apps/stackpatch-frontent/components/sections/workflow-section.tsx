@@ -4,9 +4,9 @@ import { motion } from "motion/react";
 
 export function WorkflowSection() {
   return (
-    <section className="py-12 sm:py-16 md:py-20 px-4 border-b border-neutral-700">
-      <div className="w-[76.75rem] max-w-[calc(100vw-1rem)] md:max-w-[calc(100vw-2rem)] mx-auto">
-        <div className="mb-8 sm:mb-10 md:mb-12">
+    <section className="py-12 sm:py-16 md:py-20 px-5 md:px-4 sm:px-6 lg:px-8 border-b border-neutral-700">
+      <div className="w-[76.75rem] max-w-[calc(100vw-2.5rem)] md:max-w-[calc(100vw-2rem)] mx-auto">
+        <div className="mb-8 sm:mb-10 md:mb-12 px-4 md:px-0">
           <h2 className="text-xs sm:text-sm font-medium text-[#A78BFA] mb-3 sm:mb-4">Workflow</h2>
           <h3 className="text-2xl sm:text-3xl md:text-4xl font-heading font-semibold text-foreground mb-3 sm:mb-4">
             Seamless Integration Workflow
@@ -21,7 +21,7 @@ export function WorkflowSection() {
           {/* Dotted background pattern */}
 
           {/* Workflow Visualization - Desktop */}
-          <div className="relative mx-auto  h-full min-h-80 max-w-[67rem] grid-cols-2 p-4 lg:grid">
+          <div className="relative mx-auto  h-full min-h-80 max-w-[67rem] grid-cols-2 p-4 lg:grid hidden md:block">
             {/* Left Column - Services */}
             <div className="flex items-center mt-20 justify-between">
               <div className="flex flex-col gap-10">
@@ -566,7 +566,7 @@ export function WorkflowSection() {
           </div>
 
           {/* Mobile View - Simplified */}
-          <div className="relative mx-auto my-12 sm:my-16 md:my-20 h-full w-full scale-[1.8] sm:scale-[1.5] md:scale-[1.2] lg:hidden overflow-x-auto">
+          <div className="relative mx-auto my-20 sm:my-20 md:my-20 h-full w-full scale-[1.8] sm:scale-[1.5] md:scale-[1.2] lg:hidden overflow-x-auto">
             <div className="flex flex-col items-center gap-8 p-8">
               <div className="text-center">
                 <h4 className="text-foreground font-semibold mb-2">Next.js App</h4>
@@ -583,24 +583,71 @@ export function WorkflowSection() {
                   }}
                 />
                 <div className="relative z-20 flex h-full w-full items-center justify-center rounded-[5px] bg-card">
-                  <svg
-                    width="20"
-                    height="24"
-                    viewBox="0 0 20 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="text-primary"
-                  >
-                    <path
-                      d="M0 4.5C0 3.11929 1.11929 2 2.5 2H7.5C8.88071 2 10 3.11929 10 4.5V9.40959C10.0001 9.4396 10.0002 9.46975 10.0002 9.50001C10.0002 10.8787 11.1162 11.9968 12.4942 12C12.4961 12 12.4981 12 12.5 12H17.5C18.8807 12 20 13.1193 20 14.5V19.5C20 20.8807 18.8807 22 17.5 22H12.5C11.1193 22 10 20.8807 10 19.5V14.5C10 14.4931 10 14.4861 10.0001 14.4792C9.98891 13.1081 8.87394 12 7.50017 12C7.4937 12 7.48725 12 7.48079 12H2.5C1.11929 12 0 10.8807 0 9.5V4.5Z"
-                      fill="currentColor"
-                    />
-                  </svg>
+                <svg
+      width="32"
+      height="32"
+      viewBox="0 0 32 32"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="text-primary"
+    >
+      {/* Stack layers */}
+      <rect
+        x="4"
+        y="8"
+        width="20"
+        height="4"
+        rx="1"
+        fill="#A78BFA"
+        opacity="0.8"
+      />
+      <rect
+        x="6"
+        y="12"
+        width="18"
+        height="4"
+        rx="1"
+        fill="#A78BFA"
+        opacity="0.6"
+      />
+      <rect
+        x="8"
+        y="16"
+        width="16"
+        height="4"
+        rx="1"
+        fill="#A78BFA"
+        opacity="0.4"
+      />
+
+      {/* Patch overlay (diff symbol) */}
+      <path
+        d="M24 6 L28 10 L24 14 L20 10 Z"
+        fill="#06B6D4"
+        stroke="#06B6D4"
+        strokeWidth="1.5"
+      />
+      <path
+        d="M22 8 L26 8 M24 6 L24 10"
+        stroke="#0A0A0A"
+        strokeWidth="1"
+        strokeLinecap="round"
+      />
+
+      {/* Code brackets */}
+      <path
+        d="M10 22 L8 24 L10 26 M22 22 L24 24 L22 26"
+        stroke="#A78BFA"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
                 </div>
               </div>
-              <div className="text-center">
+              <div className="text-center px-4">
                 <div className="w-px h-8 bg-border mx-auto mb-2"></div>
-                <h4 className="text-foreground font-semibold">Auth Components</h4>
+                <h4 className="text-foreground text-sm sm:text-base md:text-lg font-semibold text-center px-4">Better Auth Authentication Configured</h4>
               </div>
             </div>
           </div>
