@@ -209,7 +209,7 @@ You could help continuing its development by:
 
 ## Security
 
-If you discover a security vulnerability within StackPatch, please send an e-mail to [security@stackpatch.dev](mailto:security@stackpatch.dev).
+If you discover a security vulnerability within StackPatch, please send an e-mail to [darshitshukla1777@gamil.com](mailto:darshitshukla1777@gamil.com).
 
 All reports will be promptly addressed, and you'll be credited accordingly.
 
