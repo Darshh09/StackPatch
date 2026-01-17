@@ -17,11 +17,11 @@ export function WorkflowSection() {
           </p>
         </div>
 
-        <div className="p-4 -top-10 relative w-full max-w-none overflow-hidden">
+        <div className="p-4 -top-10 relative w-full max-w-none">
           {/* Dotted background pattern */}
 
           {/* Workflow Visualization - Desktop */}
-          <div className="relative mx-auto  hidden h-full min-h-80 max-w-[67rem] grid-cols-2 p-4 lg:grid">
+          <div className="relative mx-auto  h-full min-h-80 max-w-[67rem] grid-cols-2 p-4 lg:grid">
             {/* Left Column - Services */}
             <div className="flex items-center mt-20 justify-between">
               <div className="flex flex-col gap-10">
@@ -427,9 +427,9 @@ export function WorkflowSection() {
 
 
               {/* Output Cards - Code Changes & Auth UI */}
-              <div className="absolute -top-43 right-10 flex flex-col z-0">
+              <div className="absolute -top-50 right-10 flex flex-col z-0">
                 {/* Code Changes Card - Small inner card only */}
-                <div className="relative p-0.5 rounded-lg w-[200px] overflow-hidden">
+                <div className="relative z-20 p-0.5 rounded-lg w-[200px] overflow-hidden">
                 <motion.div
                 className="absolute inset-0 scale-[1.4] rounded-full [background-image:conic-gradient(at_center,transparent,#3B82F6_20%,transparent_30%)]"
                 animate={{ rotate: 360 }}
@@ -537,7 +537,7 @@ export function WorkflowSection() {
                 </svg>
 
                 {/* Auth UI Card - Small inner card only */}
-                <div className="relative rounded-lg p-0.5 w-[200px] overflow-hidden">
+                <div className="relative rounded-lg z-30 p-0.5 w-[200px] overflow-hidden">
                 <motion.div
                 className="absolute inset-0 scale-[1.4] rounded-full bg-conic [background-image:conic-gradient(at_center,transparent,#EF4444_20%,transparent_30%)]"
                 animate={{ rotate: 360 }}
