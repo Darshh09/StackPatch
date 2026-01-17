@@ -8,6 +8,7 @@ import { ThemeToggle } from "@/components/layout/theme-toggle";
 import DocsSearchDialog from "@/components/docs-search-dialog";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import Link from "next/link";
+import { kFormatter } from "@/lib/utils";
 
 interface NavbarProps {
   command?: string;
@@ -25,6 +26,32 @@ export function Navbar(props: NavbarProps = {}) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDocsMenuOpen, setIsDocsMenuOpen] = useState(false);
+  const [githubStars, setGithubStars] = useState<number | null>(null);
+
+  // Fetch GitHub stars
+  useEffect(() => {
+    async function getGitHubStars() {
+      try {
+        const response = await fetch(
+          "https://api.github.com/repos/Darshh09/StackPatch",
+          {
+            next: {
+              revalidate: 60,
+            },
+          },
+        );
+        if (!response?.ok) {
+          return null;
+        }
+        const json = await response.json();
+        const stars = parseInt(json.stargazers_count);
+        setGithubStars(stars);
+      } catch {
+        setGithubStars(null);
+      }
+    }
+    getGitHubStars();
+  }, []);
 
   // Check for dark mode
   useEffect(() => {
@@ -86,7 +113,16 @@ export function Navbar(props: NavbarProps = {}) {
     {
       href: "https://github.com/Darshh09/StackPatch",
       label: "GitHub Repository",
-      icon: <Github className="h-4 w-4" />,
+      icon: (
+        <div className="relative">
+          <Github className="h-4 w-4" />
+          {githubStars !== null && (
+            <span className="absolute -top-1.5 -right-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-yellow-500 px-1 text-[10px] font-semibold text-white shadow-sm">
+              {kFormatter(githubStars)}
+            </span>
+          )}
+        </div>
+      ),
     },
   ];
 

@@ -28,6 +28,8 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background text-foreground relative">
+       <div className="absolute inset-0 left-5 right-5 lg:left-16 lg:right-14 xl:left-16 xl:right-14  border-[0.5px] border-l-neutral-700 border-r-neutral-700">
+      </div>
       <Navbar command={command} onCopyCommand={() => copyToClipboard(command)} />
 
       <HeroSection
@@ -43,7 +45,7 @@ export default function Home() {
       <WorkflowSection />
 
       {/* Revert Feature Section */}
-      <section className="py-12 sm:py-16 md:py-20 px-4 border-y border-border">
+      <section className="py-12 sm:py-16 md:py-20 px-4 border-b border-neutral-700">
         <div className="w-[76.75rem] max-w-[calc(100vw-1rem)] md:max-w-[calc(100vw-2rem)] mx-auto">
           <div className="mb-8 sm:mb-10 md:mb-12">
             <h2 className="text-xs sm:text-sm font-medium text-[#A78BFA] mb-3 sm:mb-4">Reversible</h2>

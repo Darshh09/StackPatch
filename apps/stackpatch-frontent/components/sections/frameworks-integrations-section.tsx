@@ -11,7 +11,7 @@ export function FrameworksIntegrationsSection() {
   ];
 
   const integrations = [
-    { name: "NextAuth", icon: "🔐" },
+    { name: "Better Auth", icon: "🔐" },
     { name: "Upstash", icon: "⚡" },
     { name: "Stripe", icon: "💳" },
     { name: "TanStack Query", icon: "🔁" },

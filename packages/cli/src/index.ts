@@ -1,5 +1,3 @@
-#!/usr/bin/env bun
-
 // Try to import dependencies and show helpful error if they're missing
 let chalk: typeof import("chalk").default;
 let inquirer: any;
