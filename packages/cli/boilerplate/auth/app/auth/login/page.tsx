@@ -1,16 +1,40 @@
 "use client";
 
-import { signIn } from "next-auth/react";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 
+/**
+ * Login Page
+ *
+ * 📝 TO CHANGE THE REDIRECT ROUTE AFTER LOGIN:
+ * Change "/stackpatch" below to your desired route (e.g., "/dashboard", "/home")
+ * Also update the same route in:
+ * - app/page.tsx
+ * - app/auth/signup/page.tsx
+ */
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const { data: session, isPending: sessionLoading } = authClient.useSession();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  // 🔧 CHANGE THIS ROUTE: Update "/stackpatch" to your desired landing page route
+  const LANDING_PAGE_ROUTE = "/stackpatch";
+
+  // Get redirect URL from query params (set by middleware when protecting routes)
+  const redirectTo = searchParams.get("redirect") || LANDING_PAGE_ROUTE;
+
+  // Redirect if already signed in
+  useEffect(() => {
+    if (!sessionLoading && session?.user) {
+      router.push(redirectTo);
+    }
+  }, [session, sessionLoading, router, redirectTo]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,33 +42,18 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      // ⚠️ DEMO MODE: This is a placeholder implementation
-      //
-      // TO IMPLEMENT REAL AUTHENTICATION:
-      // 1. Set up a database (PostgreSQL, MongoDB, etc.)
-      // 2. Create a user registration API route (app/api/auth/signup/route.ts)
-      // 3. Hash passwords using bcrypt or similar
-      // 4. Update the authorize function in app/api/auth/[...nextauth]/route.ts
-      //    to check credentials against your database
-      // 5. Remove this demo check and implement proper database lookup
-      //
-      // Current demo credentials (REMOVE IN PRODUCTION):
-      // Email: demo@example.com
-      // Password: demo123
-
-      const result = await signIn("credentials", {
+      const result = await authClient.signIn.email({
         email,
         password,
-        redirect: false,
       });
 
-      if (result?.error) {
-        setError("Invalid email or password");
-        toast.error("Invalid email or password");
+      if (result.error) {
+        setError(result.error.message || "Invalid email or password");
+        toast.error(result.error.message || "Invalid email or password");
       } else {
         toast.success("Login successful! Redirecting...");
         setTimeout(() => {
-          router.push("/");
+          router.push(redirectTo);
           router.refresh();
         }, 1000);
       }
@@ -58,11 +67,28 @@ export default function LoginPage() {
 
   const handleOAuthSignIn = async (provider: "google" | "github") => {
     try {
-      await signIn(provider, { callbackUrl: "/" });
+      await authClient.signIn.social({ provider });
     } catch (error) {
       toast.error(`Failed to sign in with ${provider}`);
     }
   };
+
+  // Show loading state while checking session
+  if (sessionLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent"></div>
+          <p className="mt-4 text-sm text-zinc-600 dark:text-zinc-400">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Don't show login form if already signed in (will redirect)
+  if (session?.user) {
+    return null;
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 px-4 py-12 dark:bg-black sm:px-6 lg:px-8">
