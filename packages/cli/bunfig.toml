@@ -1,0 +1,3 @@
+# Bun configuration for better module resolution with pnpm workspaces
+[install]
+auto = true

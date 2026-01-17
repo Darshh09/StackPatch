@@ -1,18 +1,42 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
+import React, { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
 import toast from "react-hot-toast";
 
+/**
+ * Signup Page
+ *
+ * 📝 TO CHANGE THE REDIRECT ROUTE AFTER SIGNUP:
+ * Change "/stackpatch" below to your desired route (e.g., "/dashboard", "/home")
+ * Also update the same route in:
+ * - app/page.tsx
+ * - app/auth/login/page.tsx
+ */
 export default function SignupPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const { data: session, isPending: sessionLoading } = authClient.useSession();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [name, setName] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  // 🔧 CHANGE THIS ROUTE: Update "/stackpatch" to your desired landing page route
+  const LANDING_PAGE_ROUTE = "/stackpatch";
+
+  // Get redirect URL from query params (set by middleware when protecting routes)
+  const redirectTo = searchParams.get("redirect") || LANDING_PAGE_ROUTE;
+
+  // Redirect if already signed in
+  useEffect(() => {
+    if (!sessionLoading && session?.user) {
+      router.push(redirectTo);
+    }
+  }, [session, sessionLoading, router, redirectTo]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,63 +57,35 @@ export default function SignupPage() {
     setLoading(true);
 
     try {
-      // ⚠️ DEMO MODE: This is a placeholder implementation
-      //
-      // TO IMPLEMENT REAL SIGNUP:
-      // 1. Set up a database (PostgreSQL, MongoDB, etc.)
-      // 2. Create app/api/auth/signup/route.ts with:
-      //    - Password hashing (use bcrypt)
-      //    - User creation in database
-      //    - Email validation
-      //    - Duplicate user checking
-      // 3. Update this fetch call to use your actual signup endpoint
-      // 4. Handle errors properly (duplicate email, weak password, etc.)
-      //
-      // Example signup route structure:
-      // ```ts
-      // // app/api/auth/signup/route.ts
-      // import bcrypt from "bcryptjs";
-      // import { db } from "@/lib/db"; // Your database connection
-      //
-      // export async function POST(req: Request) {
-      //   const { email, password, name } = await req.json();
-      //   const hashedPassword = await bcrypt.hash(password, 10);
-      //   const user = await db.user.create({ data: { email, password: hashedPassword, name } });
-      //   return Response.json({ user });
-      // }
-      // ```
-
-      const response = await fetch("/api/auth/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password, name }),
-      });
-
-      if (!response.ok) {
-        const data = await response.json();
-        setError(data.error || "Failed to create account");
-        toast.error(data.error || "Failed to create account");
-        return;
-      }
-
-      toast.success("Account created successfully! Signing you in...");
-
-      // Auto sign in after successful signup
-      const result = await signIn("credentials", {
+      // Better Auth handles signup natively
+      const result = await authClient.signUp.email({
         email,
         password,
-        redirect: false,
+        name,
       });
 
-      if (result?.error) {
-        setError("Account created but sign in failed. Please try logging in.");
-        toast.error("Account created but sign in failed. Please try logging in.");
+      if (result.error) {
+        setError(result.error.message || "Failed to create account");
+        toast.error(result.error.message || "Failed to create account");
       } else {
-        toast.success("Welcome! Redirecting...");
-        setTimeout(() => {
-          router.push("/");
-          router.refresh();
-        }, 1000);
+        toast.success("Account created successfully! Signing you in...");
+
+        // Auto sign in after successful signup
+        const signInResult = await authClient.signIn.email({
+          email,
+          password,
+        });
+
+        if (signInResult.error) {
+          setError("Account created but sign in failed. Please try logging in.");
+          toast.error("Account created but sign in failed. Please try logging in.");
+        } else {
+          toast.success("Welcome! Redirecting...");
+          setTimeout(() => {
+            router.push(redirectTo);
+            router.refresh();
+          }, 1000);
+        }
       }
     } catch (err) {
       setError("Something went wrong. Please try again.");
@@ -101,11 +97,28 @@ export default function SignupPage() {
 
   const handleOAuthSignIn = async (provider: "google" | "github") => {
     try {
-      await signIn(provider, { callbackUrl: "/" });
+      await authClient.signIn.social({ provider });
     } catch (error) {
       toast.error(`Failed to sign in with ${provider}`);
     }
   };
+
+  // Show loading state while checking session
+  if (sessionLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent"></div>
+          <p className="mt-4 text-sm text-zinc-600 dark:text-zinc-400">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Don't show signup form if already signed in (will redirect)
+  if (session?.user) {
+    return null;
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 px-4 py-12 dark:bg-black sm:px-6 lg:px-8">

@@ -103,7 +103,7 @@ This will:
 
 ## 📖 What Gets Added
 
-### Authentication Setup
+### Setup Flow
 
 When you run `npx stackpatch add auth`, StackPatch automatically generates:
 
