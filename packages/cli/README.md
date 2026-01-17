@@ -1,76 +1,90 @@
-# StackPatch CLI
+<p align="center">
+  <h2 align="center">
+    StackPatch ⚡
+  </h2>
 
-> Composable frontend features for modern React & Next.js apps - Add authentication, UI components, and more with zero configuration.
+  <p align="center">
+    Composable frontend features for modern React & Next.js apps
+    <br />
+    Add production-ready features to existing projects without restructuring
+    <br />
+    <a href="https://stackpatch.darshitdev.in"><strong>Visit Website »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/Darshh09/StackPatch/issues">Issues</a>
+    ·
+    <a href="https://github.com/Darshh09/StackPatch">GitHub</a>
+    ·
+    <a href="https://www.producthunt.com/products/stackpatch">Product Hunt</a>
+  </p>
 
-[![npm version](https://img.shields.io/npm/v/stackpatch.svg)](https://www.npmjs.com/package/stackpatch)
-[![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
+  <p align="center">
+    <a href="https://www.producthunt.com/products/stackpatch?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-stackpatch" target="_blank" rel="noopener noreferrer">
+      <img alt="StackPatch - Patch authentication into your Next.js app with one command | Product Hunt" width="250" height="54" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1063012&theme=light&t=1768419170786" />
+    </a>
+  </p>
 
-StackPatch is a CLI tool that helps you quickly add production-ready features to your Next.js applications. No more copy-pasting boilerplate code or configuring complex setups - just run a command and you're done.
+[![npm](https://img.shields.io/npm/dm/stackpatch?style=flat&colorA=000000&colorB=000000)](https://npm.chart.dev/stackpatch?primary=neutral&gray=neutral&theme=dark)
+[![npm version](https://img.shields.io/npm/v/stackpatch.svg?style=flat&colorA=000000&colorB=000000)](https://www.npmjs.com/package/stackpatch)
+[![GitHub stars](https://img.shields.io/github/stars/Darshh09/StackPatch?style=flat&colorA=000000&colorB=000000)](https://github.com/Darshh09/StackPatch/stargazers)
+[![Product Hunt](https://img.shields.io/badge/Product%20Hunt-Featured-orange?style=flat&colorA=000000&colorB=000000)](https://www.producthunt.com/products/stackpatch)
+</p>
 
-## ✨ Features
+## About the Project
 
-- 🚀 **Zero Configuration** - Add features with a single command
-- 🔐 **Authentication** - Full Better Auth setup with customizable OAuth providers
-- 🛡️ **Protected Routes** - Easy route protection with components or middleware
-- 🎨 **UI Components** - Pre-built, production-ready components
-- 📦 **Composable** - Add only what you need, when you need it
-- ⚡ **Fast** - Built with Bun for lightning-fast execution
-- 🛡️ **Type-Safe** - Full TypeScript support
-- 🧠 **Smart Detection** - Automatically detects `app/` vs `src/app/` and places files correctly
-- 🔄 **Revert Support** - Safely revert any installation with `npx stackpatch revert`
-- 🎯 **Path Alias Aware** - Automatically uses your `tsconfig.json` path aliases for imports
-- 🔧 **Provider Selection** - Choose which OAuth providers to configure (Google, GitHub, Email/Password)
+StackPatch is a CLI tool that helps you quickly add production-ready features to your Next.js applications. No more copy-pasting boilerplate code or configuring complex setups—just run a command and you're done.
 
-## 📋 Prerequisites
+Think of StackPatch as **shadcn/ui, but for complete features** instead of components. Each patch is self-contained, fully reversible, and designed to work with your existing project structure.
 
-- **Bun** >= 1.0.0 ([Install Bun](https://bun.sh))
-- **Node.js** >= 18.0.0 (for npm/npx)
-- A Next.js project (App Router)
+### Why StackPatch
+
+Adding features to existing Next.js projects often means:
+- Copy-pasting boilerplate code from multiple sources
+- Manually configuring complex setups
+- Worrying about breaking existing code
+- Struggling with path aliases and directory structures
+
+StackPatch solves this by:
+- ✅ **Zero Configuration** - Interactive setup guides you through everything
+- ✅ **Smart Detection** - Automatically adapts to your project structure (`app/` vs `src/app/`)
+- ✅ **Fully Reversible** - Track and revert any installation safely
+- ✅ **Own Your Code** - Every line of code is yours to modify
+- ✅ **Production-Ready** - Battle-tested patterns, not toy examples
 
 ## 🚀 Quick Start
 
-### Install
+### Add to Existing Project
+
+Navigate to your Next.js project directory and run:
 
 ```bash
-npm install -g stackpatch
-# or
-bun add -g stackpatch
+npx stackpatch add auth
 ```
 
-### Create a New Project
+The CLI will guide you through an interactive setup:
+1. **Session Mode** - Choose Database (persistent) or Stateless (JWT)
+2. **Database** (if database mode) - Select PostgreSQL, MySQL, SQLite, or MongoDB
+3. **ORM** (if database mode) - Choose Drizzle, Prisma, or Raw SQL
+4. **Auth Providers** - Enable Email/Password and select OAuth (Google, GitHub)
+5. **UI Components** - Choose whether to add prebuilt login/signup pages
+6. **Protected Routes** - Select which routes to protect (supports wildcards like `/dashboard/*`)
+
+### Create New Project
 
 ```bash
-# Using npm create (recommended - works with create-stackpatch bin)
+# Using npm create (recommended)
 npm create stackpatch@latest my-app
 
-# Using npx (recommended alternative)
+# Using npx
 npx create-stackpatch@latest my-app
 # or
 npx stackpatch create my-app
 
 # Using bunx (Bun's npx equivalent)
 bunx create-stackpatch@latest my-app
-# or
-bunx stackpatch create my-app
 ```
 
-> **Note:**
-> - `bun create stackpatch@latest` won't work because Bun's `create` command looks for packages named `create-*` in npm. Use `bunx` instead.
-> - `npm create stackpatch` works because it uses the `create-stackpatch` binary from the `stackpatch` package.
-> - All commands will prompt you for a project name if not provided.
-
-### Add Features to Existing Project
-
-Navigate to your Next.js project directory and run:
-
-```bash
-# Add authentication with UI
-npx stackpatch add auth
-# or
-npx stackpatch add auth-ui
-```
-
-> **Note:** Both `auth` and `auth-ui` commands are identical - they add the complete authentication setup.
+> **Note:** All commands will prompt you for a project name if not provided.
 
 ### Revert an Installation
 
@@ -91,18 +105,7 @@ This will:
 
 ### Setup Flow
 
-When you run `npx stackpatch add auth`, StackPatch will guide you through an interactive setup:
-
-1. **Session Mode**: Choose between Database (persistent sessions) or Stateless (JWT only)
-2. **Database** (if database mode): Select PostgreSQL, MySQL, SQLite, or MongoDB
-3. **ORM** (if database mode): Choose Drizzle, Prisma, or Raw SQL driver
-4. **Auth Providers**: Enable Email/Password and select OAuth providers (Google, GitHub)
-5. **UI Components**: Choose whether to add prebuilt login/signup pages
-6. **Protected Routes**: Select which routes to protect (supports wildcards like `/dashboard/*`)
-
-### Files Generated
-
-After the interactive setup, StackPatch automatically generates:
+When you run `npx stackpatch add auth`, StackPatch automatically generates:
 
 - ✅ **Better Auth configuration** (`lib/auth.ts` or `src/lib/auth.ts`)
 - ✅ **Auth client utilities** (`lib/auth-client.ts` or `src/lib/auth-client.ts`)
