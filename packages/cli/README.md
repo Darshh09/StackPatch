@@ -1,76 +1,90 @@
-# StackPatch CLI
+<p align="center">
+  <h2 align="center">
+    StackPatch ⚡
+  </h2>
 
-> Composable frontend features for modern React & Next.js apps - Add authentication, UI components, and more with zero configuration.
+  <p align="center">
+    Composable frontend features for modern React & Next.js apps
+    <br />
+    Add production-ready features to existing projects without restructuring
+    <br />
+    <a href="https://stackpatch.darshitdev.in"><strong>Visit Website »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/Darshh09/StackPatch/issues">Issues</a>
+    ·
+    <a href="https://github.com/Darshh09/StackPatch">GitHub</a>
+    ·
+    <a href="https://www.producthunt.com/products/stackpatch">Product Hunt</a>
+  </p>
 
-[![npm version](https://img.shields.io/npm/v/stackpatch.svg)](https://www.npmjs.com/package/stackpatch)
-[![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
+  <p align="center">
+    <a href="https://www.producthunt.com/products/stackpatch?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-stackpatch" target="_blank" rel="noopener noreferrer">
+      <img alt="StackPatch - Patch authentication into your Next.js app with one command | Product Hunt" width="250" height="54" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1063012&theme=light&t=1768419170786" />
+    </a>
+  </p>
 
-StackPatch is a CLI tool that helps you quickly add production-ready features to your Next.js applications. No more copy-pasting boilerplate code or configuring complex setups - just run a command and you're done.
+[![npm](https://img.shields.io/npm/dm/stackpatch?style=flat&colorA=000000&colorB=000000)](https://npm.chart.dev/stackpatch?primary=neutral&gray=neutral&theme=dark)
+[![npm version](https://img.shields.io/npm/v/stackpatch.svg?style=flat&colorA=000000&colorB=000000)](https://www.npmjs.com/package/stackpatch)
+[![GitHub stars](https://img.shields.io/github/stars/Darshh09/StackPatch?style=flat&colorA=000000&colorB=000000)](https://github.com/Darshh09/StackPatch/stargazers)
+[![Product Hunt](https://img.shields.io/badge/Product%20Hunt-Featured-orange?style=flat&colorA=000000&colorB=000000)](https://www.producthunt.com/products/stackpatch)
+</p>
 
-## ✨ Features
+## About the Project
 
-- 🚀 **Zero Configuration** - Add features with a single command
-- 🔐 **Authentication** - Full NextAuth.js setup with customizable OAuth providers
-- 🛡️ **Protected Routes** - Easy route protection with components or middleware
-- 🎨 **UI Components** - Pre-built, production-ready components
-- 📦 **Composable** - Add only what you need, when you need it
-- ⚡ **Fast** - Built with Bun for lightning-fast execution
-- 🛡️ **Type-Safe** - Full TypeScript support
-- 🧠 **Smart Detection** - Automatically detects `app/` vs `src/app/` and places files correctly
-- 🔄 **Revert Support** - Safely revert any installation with `npx stackpatch revert`
-- 🎯 **Path Alias Aware** - Automatically uses your `tsconfig.json` path aliases for imports
-- 🔧 **Provider Selection** - Choose which OAuth providers to configure (Google, GitHub, Email/Password)
+StackPatch is a CLI tool that helps you quickly add production-ready features to your Next.js applications. No more copy-pasting boilerplate code or configuring complex setups—just run a command and you're done.
 
-## 📋 Prerequisites
+Think of StackPatch as **shadcn/ui, but for complete features** instead of components. Each patch is self-contained, fully reversible, and designed to work with your existing project structure.
 
-- **Bun** >= 1.0.0 ([Install Bun](https://bun.sh))
-- **Node.js** >= 18.0.0 (for npm/npx)
-- A Next.js project (App Router)
+### Why StackPatch
+
+Adding features to existing Next.js projects often means:
+- Copy-pasting boilerplate code from multiple sources
+- Manually configuring complex setups
+- Worrying about breaking existing code
+- Struggling with path aliases and directory structures
+
+StackPatch solves this by:
+- ✅ **Zero Configuration** - Interactive setup guides you through everything
+- ✅ **Smart Detection** - Automatically adapts to your project structure (`app/` vs `src/app/`)
+- ✅ **Fully Reversible** - Track and revert any installation safely
+- ✅ **Own Your Code** - Every line of code is yours to modify
+- ✅ **Production-Ready** - Battle-tested patterns, not toy examples
 
 ## 🚀 Quick Start
 
-### Install
+### Add to Existing Project
+
+Navigate to your Next.js project directory and run:
 
 ```bash
-npm install -g stackpatch
-# or
-bun add -g stackpatch
+npx stackpatch add auth
 ```
 
-### Create a New Project
+The CLI will guide you through an interactive setup:
+1. **Session Mode** - Choose Database (persistent) or Stateless (JWT)
+2. **Database** (if database mode) - Select PostgreSQL, MySQL, SQLite, or MongoDB
+3. **ORM** (if database mode) - Choose Drizzle, Prisma, or Raw SQL
+4. **Auth Providers** - Enable Email/Password and select OAuth (Google, GitHub)
+5. **UI Components** - Choose whether to add prebuilt login/signup pages
+6. **Protected Routes** - Select which routes to protect (supports wildcards like `/dashboard/*`)
+
+### Create New Project
 
 ```bash
-# Using npm create (recommended - works with create-stackpatch bin)
+# Using npm create (recommended)
 npm create stackpatch@latest my-app
 
-# Using npx (recommended alternative)
+# Using npx
 npx create-stackpatch@latest my-app
 # or
 npx stackpatch create my-app
 
 # Using bunx (Bun's npx equivalent)
 bunx create-stackpatch@latest my-app
-# or
-bunx stackpatch create my-app
 ```
 
-> **Note:**
-> - `bun create stackpatch@latest` won't work because Bun's `create` command looks for packages named `create-*` in npm. Use `bunx` instead.
-> - `npm create stackpatch` works because it uses the `create-stackpatch` binary from the `stackpatch` package.
-> - All commands will prompt you for a project name if not provided.
-
-### Add Features to Existing Project
-
-Navigate to your Next.js project directory and run:
-
-```bash
-# Add authentication with UI
-npx stackpatch add auth
-# or
-npx stackpatch add auth-ui
-```
-
-> **Note:** Both `auth` and `auth-ui` commands are identical - they add the complete authentication setup.
+> **Note:** All commands will prompt you for a project name if not provided.
 
 ### Revert an Installation
 
@@ -91,29 +105,27 @@ This will:
 
 ### Authentication Setup
 
-When you run `npx stackpatch add auth`, StackPatch:
+When you run `npx stackpatch add auth`, StackPatch automatically generates:
 
-1. **Asks which OAuth providers** you want to configure:
-   - Google OAuth
-   - GitHub OAuth
-   - Email/Password (Credentials)
+- ✅ **Better Auth configuration** (`lib/auth.ts` or `src/lib/auth.ts`)
+- ✅ **Auth client utilities** (`lib/auth-client.ts` or `src/lib/auth-client.ts`)
+- ✅ **Protected routes config** (`lib/protected-routes.ts` - only if protected routes are configured)
+- ✅ **API route handler** (`app/api/auth/[...all]/route.ts`)
+- ✅ **Middleware** (`middleware.ts` - only if protected routes are configured)
+- ✅ **Login/Signup pages** (`app/auth/login/page.tsx`, `app/auth/signup/page.tsx` - if UI enabled)
+- ✅ **Landing page** (`app/stackpatch/page.tsx` - if UI enabled)
+- ✅ **Auth wrapper** (`components/auth-wrapper.tsx` - if UI enabled, added to layout.tsx)
+- ✅ **Toaster component** (`components/toaster.tsx` - if UI enabled, added to layout.tsx)
+- ✅ **Environment template** (`.env.example`)
 
-2. **Adds the following files**:
-   - ✅ NextAuth.js configuration with your selected providers
-- ✅ Login and signup pages (`/auth/login`, `/auth/signup`)
-   - ✅ OAuth buttons for selected providers with email/password forms
-   - ✅ Protected route component (`components/protected-route.tsx` or `src/components/protected-route.tsx`)
-- ✅ Middleware for route protection (`middleware.ts`)
-- ✅ Session provider and toaster components
-- ✅ Environment file template (`.env.example`)
+### Smart File Placement
 
-3. **Smart file placement**:
-   - Detects if your app is in `app/` or `src/app/`
-   - Places components in matching location (`components/` or `src/components/`)
-   - Uses your `tsconfig.json` path aliases for imports
-   - Generates correct import paths automatically
-
-4. **Tracks all changes** in `.stackpatch/manifest.json` for safe reversion
+StackPatch automatically:
+- ✅ Detects if your app is in `app/` or `src/app/`
+- ✅ Places components in matching location (`components/` or `src/components/`)
+- ✅ Uses your `tsconfig.json` path aliases for imports
+- ✅ Generates correct import paths automatically
+- ✅ Tracks all changes in `.stackpatch/manifest.json` for safe reversion
 
 ## 🔐 OAuth Setup
 
@@ -126,7 +138,7 @@ If you selected Google OAuth:
 1. Go to [Google Cloud Console](https://console.cloud.google.com/)
 2. Create a project → APIs & Services → Credentials
 3. Create OAuth client ID (Web application)
-4. Add redirect URI: `http://localhost:3000/api/auth/callback/google`
+4. Add redirect URI: `http://localhost:3000/api/auth/callback/google` (or your production URL)
 5. Copy Client ID and Secret to `.env.local`:
    ```env
    GOOGLE_CLIENT_ID=your_client_id
@@ -139,7 +151,7 @@ If you selected GitHub OAuth:
 
 1. Go to [GitHub Developer Settings](https://github.com/settings/developers)
 2. New OAuth App
-3. Set callback URL: `http://localhost:3000/api/auth/callback/github`
+3. Set callback URL: `http://localhost:3000/api/auth/callback/github` (or your production URL)
 4. Copy Client ID and generate Secret
 5. Add to `.env.local`:
    ```env
@@ -152,8 +164,8 @@ If you selected GitHub OAuth:
 Your `.env.local` will include only the variables for providers you selected:
 
 ```env
-NEXTAUTH_URL=http://localhost:3000
-NEXTAUTH_SECRET=your_generated_secret
+BETTER_AUTH_SECRET=your_generated_secret
+BETTER_AUTH_URL=http://localhost:3000
 
 # Only included if you selected Google
 GOOGLE_CLIENT_ID=your_google_client_id
@@ -164,85 +176,76 @@ GITHUB_CLIENT_ID=your_github_client_id
 GITHUB_CLIENT_SECRET=your_github_client_secret
 ```
 
-## 🧭 Auth Navbar (Demo)
-
-An example navbar component (`components/auth-navbar.tsx`) is included that shows:
-- **When logged out**: Sign In button
-- **When logged in**: User name/email, avatar, and Sign Out button
-
-> **Note**: This is a demo component named `auth-navbar.tsx` to avoid conflicts with existing navbars. You can rename it or use it as reference.
-
-### Usage
-
-```tsx
-// app/layout.tsx or any page
-import { AuthNavbar } from "@/components/auth-navbar";
-
-export default function Layout({ children }) {
-  return (
-    <>
-      <AuthNavbar />
-      {children}
-    </>
-  );
-}
-```
-
-The auth navbar is included in example pages (`app/page.tsx` and `app/dashboard/page.tsx`) as a reference.
-
 ## 🛡️ Protecting Routes
 
-### Method 1: Component-Based (Recommended)
+StackPatch automatically protects routes based on your configuration. Routes are protected via:
+- **Middleware** - Server-side protection with automatic redirects
+- **AuthWrapper** - Client-side protection in your root layout
 
-Wrap any page or component:
+### How It Works
 
-```tsx
-// app/dashboard/page.tsx
-import { ProtectedRoute } from "@/components/protected-route";
-import { AuthNavbar } from "@/components/auth-navbar";
+1. **During Setup**: You'll be prompted to select which routes to protect
+2. **Automatic Protection**: StackPatch configures middleware and AuthWrapper automatically
+3. **Redirects**: Unauthenticated users are redirected to `/auth/login?redirect=<original-path>`
+4. **After Login**: Users are automatically redirected back to the original protected route
 
-export default function Dashboard() {
-  return (
-    <ProtectedRoute>
-      <AuthNavbar />
-      <h1>Protected Dashboard</h1>
-    </ProtectedRoute>
-  );
-}
+### Wildcard Routes
+
+Use `/*` to protect a route and all its sub-routes:
+
+- `/dashboard` → Protects only `/dashboard`
+- `/dashboard/*` → Protects `/dashboard` and ALL sub-routes (`/dashboard/settings`, `/dashboard/users`, etc.)
+
+**Examples:**
+```
+/dashboard/*    → Protects /dashboard and all sub-routes
+/admin/*        → Protects /admin and all sub-routes
+/profile        → Protects only /profile (not sub-routes)
 ```
 
-### Method 2: Middleware-Based
-
-Edit `middleware.ts` and add routes to protect:
+**To Modify Protected Routes:**
+Edit `lib/protected-routes.ts` (or `src/lib/protected-routes.ts`):
 
 ```ts
-// middleware.ts
-export const config = {
-  matcher: [
-    "/dashboard/:path*",  // Protect all dashboard routes
-    "/profile/:path*",    // Protect all profile routes
-  ],
-};
+export const PROTECTED_ROUTES = [
+  "/dashboard/*",  // Protects /dashboard and all sub-routes
+  "/admin/*",      // Protects /admin and all sub-routes
+  "/profile",      // Protects only /profile
+] as const;
 ```
 
-## ⚠️ Email/Password Auth (Demo Mode)
+## ⚙️ Configuration Options
 
-The email/password authentication is in **demo mode** with placeholder credentials:
+### Session Modes
 
-- **Demo credentials**: `demo@example.com` / `demo123`
+**Database Mode** (Recommended for production):
+- Persistent sessions stored in your database
+- Supports session management and revocation
+- Requires database setup (PostgreSQL, MySQL, SQLite, or MongoDB)
+- Choose an ORM: Drizzle, Prisma, or Raw SQL
 
-### To Implement Real Auth:
+**Stateless Mode** (JWT/JWE):
+- No database required
+- Sessions stored in encrypted cookies
+- Perfect for serverless deployments
+- Limited session management features
 
-1. **Set up a database** (PostgreSQL, MongoDB, Prisma, etc.)
-2. **Install bcrypt**: `npm install bcryptjs @types/bcryptjs`
-3. **Update `app/api/auth/[...nextauth]/route.ts`**:
-   - Replace the `authorize` function with database lookup
-   - Hash and compare passwords using bcrypt
-4. **Create signup API** (`app/api/auth/signup/route.ts`):
-   - Hash passwords before storing
-   - Validate and create users in database
+### Email/Password Authentication
 
-See code comments in the files for detailed implementation examples.
+Email/password authentication works out of the box with Better Auth. If you selected database mode:
+
+1. **Generate database schema**:
+   ```bash
+   npx @better-auth/cli generate
+   # or
+   npx @better-auth/cli migrate
+   ```
+
+2. **Configure in `lib/auth.ts`** (already set up by StackPatch):
+   - Database adapter is configured based on your selection
+   - Email/password is enabled if you selected it
+
+See Better Auth documentation for advanced configuration: https://better-auth.dev/docs
 
 ## 📁 File Locations
 
@@ -250,16 +253,20 @@ After running `npx stackpatch add auth`, you'll find files in locations that mat
 
 ### If your app is in `app/`:
 - **Auth pages**: `app/auth/login/page.tsx`, `app/auth/signup/page.tsx`
-- **NextAuth config**: `app/api/auth/[...nextauth]/route.ts`
-- **Components**: `components/auth-navbar.tsx`, `components/protected-route.tsx`, etc.
+- **Auth config**: `lib/auth.ts`, `lib/auth-client.ts`
+- **Protected routes config**: `lib/protected-routes.ts`
+- **API routes**: `app/api/auth/[...all]/route.ts`
+- **Components**: `components/auth-wrapper.tsx`, `components/toaster.tsx`
 - **Middleware**: `middleware.ts` (root)
 - **Environment**: `.env.example`, `.env.local`
 - **Tracking**: `.stackpatch/manifest.json` (for revert)
 
 ### If your app is in `src/app/`:
 - **Auth pages**: `src/app/auth/login/page.tsx`, `src/app/auth/signup/page.tsx`
-- **NextAuth config**: `src/app/api/auth/[...nextauth]/route.ts`
-- **Components**: `src/components/auth-navbar.tsx`, `src/components/protected-route.tsx`, etc.
+- **Auth config**: `src/lib/auth.ts`, `src/lib/auth-client.ts`
+- **Protected routes config**: `src/lib/protected-routes.ts`
+- **API routes**: `src/app/api/auth/[...all]/route.ts`
+- **Components**: `src/components/auth-wrapper.tsx`, `src/components/toaster.tsx`
 - **Middleware**: `middleware.ts` (root)
 - **Environment**: `.env.example`, `.env.local`
 - **Tracking**: `.stackpatch/manifest.json` (for revert)
@@ -271,36 +278,35 @@ StackPatch automatically detects your project structure and places files accordi
 
 ## 🔧 Customization
 
-### Change Login Redirect
+### Change Default Redirect After Login
 
-Edit `app/api/auth/[...nextauth]/route.ts`:
+The login/signup pages automatically redirect users based on:
+1. The `redirect` query parameter (set by middleware when protecting routes)
+2. Fallback to `/stackpatch` if no redirect parameter
 
-```ts
-pages: {
-  signIn: "/your-custom-login", // Change this
-}
-```
-
-### Custom Protected Route Redirect
+To change the fallback route, edit `app/auth/login/page.tsx` and `app/auth/signup/page.tsx`:
 
 ```tsx
-<ProtectedRoute redirectTo="/custom-login">
-  <YourComponent />
-</ProtectedRoute>
+// Change the fallback route (default: "/stackpatch")
+const redirectTo = searchParams.get("redirect") || "/your-custom-route";
 ```
 
 ### Protect API Routes
 
 ```ts
 // app/api/protected/route.ts
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 export async function GET() {
-  const session = await getServerSession(authOptions);
-  if (!session) {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session || !session.user) {
     return Response.json({ error: "Unauthorized" }, { status: 401 });
   }
+
   return Response.json({ data: "Protected data" });
 }
 ```
@@ -310,7 +316,7 @@ export async function GET() {
 ### OAuth redirect_uri_mismatch
 
 - Ensure redirect URIs match exactly in OAuth provider settings
-- Check `NEXTAUTH_URL` matches your app URL
+- Check `BETTER_AUTH_URL` matches your app URL (defaults to `http://localhost:3000` in development)
 
 ### OAuth buttons not working
 
@@ -346,11 +352,14 @@ your-project/
 │   │   └── signup/page.tsx      # Signup page
 │   └── api/
 │       └── auth/
-│           └── [...nextauth]/route.ts  # NextAuth config
+│           └── [...all]/route.ts  # Better Auth API route
+├── lib/
+│   ├── auth.ts                  # Better Auth configuration
+│   ├── auth-client.ts           # Client-side auth utilities
+│   └── protected-routes.ts     # Protected routes configuration
 ├── components/
-│   ├── protected-route.tsx      # Route protection component
-│   ├── auth-button.tsx          # Auth button component
-│   └── session-provider.tsx    # Session provider
+│   ├── auth-wrapper.tsx         # Automatic route protection wrapper
+│   └── toaster.tsx             # Toast notifications
 ├── middleware.ts                # Route protection middleware
 ├── .env.local                   # Your environment variables
 └── .stackpatch/                 # Tracking for revert (git-ignored)
@@ -369,11 +378,14 @@ your-project/
 │   │   │   └── signup/page.tsx
 │   │   └── api/
 │   │       └── auth/
-│   │           └── [...nextauth]/route.ts
+│   │           └── [...all]/route.ts
+│   ├── lib/
+│   │   ├── auth.ts
+│   │   ├── auth-client.ts
+│   │   └── protected-routes.ts
 │   └── components/
-│       ├── protected-route.tsx
-│       ├── auth-button.tsx
-│       └── session-provider.tsx
+│       ├── auth-wrapper.tsx
+│       └── toaster.tsx
 ├── middleware.ts
 ├── .env.local
 └── .stackpatch/
