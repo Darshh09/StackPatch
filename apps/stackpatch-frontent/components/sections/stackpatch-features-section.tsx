@@ -7,9 +7,9 @@ import { CheckCircle2, Folder, FolderOpen, File, Lock } from "lucide-react";
 
 export function StackPatchFeaturesSection() {
   return (
-    <section className="py-12 sm:py-16 md:py-20 px-4 border-b border-neutral-700">
-      <div className="w-[76.75rem] max-w-[calc(100vw-1rem)] md:max-w-[calc(100vw-2rem)] mx-auto">
-      <div className="mb-8 sm:mb-10 md:mb-12">
+    <section className="py-12 sm:py-16 md:py-20 px-5 md:px-4 sm:px-6 lg:px-8 border-b border-neutral-700">
+      <div className="w-[76.75rem] max-w-[calc(100vw-2.5rem)] md:max-w-[calc(100vw-2rem)] mx-auto">
+      <div className="mb-8 sm:mb-10 md:mb-12 px-4 md:px-0">
         <h2 className="text-xs sm:text-sm font-medium text-[#A78BFA] mb-3 sm:mb-4">StackPatch</h2>
         <h3 className="text-2xl sm:text-3xl md:text-4xl font-heading font-semibold text-foreground mb-3 sm:mb-4">
           The easy solution to feature integration

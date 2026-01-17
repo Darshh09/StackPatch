@@ -2,6 +2,9 @@
 @import "fumadocs-ui/css/neutral.css";
 @import "fumadocs-ui/css/preset.css";
 
+html {
+  overflow-x: hidden;
+}
 
 :root {
   --background: #f7f7f7;

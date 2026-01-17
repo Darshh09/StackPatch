@@ -35,8 +35,8 @@ export function TrustStrip() {
   }, []);
 
   return (
-    <section ref={ref} className="py-12 sm:py-16 md:py-20 px-4 border-y border-neutral-700 bg-muted/30">
-      <div className="w-[76.75rem] max-w-[calc(100vw-1rem)] md:max-w-[calc(100vw-2rem)] mx-auto">
+    <section ref={ref} className="py-12 sm:py-16 md:py-20 px-5 md:px-4 sm:px-6 lg:px-8 border-y border-neutral-700 bg-muted/30">
+      <div className="w-[76.75rem] max-w-[calc(100vw-2.5rem)] md:max-w-[calc(100vw-2rem)] mx-auto">
 
         <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 md:gap-8 text-xs sm:text-sm text-muted-foreground">
           {/* Next.js Logo and Text */}

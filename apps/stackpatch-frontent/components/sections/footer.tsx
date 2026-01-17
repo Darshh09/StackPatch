@@ -35,7 +35,7 @@ export function Footer() {
   }, []);
   return (
     <footer className="border-t border-border bg-background">
-      <div className="w-[76.75rem] max-w-[calc(100vw-1rem)] md:max-w-[calc(100vw-2rem)] mx-auto px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+      <div className="w-[76.75rem] max-w-[calc(100vw-2.5rem)] md:max-w-[calc(100vw-2rem)] mx-auto px-5 md:px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
         <div className="mb-8 grid gap-8 sm:mb-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-12">
           {/* StackPatch Info */}
           <div className="sm:col-span-2 lg:col-span-1">

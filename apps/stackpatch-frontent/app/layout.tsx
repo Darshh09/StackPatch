@@ -37,7 +37,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${inter.variable} ${spaceGrotesk.variable} antialiased flex flex-col min-h-screen`}
+        className={`${inter.variable} ${spaceGrotesk.variable} antialiased flex flex-col min-h-screen overflow-x-hidden`}
       >
         <RootProvider
           search={{

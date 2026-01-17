@@ -159,14 +159,15 @@ export function HeroSection({ command, copied, onCopy }: HeroSectionProps) {
   }, []);
 
   return (
-    <section ref={heroRef} className="relative w-full flex md:items-center md:justify-center bg-white/96 dark:bg-black/[0.96] antialiased min-h-[40rem] md:min-h-[50rem] lg:min-h-[40rem] pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-16 md:pb-20 px-4 overflow-hidden">
+    <section ref={heroRef} className="relative w-full flex md:items-center md:justify-center bg-white/96 dark:bg-black/[0.96] antialiased min-h-[40rem] md:min-h-[50rem] lg:min-h-[40rem] pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-16 md:pb-20 px-5 md:px-4 sm:px-6 lg:px-8 overflow-hidden">
       {/* Spotlight SVG Animation */}
-      <svg
-        className="animate-spotlight pointer-events-none absolute z-[1] h-[169%] w-[138%] lg:w-[84%] opacity-0"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 3787 2842"
-        fill="none"
-      >
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-[1]">
+        <svg
+          className="animate-spotlight h-[169%] w-[138%] lg:w-[84%] opacity-0 left-1/2 top-0 -translate-x-1/2"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 3787 2842"
+          fill="none"
+        >
         <g filter="url(#filter)">
           <ellipse
             cx="1924.71"
@@ -193,25 +194,26 @@ export function HeroSection({ command, copied, onCopy }: HeroSectionProps) {
             <feGaussianBlur stdDeviation="180" result="effect1_foregroundBlur_1065_8" />
           </filter>
         </defs>
-      </svg>
+        </svg>
+      </div>
 
       {/* Grid Background Pattern */}
-      <div className="absolute inset-0 left-5 right-5 lg:left-16 lg:right-14 xl:left-16 xl:right-14  border-[0.5px] border-l-neutral-700 border-r-neutral-700">
+      <div className="absolute inset-0 left-5 right-5 lg:left-16 lg:right-14 xl:left-16 xl:right-14 border-[0.5px] border-l-neutral-700 border-r-neutral-700 pointer-events-none">
         <div className="absolute inset-0 bg-grid text-muted/50 dark:text-white/[0.02]" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background" />
       </div>
 
-      <div className="w-[76.75rem] max-w-[calc(100vw-1rem)] md:max-w-[calc(100vw-2rem)] mx-auto relative z-10">
+      <div className="w-[76.75rem] max-w-[calc(100vw-2.5rem)] md:max-w-[calc(100vw-2rem)] mx-auto relative z-10">
         <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
           {/* Left: Headline & CTA */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="space-y-6 sm:space-y-8"
+            className="space-y-6 sm:space-y-8 px-4 md:px-0"
           >
-            <div className="space-y-3 sm:space-y-5">
-              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-2">
+            <div className=" space-y-3 sm:space-y-5">
+              <div className="flex flex-row sm:items-center gap-2 sm:gap-2">
                 <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
                   Patch your
                 </h1>
@@ -232,8 +234,8 @@ export function HeroSection({ command, copied, onCopy }: HeroSectionProps) {
               like Auth, Redis, Payments — directly into your existing Next.js app.
             </p>
             {/* Code Block Strip */}
-            <div className="relative flex items-center gap-2 w-full border border-white/10 dark:border-white/10">
-              <div className="relative flex content-center transition duration-500 items-center flex-col flex-nowrap gap-10 h-min justify-center overflow-visible p-px decoration-clone w-full">
+            <div className="relative flex items-center gap-2 w-full border border-white/10 dark:border-white/10 overflow-hidden">
+              <div className="relative flex content-center transition duration-500 items-center flex-col flex-nowrap gap-10 h-min justify-center overflow-hidden p-px decoration-clone w-full">
                 <div className="z-10 px-4 py-2 rounded-none w-full flex items-center justify-between gap-2 bg-zinc-100 dark:bg-zinc-950">
                   <div className="w-full flex flex-col min-[350px]:flex-row min-[350px]:items-center gap-0.5 min-[350px]:gap-2 min-w-0">
                     <p className="text-xs sm:text-sm font-mono select-none tracking-tighter space-x-1 shrink-0">
