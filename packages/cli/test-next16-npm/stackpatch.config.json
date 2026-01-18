@@ -1,0 +1,20 @@
+{
+  "version": "1.0.0",
+  "patch": "auth",
+  "config": {
+    "sessionMode": "stateless",
+    "database": "none",
+    "orm": "none",
+    "emailPassword": true,
+    "oauthProviders": [
+      "github",
+      "google"
+    ],
+    "addUI": true,
+    "protectedRoutes": [
+      "/",
+      "/stackpatch"
+    ]
+  },
+  "timestamp": "2026-01-18T14:30:21.338Z"
+}

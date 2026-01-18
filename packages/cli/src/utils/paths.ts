@@ -157,60 +157,74 @@ export function getParentDirectories(filePath: string, rootPath: string): string
 }
 
 /**
+ * Check if a directory is a Next.js app
+ */
+function isNextJsApp(dir: string): boolean {
+  return (
+    fs.existsSync(path.join(dir, "app")) ||
+    fs.existsSync(path.join(dir, "src", "app")) ||
+    fs.existsSync(path.join(dir, "pages")) ||
+    fs.existsSync(path.join(dir, "src", "pages"))
+  ) && fs.existsSync(path.join(dir, "package.json"));
+}
+
+/**
  * Auto-detect target directory for Next.js app
  */
 export function detectTargetDirectory(startDir: string = process.cwd()): string {
   let target = startDir;
 
-  // Check if we're in a Next.js app (has app/, src/app/, pages/, or src/pages/ directory)
-  const hasAppDir =
-    fs.existsSync(path.join(target, "app")) || fs.existsSync(path.join(target, "src", "app"));
-  const hasPagesDir =
-    fs.existsSync(path.join(target, "pages")) || fs.existsSync(path.join(target, "src", "pages"));
+  // Check if we're in a Next.js app
+  if (isNextJsApp(target)) {
+    return target;
+  }
 
-  if (!hasAppDir && !hasPagesDir) {
-    // Try parent directory
-    const parent = path.resolve(target, "..");
-    if (
-      fs.existsSync(path.join(parent, "app")) ||
-      fs.existsSync(path.join(parent, "src", "app")) ||
-      fs.existsSync(path.join(parent, "pages")) ||
-      fs.existsSync(path.join(parent, "src", "pages"))
-    ) {
-      target = parent;
-    } else {
-      // Try common monorepo locations: apps/, packages/, or root
-      const possiblePaths = [
-        path.join(target, "apps"),
-        path.join(parent, "apps"),
-        path.join(target, "packages"),
-        path.join(parent, "packages"),
-      ];
+  // Try parent directory
+  const parent = path.resolve(target, "..");
+  if (isNextJsApp(parent)) {
+    return parent;
+  }
 
-      let foundApp = false;
-      for (const possiblePath of possiblePaths) {
-        if (fs.existsSync(possiblePath)) {
-          // Look for Next.js apps in this directory
-          const entries = fs.readdirSync(possiblePath, { withFileTypes: true });
-          for (const entry of entries) {
-            if (entry.isDirectory()) {
-              const appPath = path.join(possiblePath, entry.name);
-              if (
-                fs.existsSync(path.join(appPath, "app")) ||
-                fs.existsSync(path.join(appPath, "src", "app")) ||
-                fs.existsSync(path.join(appPath, "pages")) ||
-                fs.existsSync(path.join(appPath, "src", "pages"))
-              ) {
-                target = appPath;
-                foundApp = true;
-                break;
-              }
+  // Try common monorepo locations: apps/, packages/, or root
+  const possiblePaths = [
+    path.join(target, "apps"),
+    path.join(parent, "apps"),
+    path.join(target, "packages"),
+    path.join(parent, "packages"),
+  ];
+
+  for (const possiblePath of possiblePaths) {
+    if (fs.existsSync(possiblePath)) {
+      // Look for Next.js apps in this directory
+      try {
+        const entries = fs.readdirSync(possiblePath, { withFileTypes: true });
+        for (const entry of entries) {
+          if (entry.isDirectory()) {
+            const appPath = path.join(possiblePath, entry.name);
+            if (isNextJsApp(appPath)) {
+              return appPath;
             }
           }
-          if (foundApp) break;
+        }
+      } catch {
+        // Ignore errors reading directory
+      }
+    }
+  }
+
+  // Try searching subdirectories (one level deep) in current directory
+  try {
+    const entries = fs.readdirSync(target, { withFileTypes: true });
+    for (const entry of entries) {
+      if (entry.isDirectory()) {
+        const subPath = path.join(target, entry.name);
+        if (isNextJsApp(subPath)) {
+          return subPath;
         }
       }
     }
+  } catch {
+    // Ignore errors reading directory
   }
 
   return target;

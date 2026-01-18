@@ -29,15 +29,78 @@ export async function addPatch(patchName: string, targetDir?: string): Promise<v
 
   if (!hasAppDir && !hasPagesDir) {
     console.log(chalk.yellow("⚠️  Could not auto-detect Next.js app directory."));
+
+    // Try to find Next.js apps in subdirectories
+    let foundApps: string[] = [];
+    try {
+      const entries = fs.readdirSync(target, { withFileTypes: true });
+      for (const entry of entries) {
+        if (entry.isDirectory()) {
+          const subPath = path.join(target, entry.name);
+          const hasSubAppDir = fs.existsSync(path.join(subPath, "app")) || fs.existsSync(path.join(subPath, "src", "app"));
+          const hasSubPagesDir = fs.existsSync(path.join(subPath, "pages")) || fs.existsSync(path.join(subPath, "src", "pages"));
+          const hasPackageJson = fs.existsSync(path.join(subPath, "package.json"));
+          if ((hasSubAppDir || hasSubPagesDir) && hasPackageJson) {
+            foundApps.push(entry.name);
+          }
+        }
+      }
+    } catch {
+      // Ignore errors
+    }
+
+    let defaultPath = target;
+    if (foundApps.length === 1) {
+      defaultPath = path.join(target, foundApps[0]);
+      console.log(chalk.green(`💡 Found Next.js app in subdirectory: ${foundApps[0]}`));
+    } else if (foundApps.length > 1) {
+      console.log(chalk.cyan(`💡 Found multiple Next.js apps: ${foundApps.join(", ")}`));
+    }
+
     const { userTarget } = await inquirer.prompt([
       {
         type: "input",
         name: "userTarget",
         message: "Enter the path to your Next.js app folder:",
-        default: target,
+        default: defaultPath,
       },
     ]);
-    target = path.resolve(userTarget);
+
+    // Resolve the path - handle both absolute and relative paths
+    if (path.isAbsolute(userTarget)) {
+      target = userTarget;
+    } else {
+      // If relative, resolve from current working directory
+      target = path.resolve(process.cwd(), userTarget);
+    }
+
+    // Verify the target exists
+    if (!fs.existsSync(target)) {
+      console.log(chalk.red(`❌ Error: Directory does not exist: ${target}`));
+      console.log(chalk.yellow(`💡 Tip: Make sure you're in the correct directory or provide the full absolute path.`));
+      console.log(chalk.yellow(`   Current directory: ${process.cwd()}`));
+      if (foundApps.length > 0) {
+        console.log(chalk.yellow(`   Found Next.js apps in subdirectories: ${foundApps.join(", ")}`));
+      }
+      process.exit(1);
+    }
+
+    // Verify it's actually a Next.js app
+    const finalHasAppDir = fs.existsSync(path.join(target, "app")) || fs.existsSync(path.join(target, "src", "app"));
+    const finalHasPagesDir = fs.existsSync(path.join(target, "pages")) || fs.existsSync(path.join(target, "src", "pages"));
+    const finalHasPackageJson = fs.existsSync(path.join(target, "package.json"));
+
+    if (!finalHasAppDir && !finalHasPagesDir) {
+      console.log(chalk.red(`❌ Error: ${target} does not appear to be a Next.js app directory.`));
+      console.log(chalk.yellow(`   Expected to find: app/, src/app/, pages/, or src/pages/ directory`));
+      process.exit(1);
+    }
+
+    if (!finalHasPackageJson) {
+      console.log(chalk.red(`❌ Error: package.json not found in ${target}.`));
+      console.log(chalk.yellow(`   Make sure you're pointing to the root of your Next.js project.`));
+      process.exit(1);
+    }
   }
 
   // For auth patches, use new setup flow
