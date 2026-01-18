@@ -260,7 +260,10 @@ function showSuccessMessage(
   console.log(chalk.white(`   - ${libDir}/auth-client.ts`));
   console.log(chalk.white(`   - app/api/auth/[...all]/route.ts`));
   if (config.protectedRoutes.length > 0) {
-    console.log(chalk.white(`   - middleware.ts`));
+    const middlewareFileName = scan.nextVersion && parseInt(scan.nextVersion.split(".")[0]) >= 16
+      ? "middleware.ts"
+      : "proxy.ts";
+    console.log(chalk.white(`   - ${middlewareFileName}`));
   }
   if (config.protectedRoutes.length > 0) {
     console.log(chalk.white(`   - ${libDir}/protected-routes.ts`));

@@ -289,7 +289,22 @@ export function generateMiddleware(
     return null;
   }
 
-  const middlewarePath = path.join(target, "middleware.ts");
+  // Next.js < 16 uses proxy.ts, Next.js 16+ uses middleware.ts
+  const isNext16Plus = scan.nextVersion &&
+    (parseInt(scan.nextVersion.split(".")[0]) >= 16);
+  const middlewareFileName = isNext16Plus ? "middleware.ts" : "proxy.ts";
+  const middlewarePath = path.join(target, middlewareFileName);
+
+  // Also check for the old filename if migrating
+  const oldMiddlewarePath = path.join(target, isNext16Plus ? "proxy.ts" : "middleware.ts");
+  if (fs.existsSync(oldMiddlewarePath) && oldMiddlewarePath !== middlewarePath) {
+    // Remove old middleware file if it exists
+    try {
+      fs.unlinkSync(oldMiddlewarePath);
+    } catch {
+      // Ignore errors
+    }
+  }
 
   // Check if middleware already exists
   if (fs.existsSync(middlewarePath)) {
@@ -326,10 +341,49 @@ export function generateMiddleware(
   const authPages = ["/auth/login", "/auth/signup"];
   const allMatcherPatterns = [...matcherPatterns, ...authPages];
 
-  const middlewareContent = `import { NextRequest, NextResponse } from "next/server";
+  // Next.js 16+ uses middleware.ts with named export, Next.js < 16 uses proxy.ts with default export
+  const middlewareContent = isNext16Plus
+    ? `import { NextRequest, NextResponse } from "next/server";
 import { getSessionCookie } from "better-auth/cookies";
 
 export async function middleware(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
+
+  // Check if session cookie exists
+  const sessionCookie = getSessionCookie(request);
+
+  // Handle auth pages (login/signup)
+  if (pathname === "/auth/login" || pathname === "/auth/signup") {
+    // If already authenticated, redirect away from auth pages
+    if (sessionCookie) {
+      const redirectParam = request.nextUrl.searchParams.get("redirect");
+      const redirectTo = redirectParam || "/stackpatch";
+      return NextResponse.redirect(new URL(redirectTo, request.url));
+    }
+    // Not authenticated - allow access to auth pages
+    return NextResponse.next();
+  }
+
+  // Handle protected routes (only protected routes reach here thanks to matcher)
+  if (!sessionCookie) {
+    // Not authenticated - redirect to login with return URL
+    const loginUrl = new URL("/auth/login", request.url);
+    loginUrl.searchParams.set("redirect", pathname);
+    return NextResponse.redirect(loginUrl);
+  }
+
+  // Authenticated and accessing protected route - allow access
+  return NextResponse.next();
+}
+
+export const config = {
+  matcher: ${JSON.stringify(allMatcherPatterns)}, // Protected routes + auth pages
+};
+`
+    : `import { NextRequest, NextResponse } from "next/server";
+import { getSessionCookie } from "better-auth/cookies";
+
+export default async function handler(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
   // Check if session cookie exists

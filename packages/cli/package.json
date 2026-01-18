@@ -1,6 +1,6 @@
 {
   "name": "stackpatch",
-  "version": "1.2.6",
+  "version": "1.2.9",
   "description": "Composable frontend features for modern React & Next.js apps - Add authentication, UI components, and more with zero configuration",
   "main": "dist/stackpatch.js",
   "bin": {
@@ -20,6 +20,7 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:cli": "node scripts/test-cli-execution.js",
+    "test:nextjs-version": "node scripts/test-nextjs-version.js",
     "prepublishOnly": "npm run build && node scripts/prepare-publish.js && npm run test:cli",
     "dev": "bun run bin/stackpatch.ts",
     "create": "bun run bin/stackpatch.ts"

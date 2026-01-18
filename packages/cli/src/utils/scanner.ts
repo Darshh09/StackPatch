@@ -13,6 +13,7 @@ export interface ProjectScan {
   runtime: "node" | "bun" | "unknown";
   hasSrcDir: boolean;
   existingAuth: "better-auth" | "next-auth" | "none";
+  nextVersion?: string; // Next.js version (e.g., "16.0.0")
 }
 
 /**
@@ -41,6 +42,15 @@ export function scanProject(target: string): ProjectScan {
 
       if (deps.next || deps["next"]) {
         scan.framework = "nextjs";
+        // Extract Next.js version
+        const nextVersion = deps.next || deps["next"];
+        if (typeof nextVersion === "string") {
+          // Extract version number (handle ranges like "^16.0.0" or "16.0.0")
+          const versionMatch = nextVersion.match(/(\d+)\.(\d+)\.(\d+)/);
+          if (versionMatch) {
+            scan.nextVersion = versionMatch[0];
+          }
+        }
       }
 
       // Detect package manager from lock files
